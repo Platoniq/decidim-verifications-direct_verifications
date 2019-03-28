@@ -14,8 +14,9 @@ module Decidim
           end
 
           def create
-            enforce_permission_to :index, UserProcessor
-            processor = UserProcessor.new params[:userlist]
+            enforce_permission_to :create, UserProcessor
+            processor = UserProcessor.new(current_organization)
+            processor.emails = extract_emails_to_hash params[:userlist]
             if params[:register]
               # register users, send invitation
               processor.register_users
@@ -24,13 +25,8 @@ module Decidim
               # find users, authorize them
               processor.authorize_users
             end
-            puts '************'
-            puts params
-            puts processor.user_hash
-            puts '************'
-            flash[:notice] = t(".success", count: 1,
-                                             errors: 'errors')
-            flash[:notice] = processor.user_hash
+            flash[:notice] = t(".success", count: processor.success.count,
+                                             errors: processor.errors.count)
             redirect_to batch_verifications_path
           end
 
@@ -44,6 +40,19 @@ module Decidim
 
           def permission_scope
             :admin
+          end
+
+          private
+
+          # TODO: dirty text test:
+          # test1@test.com
+          # test2@test.com
+          # use test3@t.com
+          # User <a@b.co> another@email.com third@email.com@as.com
+          # Test 1 test1@test.com
+          def extract_emails_to_hash(txt)
+            reg = /([^@\r\n]*)\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/i
+            txt.scan(reg).map {|m| [m[1], m[0].delete('<>').strip]}.to_h
           end
 
         end

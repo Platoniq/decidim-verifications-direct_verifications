@@ -4,23 +4,53 @@ module Decidim
   module Verifications
     module BatchUsers
       class UserProcessor
-        def initialize(text)
-          @emails = extract_emails_to_hash text
+        def initialize(organization)
+          @organization = organization
+          @errors = []
+          @success = []
         end
 
-        def user_hash
+        def emails=(emails)
+          @emails = emails
+        end
+
+        def emails
           @emails || {}
         end
 
-        # TODO: dirty text test:
-        # test1@test.com
-        # test2@test.com
-        # use test3@t.com
-        # User <a@b.co> another@email.com third@email.com@as.com
-        # Test 1 test1@test.com
-        def extract_emails_to_hash(txt)
-          reg = /([^@\r\n]*)\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/i
-          txt.scan(reg).map {|m| [m[1], m[0].delete('<>').strip]}.to_h
+        def errors
+          @errors
+        end
+
+        def success
+          @success
+        end
+
+        # def register_users
+        # end
+
+        def authorize_users
+          @emails.each do |email, name|
+            if u = User.find_by(email: email.to_s.downcase, decidim_organization_id: @organization.id)
+              Decidim::Verifications::BatchUsers::ConfirmUserEmailAuthorization.call(authorization(u), form(u))
+              @success<< email
+            else
+              @errors<< email
+            end
+          end
+        end
+
+        private
+
+        def authorization(user)
+          @authorization = Authorization.find_or_initialize_by(
+            user: user,
+            name: :batch_users_authorization_handler
+          )
+        end
+
+        def form(user)
+          BatchUsersForm.new(email: user.email, name: user.name)
         end
       end
     end
