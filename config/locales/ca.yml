@@ -1,0 +1,15 @@
+ca:
+  decidim:
+    verifications:
+      batch_users:
+        admin:
+          index:
+            title: Inscriu i autoritza usuaris
+          new:
+            info: Introdueix aqui els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
+            textarea: 'Llista d''emails:'
+            register: 'Registra els usuaris a la plataforma (si existeixen s''ignoraran)'
+            authorize: Autoritza els usuaris
+            submit: Envia i processa el llistat
+
+

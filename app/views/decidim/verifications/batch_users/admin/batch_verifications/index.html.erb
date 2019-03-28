@@ -1,0 +1,27 @@
+
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t('admin.index.title', scope: 'decidim.verifications.batch_users') %>
+    </h2>
+  </div>
+  <div class="card-section">
+    <p><%= t('decidim.verifications.batch_users.admin.new.info') %></p>
+    <%= form_tag batch_verifications_path, multipart: true, class: 'form' do %>
+      <%= label_tag :userlist, t('admin.new.textarea', scope: 'decidim.verifications.batch_users') %>
+      <%= text_area_tag :userlist, nil, rows: 10 %>
+	  	<label for="register">
+	  		<%= check_box_tag :register %>
+	  		<%= t('admin.new.register', scope: 'decidim.verifications.batch_users') %>
+			</label>
+	  	<label for="authorize">
+	  		<%= check_box_tag :authorize %>
+      	<%= t('admin.new.authorize', scope: 'decidim.verifications.batch_users') %>
+      </label>
+      <%= submit_tag t('admin.new.submit', scope: 'decidim.verifications.batch_users'), class: 'button' %>
+
+    <% end %>
+
+  </div>
+</div>
+

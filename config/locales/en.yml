@@ -1,0 +1,13 @@
+en:
+  decidim:
+    verifications:
+      batch_users:
+        admin:
+          index:
+            title: title
+          new:
+            info: emails
+            textarea: textarea
+            register: register
+            authorize: authorize
+            submit: submit

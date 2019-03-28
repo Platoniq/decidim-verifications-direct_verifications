@@ -10,7 +10,7 @@ module Decidim
           layout "decidim/admin/users"
 
           def index
-            'index'
+            # enforce_permission_to :index
           end
         end
       end
