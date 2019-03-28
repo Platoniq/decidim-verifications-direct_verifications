@@ -5,6 +5,9 @@ ca:
         admin:
           index:
             title: Inscriu i autoritza usuaris
+          batch_verifications:
+            create:
+              success: 'S''han importat correctament %{count} elements (%{errors} errors)'
           new:
             info: Introdueix aqui els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
             textarea: 'Llista d''emails:'

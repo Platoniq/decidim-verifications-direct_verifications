@@ -5,6 +5,9 @@ en:
         admin:
           index:
             title: title
+          batch_verifications:
+            create:
+              success: Successfully imported %{count} items (%{errors} errors)
           new:
             info: emails
             textarea: textarea
