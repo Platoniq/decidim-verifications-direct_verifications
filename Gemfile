@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim-batch_verifications", path: "."
+gem "decidim-verifications-batch_users", path: "."
 
 gemspec
 

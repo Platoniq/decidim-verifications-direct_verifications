@@ -2,18 +2,18 @@
 
 $LOAD_PATH.push File.expand_path("lib", __dir__)
 
-require "decidim/batch_verifications/version"
+require "decidim/verifications/batch_users/version"
 
 Gem::Specification.new do |s|
-  s.version = Decidim::BatchVerifications.version
+  s.version = Decidim::Verifications::BatchUsers.version
   s.authors = ["Ivan Vergés"]
   s.email = ["ivan@platoniq.net"]
   s.license = "AGPL-3.0"
-  s.homepage = "https://github.com/Platoniq/decidim-module-batch_verifications"
+  s.homepage = "https://github.com/Platoniq/decidim-verifications-batch_users"
   s.required_ruby_version = ">= 2.5"
 
-  s.name = "decidim-batch_verifications"
-  s.summary = "A decidim batch_user_registration module"
+  s.name = "decidim-verifications-batch_users"
+  s.summary = "A decidim batch user registration and verification module"
   s.description = "Provides a verification method that also registers users directly in the platform."
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
