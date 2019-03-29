@@ -35,4 +35,3 @@ end
 group :test do
   gem "codecov", require: false
 end
-
