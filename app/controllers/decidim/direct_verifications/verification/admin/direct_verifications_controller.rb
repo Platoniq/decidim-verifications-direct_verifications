@@ -17,12 +17,29 @@ module Decidim
             enforce_permission_to :create, UserProcessor
 
             processor = UserProcessor.new(current_organization, current_user)
-            processor.emails = extract_emails_to_hash params[:userlist]
-            processor.register_users if params[:register]
-            processor.authorize_users if params[:authorize]
-
-            flash[:notice] = t(".success", count: processor.success.count,
-                                           errors: processor.errors.count)
+            @userlist = params[:userlist]
+            processor.emails = extract_emails_to_hash @userlist
+            processor.authorization_handler = params[:authorization_handler] if params[:authorization_handler]
+            if params[:register]
+              processor.register_users
+              flash[:warning] = t(".registered", count: processor.emails.count,
+                                                 registered: processor.processed[:registered].count,
+                                                 errors: processor.errors[:registered].count)
+            end
+            if params[:authorize]
+              processor.authorize_users
+              flash[:notice] = t(".authorized", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
+                                                count: processor.emails.count,
+                                                authorized: processor.processed[:authorized].count,
+                                                errors: processor.errors[:authorized].count)
+            end
+            unless params[:authorize] || params[:register]
+              flash[:info] = t(".info", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
+                                        count: processor.emails.count,
+                                        authorized: processor.total(:authorized),
+                                        registered: processor.total(:registered))
+              render(action: :index) && return
+            end
             redirect_to direct_verifications_path
           end
 

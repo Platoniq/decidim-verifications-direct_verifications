@@ -7,13 +7,16 @@ es:
             title: title
           direct_verifications:
             create:
-              success: Se importaron correctamente %{count} elementos (%{errors} errores)
+              registered: 'S''han registrat correctament %{count} usuaris (%{errors} errors)'
+              authorized: 'S''han verificat amb el tipus %{handler} correctament %{count} usuaris (%{errors} errors)'
+              info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats amb [%{handler}]'
           new:
             info: emails
             textarea: textarea
             register: register
             authorize: authorize
             submit: submit
+            authorization_handler: 'Mètode de verificació:'
     authorization_handlers:
       direct_verifications:
         name: Verificación directa

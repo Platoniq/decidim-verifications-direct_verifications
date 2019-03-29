@@ -4,7 +4,7 @@ module Decidim
   # This holds the decidim-direct_verifications version.
   module DirectVerifications
     def self.version
-      "0.0.3"
+      "0.1.0beta"
     end
 
     def self.decidim_version

@@ -6,15 +6,17 @@ module Decidim
       def initialize(organization, current_user)
         @organization = organization
         @current_user = current_user
-        @errors = []
-        @success = []
+        @authorization_handler = :direct_verifications
+        @errors = { registered: [], authorized: [] }
+        @processed = { registered: [], authorized: [] }
         @emails = {}
       end
 
-      attr_reader :organization, :current_user, :errors, :success, :emails
+      attr_reader :organization, :current_user, :errors, :processed, :emails
+      attr_accessor :authorization_handler
 
       def emails=(emails)
-        @emails = emails.map { |k, v| [k, v || k.split("@").first] }.to_h
+        @emails = emails.map { |k, v| [k.to_s.downcase, v || k.split("@").first] }.to_h
       end
 
       def register_users
@@ -24,10 +26,10 @@ module Decidim
           begin
             InviteUser.call(form) do
               on(:ok) do
-                add_success email
+                add_processed :registered, email
               end
               on(:invalid) do
-                add_error email
+                add_error :registered, email
               end
             end
           end
@@ -37,18 +39,37 @@ module Decidim
       def authorize_users
         emails.each do |email, _name|
           if (u = find_user(email))
-            Verification::ConfirmUserEmailAuthorization.call(authorization(u), authorize_form(u))
-            add_success email
+            auth = authorization(u)
+            next if auth.granted?
+            Verification::ConfirmUserEmailAuthorization.call(auth, authorize_form(u)) do
+              on(:ok) do
+                add_processed :authorized, email
+              end
+              on(:invalid) do
+                add_error :authorized, email
+              end
+            end
           else
-            add_error email
+            add_error :authorized, email
           end
         end
+      end
+
+      def total(type)
+        return User.where(email: emails.keys, decidim_organization_id: @organization.id).count if type == :registered
+        if type == :authorized
+          return Decidim::Authorization.joins(:user)
+                                       .where(name: authorization_handler)
+                                       .where("decidim_users.email IN (:emails) AND decidim_users.decidim_organization_id=:org",
+                                              emails: emails.keys, org: @organization.id).count
+        end
+        0
       end
 
       private
 
       def find_user(email)
-        User.find_by(email: email.to_s.downcase, decidim_organization_id: @organization.id)
+        User.find_by(email: email, decidim_organization_id: @organization.id)
       end
 
       def register_form(email, name)
@@ -63,7 +84,7 @@ module Decidim
       def authorization(user)
         Authorization.find_or_initialize_by(
           user: user,
-          name: :direct_verifications
+          name: authorization_handler
         )
       end
 
@@ -71,12 +92,12 @@ module Decidim
         Verification::DirectVerificationsForm.new(email: user.email, name: user.name)
       end
 
-      def add_success(email)
-        @success << email unless @success.include? email
+      def add_processed(type, email)
+        @processed[type] << email unless @processed[type].include? email
       end
 
-      def add_error(email)
-        @errors << email unless @errors.include? email
+      def add_error(type, email)
+        @errors[type] << email unless @errors[type].include? email
       end
     end
   end

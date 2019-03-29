@@ -9,7 +9,7 @@
     <p><%= t('decidim.direct_verifications.verification.admin.new.info') %></p>
     <%= form_tag direct_verifications_path, multipart: true, class: 'form' do %>
       <%= label_tag :userlist, t('admin.new.textarea', scope: 'decidim.direct_verifications.verification') %>
-      <%= text_area_tag :userlist, nil, rows: 10 %>
+      <%= text_area_tag :userlist, @userlist, rows: 10 %>
 	  	<label for="register">
 	  		<%= check_box_tag :register %>
 	  		<%= t('admin.new.register', scope: 'decidim.direct_verifications.verification') %>
@@ -18,9 +18,14 @@
 	  		<%= check_box_tag :authorize %>
       	<%= t('admin.new.authorize', scope: 'decidim.direct_verifications.verification') %>
       </label>
+
+      <%= label_tag :userlist, t('admin.new.authorization_handler', scope: 'decidim.direct_verifications.verification') %>
+      <%= select_tag :authorization_handler, options_for_select(current_organization.available_authorizations.map { |a|
+        [t("#{a}.name", scope: "decidim.authorization_handlers"), a]
+        }, :direct_verifications) %>
+
       <%= submit_tag t('admin.new.submit', scope: 'decidim.direct_verifications.verification'), class: 'button' %>
 
-      <%= current_organization.available_authorizations %>
     <% end %>
 
   </div>

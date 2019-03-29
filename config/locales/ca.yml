@@ -7,16 +7,19 @@ ca:
             title: Inscriu i autoritza usuaris
           direct_verifications:
             create:
-              success: 'S''han importat correctament %{count} elements (%{errors} errors)'
+              registered: 'S''han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)'
+              authorized: 'S''han verificat amb [%{handler}] correctament %{authorized} usuaris (%{count} detectats, %{errors} errors)'
+              info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats amb [%{handler}]'
           new:
             info: Introdueix aqui els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
             textarea: 'Llista d''emails:'
             register: 'Registra els usuaris a la plataforma (si existeixen s''ignoraran)'
             authorize: Autoritza els usuaris
             submit: Envia i processa el llistat
+            authorization_handler: 'Mètode de verificació:'
     authorization_handlers:
       direct_verifications:
-        name: 'Verficació directa'
+        name: 'Verificació directa'
       admin:
         direct_verifications:
           help:
