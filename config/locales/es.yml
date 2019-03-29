@@ -1,36 +1,42 @@
+---
 es:
   decidim:
-    direct_verifications:
-      verification:
-        authorizations:
-          new:
-            no_action: 'Este método requiere que un administrador os verifique'
-        admin:
-          index:
-            title: 'Inscribe y autoriza usuarios'
-          direct_verifications:
-            create:
-              registered: 'Se han registrado correctamente %{registered} usuarios (%{count} detectados, %{errors} errores)'
-              authorized: 'Se han verificado correctamente %{authorized} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)'
-              revoked: 'Se ha revocado correctament la verificación de %{revoked} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)'
-              info: 'Se han detectado %{count} usuarios, de los cuales %{registered} están registrados y %{authorized} están autorizados usando [%{handler}]'
-          new:
-            info: 'Introduce aquí los emails, uno por linea. Si los emails están precedidos por un texto, se interpretará como el nombre del usuario'
-            textarea: 'Lista de emails:'
-            register: 'Registra los usuarios a la plataforma (si existen se ignorarán)'
-            authorize: 'Autoriza los usuarios'
-            revoke: 'Revoca la autorización de los usuarios'
-            check: 'Comprueba el estado de los usuarios'
-            submit: 'Envía y procesa el listado'
-            authorization_handler: 'Método de verificación:'
     authorization_handlers:
-      direct_verifications:
-        name: 'Verificación directa'
-        explanation: 'Verificación manual por parte de los administradores de la organización'
       admin:
         direct_verifications:
           help:
-            - 'Permite la introducción masiva d usuarios con el fin de:'
-            - 'Registrarlos directamente a la organización con el envío de invitaciones'
-            - 'Verificarlos en cualquier método de verificación activo'
-            - 'Revocar la verificación en cualquier método de verificación activo'
+          - 'Permite la introducción masiva d usuarios con el fin de:'
+          - Registrarlos directamente a la organización con el envío de invitaciones
+          - Verificarlos en cualquier método de verificación activo
+          - Revocar la verificación en cualquier método de verificación activo
+      direct_verifications:
+        explanation: Verificación manual por parte de los administradores de la organización
+        name: Verificación directa
+    direct_verifications:
+      verification:
+        admin:
+          direct_verifications:
+            create:
+              authorized: Se han verificado correctamente %{authorized} usuarios usando
+                [%{handler}] (%{count} detectados, %{errors} errores)
+              info: Se han detectado %{count} usuarios, de los cuales %{registered}
+                están registrados y %{authorized} están autorizados usando [%{handler}]
+              registered: Se han registrado correctamente %{registered} usuarios (%{count}
+                detectados, %{errors} errores)
+              revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
+                usando [%{handler}] (%{count} detectados, %{errors} errores)
+          index:
+            title: Inscribe y autoriza usuarios
+          new:
+            authorization_handler: 'Método de verificación:'
+            authorize: Autoriza los usuarios
+            check: Comprueba el estado de los usuarios
+            info: Introduce aquí los emails, uno por linea. Si los emails están precedidos
+              por un texto, se interpretará como el nombre del usuario
+            register: Registra los usuarios a la plataforma (si existen se ignorarán)
+            revoke: Revoca la autorización de los usuarios
+            submit: Envía y procesa el listado
+            textarea: 'Lista de emails:'
+        authorizations:
+          new:
+            no_action: Este método requiere que un administrador os verifique

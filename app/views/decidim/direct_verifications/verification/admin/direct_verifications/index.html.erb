@@ -10,13 +10,13 @@
     <%= form_tag direct_verifications_path, multipart: true, class: 'form' do %>
       <%= label_tag :userlist, t('admin.new.textarea', scope: 'decidim.direct_verifications.verification') %>
       <%= text_area_tag :userlist, @userlist, rows: 10 %>
-	  	<label>
-	  		<%= check_box_tag :register %>
-	  		<%= t('admin.new.register', scope: 'decidim.direct_verifications.verification') %>
-			</label>
-	  	<label>
-	  		<%= radio_button_tag :authorize, 'in' %>
-      	<%= t('admin.new.authorize', scope: 'decidim.direct_verifications.verification') %>
+      <label>
+        <%= check_box_tag :register %>
+        <%= t('admin.new.register', scope: 'decidim.direct_verifications.verification') %>
+      </label>
+      <label>
+        <%= radio_button_tag :authorize, 'in' %>
+        <%= t('admin.new.authorize', scope: 'decidim.direct_verifications.verification') %>
       </label>
       <label>
         <%= radio_button_tag :authorize, 'out' %>
@@ -38,4 +38,3 @@
 
   </div>
 </div>
-
