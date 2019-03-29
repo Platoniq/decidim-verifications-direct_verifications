@@ -22,7 +22,7 @@ module Decidim
             processor.authorize_users if params[:authorize]
 
             flash[:notice] = t(".success", count: processor.success.count,
-                                             errors: processor.errors.count)
+                                           errors: processor.errors.count)
             redirect_to direct_verifications_path
           end
 
@@ -48,9 +48,8 @@ module Decidim
           # Test 1 test1@test.com
           def extract_emails_to_hash(txt)
             reg = /([^@\r\n]*)\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/i
-            txt.scan(reg).map {|m| [m[1], m[0].delete('<>').strip]}.to_h
+            txt.scan(reg).map { |m| [m[1], m[0].delete("<>").strip] }.to_h
           end
-
         end
       end
     end

@@ -13,7 +13,6 @@ module Decidim
         # This is the validation to perform
         # If passed, an authorization is created
         validates :email, presence: true
-
       end
     end
   end

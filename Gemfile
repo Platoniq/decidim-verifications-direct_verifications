@@ -9,8 +9,8 @@ gem "decidim-direct_verifications", path: "."
 gemspec
 
 group :development, :test do
+  gem "bootsnap"
   gem "byebug", "~> 10.0", platform: :mri
-  gem 'bootsnap'
 end
 
 group :development do
