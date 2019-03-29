@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Verifications
-    module BatchUsers
+  module DirectVerifications
+    module Verification
       class ConfirmUserEmailAuthorization < Decidim::Verifications::ConfirmUserAuthorization
         def call
           return broadcast(:invalid) unless form.valid?

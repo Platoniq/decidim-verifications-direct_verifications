@@ -1,11 +1,11 @@
 ca:
   decidim:
-    verifications:
-      batch_users:
+    direct_verifications:
+      verification:
         admin:
           index:
             title: Inscriu i autoritza usuaris
-          batch_verifications:
+          direct_verifications:
             create:
               success: 'S''han importat correctament %{count} elements (%{errors} errors)'
           new:
@@ -14,5 +14,10 @@ ca:
             register: 'Registra els usuaris a la plataforma (si existeixen s''ignoraran)'
             authorize: Autoritza els usuaris
             submit: Envia i processa el llistat
-
-
+    authorization_handlers:
+      direct_verifications:
+        name: 'Verficació directa'
+      admin:
+        direct_verifications:
+          help:
+            - help page

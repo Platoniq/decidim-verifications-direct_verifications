@@ -1,11 +1,11 @@
 es:
   decidim:
-    verifications:
-      batch_users:
+    direct_verifications:
+      verification:
         admin:
           index:
             title: title
-          batch_verifications:
+          direct_verifications:
             create:
               success: Se importaron correctamente %{count} elementos (%{errors} errores)
           new:
@@ -14,3 +14,10 @@ es:
             register: register
             authorize: authorize
             submit: submit
+    authorization_handlers:
+      direct_verifications:
+        name: Verificación directa
+      admin:
+        direct_verifications:
+          help:
+            - help page

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Verifications
-    module BatchUsers
+  module DirectVerifications
+    module Verification
       module Admin
-        class BatchVerificationsController < Decidim::Admin::ApplicationController
+        class DirectVerificationsController < Decidim::Admin::ApplicationController
           include NeedsPermission
 
           layout "decidim/admin/users"
@@ -15,24 +15,20 @@ module Decidim
 
           def create
             enforce_permission_to :create, UserProcessor
+
             processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash params[:userlist]
-            if params[:register]
-              # register users, send invitation
-              processor.register_users
-            end
-            if params[:authorize]
-              # find users, authorize them
-              processor.authorize_users
-            end
+            processor.register_users if params[:register]
+            processor.authorize_users if params[:authorize]
+
             flash[:notice] = t(".success", count: processor.success.count,
                                              errors: processor.errors.count)
-            redirect_to batch_verifications_path
+            redirect_to direct_verifications_path
           end
 
           def permission_class_chain
             [
-              Decidim::Verifications::BatchUsers::Admin::Permissions,
+              Decidim::DirectVerifications::Verification::Admin::Permissions,
               Decidim::Admin::Permissions,
               Decidim::Permissions
             ]
