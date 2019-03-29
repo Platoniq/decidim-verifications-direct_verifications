@@ -2,25 +2,35 @@ en:
   decidim:
     direct_verifications:
       verification:
+        authorizations:
+          new:
+            no_action: 'This method requires an administrator that verifies you'
         admin:
           index:
-            title: title
+            title: 'Register and authorize users'
           direct_verifications:
             create:
-              registered: 'S''han registrat correctament %{count} usuaris (%{errors} errors)'
-              authorized: 'S''han verificat amb el tipus %{handler} correctament %{count} usuaris (%{errors} errors)'
-              info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats amb [%{handler}]'
+              registered: '%{registered} users have been successfully registered (%{count} detected, %{errors} errors) '
+              authorized: '%{authorized} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)'
+              revoked: 'Verification from %{revoked} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)'
+              info: '%{count} users detected, of which %{registered} are registered and %{authorized} are authorized using [%{handler}]'
           new:
-            info: emails
-            textarea: textarea
-            register: register
-            authorize: authorize
-            submit: submit
-            authorization_handler: 'Mètode de verificació:'
+            info: 'Enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name'
+            textarea: 'Emails list:'
+            register: 'Register users in the platform (if they exist they will be ignored)'
+            authorize: 'Authorize users'
+            revoke: 'Revoke authorization from users'
+            check: 'Check users status'
+            submit: 'Send and process the list'
+            authorization_handler: 'Verification method:'
     authorization_handlers:
       direct_verifications:
-        name: Direct verification
+        name: 'Direct verification'
+        explanation: 'Manual verification by the administrators of the organization'
       admin:
         direct_verifications:
           help:
-            - help page
+            - 'Allows the massive introduction of users in order to:'
+            - 'Direct register in the organization and sends invitations'
+            - 'Verify them in any active verification method'
+            - 'Revoke their verification in any active verification method'

@@ -26,18 +26,18 @@ module Decidim
                                                  registered: processor.processed[:registered].count,
                                                  errors: processor.errors[:registered].count)
             end
-            if params[:authorize] == 'in'
+            if params[:authorize] == "in"
               processor.authorize_users
               flash[:notice] = t(".authorized", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                                 count: processor.emails.count,
                                                 authorized: processor.processed[:authorized].count,
                                                 errors: processor.errors[:authorized].count)
-            elsif params[:authorize] == 'out'
+            elsif params[:authorize] == "out"
               processor.revoke_users
               flash[:notice] = t(".revoked", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
-                                                count: processor.emails.count,
-                                                revoked: processor.processed[:revoked].count,
-                                                errors: processor.errors[:revoked].count)
+                                             count: processor.emails.count,
+                                             revoked: processor.processed[:revoked].count,
+                                             errors: processor.errors[:revoked].count)
             else
               flash[:info] = t(".info", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                         count: processor.emails.count,

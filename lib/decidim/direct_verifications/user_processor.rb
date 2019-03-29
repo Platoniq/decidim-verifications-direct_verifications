@@ -75,9 +75,7 @@ module Decidim
       end
 
       def total(type)
-        if type == :registered
-          return User.where(email: emails.keys, decidim_organization_id: @organization.id).count
-        end
+        return User.where(email: emails.keys, decidim_organization_id: @organization.id).count if type == :registered
         if type == :authorized
           return Decidim::Authorization.joins(:user)
                                        .where(name: authorization_handler)

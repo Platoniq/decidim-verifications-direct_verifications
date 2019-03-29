@@ -2,28 +2,31 @@ ca:
   decidim:
     direct_verifications:
       verification:
+        authorizations:
+          new:
+            no_action: 'Aquest mètode requereix que un administrador us verifiqui'
         admin:
           index:
-            title: Inscriu i autoritza usuaris
+            title: 'Inscriu i autoritza usuaris'
           direct_verifications:
             create:
               registered: 'S''han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)'
-              authorized: 'S''han verificat amb [%{handler}] correctament %{authorized} usuaris (%{count} detectats, %{errors} errors)'
-              revoked: 'S''han revocat les verificacions amb [%{handler}] correctament de %{revoked} usuaris (%{count} detectats, %{errors} errors)'
-              info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats amb [%{handler}]'
+              authorized: 'S''han verificat correctament %{authorized} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)'
+              revoked: 'S''ha revocat correctament la verificació de %{revoked} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)'
+              info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats utilitzant [%{handler}]'
           new:
-            info: Introdueix aqui els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
-
+            info: 'Introdueix aquí els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari'
             textarea: 'Llista d''emails:'
             register: 'Registra els usuaris a la plataforma (si existeixen s''ignoraran)'
-            authorize: Autoritza els usuaris
+            authorize: 'Autoritza els usuaris'
             revoke: 'Revoca l''autorització dels usuaris'
             check: 'Comprova l''estat dels usuaris'
-            submit: Envia i processa el llistat
+            submit: 'Envia i processa el llistat'
             authorization_handler: 'Mètode de verificació:'
     authorization_handlers:
       direct_verifications:
         name: 'Verificació directa'
+        explanation: 'Verificació manual per par dels administradors de l''organització'
       admin:
         direct_verifications:
           help:
