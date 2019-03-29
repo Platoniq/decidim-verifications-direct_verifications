@@ -7,8 +7,8 @@ module Decidim
         @organization = organization
         @current_user = current_user
         @authorization_handler = :direct_verifications
-        @errors = { registered: [], authorized: [] }
-        @processed = { registered: [], authorized: [] }
+        @errors = { registered: [], authorized: [], revoked: [] }
+        @processed = { registered: [], authorized: [], revoked: [] }
         @emails = {}
       end
 
@@ -41,7 +41,7 @@ module Decidim
           if (u = find_user(email))
             auth = authorization(u)
             next if auth.granted?
-            Verification::ConfirmUserEmailAuthorization.call(auth, authorize_form(u)) do
+            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
               on(:ok) do
                 add_processed :authorized, email
               end
@@ -55,8 +55,29 @@ module Decidim
         end
       end
 
+      def revoke_users
+        emails.each do |email, _name|
+          if (u = find_user(email))
+            auth = authorization(u)
+            next unless auth.granted?
+            Verification::DestroyUserAuthorization.call(auth) do
+              on(:ok) do
+                add_processed :revoked, email
+              end
+              on(:invalid) do
+                add_error :revoked, email
+              end
+            end
+          else
+            add_error :revoked, email
+          end
+        end
+      end
+
       def total(type)
-        return User.where(email: emails.keys, decidim_organization_id: @organization.id).count if type == :registered
+        if type == :registered
+          return User.where(email: emails.keys, decidim_organization_id: @organization.id).count
+        end
         if type == :authorized
           return Decidim::Authorization.joins(:user)
                                        .where(name: authorization_handler)

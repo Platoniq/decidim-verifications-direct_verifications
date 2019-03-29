@@ -9,12 +9,16 @@ ca:
             create:
               registered: 'S''han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)'
               authorized: 'S''han verificat amb [%{handler}] correctament %{authorized} usuaris (%{count} detectats, %{errors} errors)'
+              revoked: 'S''han revocat les verificacions amb [%{handler}] correctament de %{revoked} usuaris (%{count} detectats, %{errors} errors)'
               info: 'S''han detectat %{count} usuaris, dels quals %{registered} estan registrats i %{authorized} estan autoritzats amb [%{handler}]'
           new:
             info: Introdueix aqui els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
+
             textarea: 'Llista d''emails:'
             register: 'Registra els usuaris a la plataforma (si existeixen s''ignoraran)'
             authorize: Autoritza els usuaris
+            revoke: 'Revoca l''autorització dels usuaris'
+            check: 'Comprova l''estat dels usuaris'
             submit: Envia i processa el llistat
             authorization_handler: 'Mètode de verificació:'
     authorization_handlers:
@@ -23,4 +27,7 @@ ca:
       admin:
         direct_verifications:
           help:
-            - help page
+            - 'Permet la introducció massiva d''usuaris per tal de:'
+            - 'Registrar-los directament a la organització amb l''enviament d''invitacions'
+            - 'Verificar-los en qualsevol mètode de verificació actiu'
+            - 'Revocar la verificació en qualsevol mètode de verificació actiu'

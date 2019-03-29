@@ -16,8 +16,8 @@ module Decidim
           def create
             enforce_permission_to :create, UserProcessor
 
-            processor = UserProcessor.new(current_organization, current_user)
             @userlist = params[:userlist]
+            processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash @userlist
             processor.authorization_handler = params[:authorization_handler] if params[:authorization_handler]
             if params[:register]
@@ -26,14 +26,19 @@ module Decidim
                                                  registered: processor.processed[:registered].count,
                                                  errors: processor.errors[:registered].count)
             end
-            if params[:authorize]
+            if params[:authorize] == 'in'
               processor.authorize_users
               flash[:notice] = t(".authorized", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                                 count: processor.emails.count,
                                                 authorized: processor.processed[:authorized].count,
                                                 errors: processor.errors[:authorized].count)
-            end
-            unless params[:authorize] || params[:register]
+            elsif params[:authorize] == 'out'
+              processor.revoke_users
+              flash[:notice] = t(".revoked", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
+                                                count: processor.emails.count,
+                                                revoked: processor.processed[:revoked].count,
+                                                errors: processor.errors[:revoked].count)
+            else
               flash[:info] = t(".info", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                         count: processor.emails.count,
                                         authorized: processor.total(:authorized),

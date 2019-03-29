@@ -3,7 +3,7 @@
 module Decidim
   module DirectVerifications
     module Verification
-      class ConfirmUserEmailAuthorization < Decidim::Verifications::ConfirmUserAuthorization
+      class ConfirmUserAuthorization < Decidim::Verifications::ConfirmUserAuthorization
         def call
           return broadcast(:invalid) unless form.valid?
 
