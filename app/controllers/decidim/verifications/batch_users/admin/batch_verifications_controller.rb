@@ -15,7 +15,7 @@ module Decidim
 
           def create
             enforce_permission_to :create, UserProcessor
-            processor = UserProcessor.new(current_organization)
+            processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash params[:userlist]
             if params[:register]
               # register users, send invitation
