@@ -1,17 +1,39 @@
 # Decidim::DirectVerifications
 
-Provides a verification method that also registers users directly in the platform.
+a [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
+
+This plugin allows to verify users against the `Direct verification` method by default, but it is not limited to it, it can be used to directly verify users against any other method registered for the organization.
+
+You can use this plugin in combination with the great [AccessRequests](https://github.com/mainio/decidim-module-access_requests) plugin from Maino Tech to provide and manage several levels of permissions to users in the platform Decidim.
+
+**Other features include:**
+
+1. Allows to massively register users directly in the platform prior (or independently) to verify them by sending them invite emails. 
+> **IMPORTANT:**<br>
+> You must only use this feature if you have explicit consent from your users, otherwise you might be violating the [GDPR](https://eugdpr.org/) regulation in EU.
+2. Can massively revoke authorizations given to any user with any verification method available.
 
 ## Usage
 
-DirectVerifications will be available as a new verification method under Participants/Verifications
+DirectVerifications will be available as a new verification method under Participants/Verifications.
+
+Final users take no action, verification is 100% in the admin side.
+
+Verifications can only be managed by the admins. They have available a simple textarea form where to put a list of emails with no special format required. Emails (and names if possible) are detected automatically. 
+
+With the detected list of emails admin have different options available:
+
+1. Register the list of users in the platform
+2. Authorize the list of users using any verification method available (defaults to the built-in `Direct verification` method).
+3. Revoke the authorization for the list of users using any verification method available.
+4. Check the status of the users in order to know if they are verified or registered.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-direct_verifications"
+gem "decidim-direct_verifications", github: "Platoniq/decidim-verifications-direct_verifications"
 ```
 
 And then execute:
@@ -115,3 +137,10 @@ the code coverage report.
 ## License
 
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+
+## Also check
+
+This plugin has been inspired by these two nice verification methods:
+
+- **Access Requests** by Maino Tech: https://github.com/mainio/decidim-module-access_requests
+- **CSV Emails Verifications** by CodiTramuntana: https://github.com/CodiTramuntana/decidim-verifications-csv_emails
