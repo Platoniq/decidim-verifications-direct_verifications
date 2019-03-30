@@ -11,6 +11,15 @@ module Decidim::DirectVerifications::Verification::Admin
       create(:organization, available_authorizations: [verification_type])
     end
     let(:verification_type) { "direct_verifications" }
+    let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
+    # let(:authorization) do
+    #   create(
+    #     :authorization,
+    #     :granted,
+    #     name: verification_type,
+    #     user: authorized_user
+    #   )
+    # end
 
     before do
       request.env["decidim.current_organization"] = user.organization
@@ -76,6 +85,25 @@ module Decidim::DirectVerifications::Verification::Admin
         end
       end
 
+      shared_examples_for "revoking users" do |params|
+        context "when send valid emails" do
+          it "creates notice message" do
+            create(
+              :authorization,
+              :granted,
+              name: verification_type,
+              user: authorized_user
+            )
+            post :create, params: params
+            expect(flash[:notice]).not_to be_empty
+            expect(flash[:notice]).to include("1 detected")
+            expect(flash[:notice]).to include("0 errors")
+            expect(flash[:notice]).to include("1 users")
+            expect(flash[:notice]).to include("revoked")
+          end
+        end
+      end
+
       context "when parameters are defaults" do
         params = { userlist: "" }
         it_behaves_like "checking users", params
@@ -104,6 +132,11 @@ module Decidim::DirectVerifications::Verification::Admin
           post :create, params: params
           expect(subject).to redirect_to(action: :index)
         end
+      end
+
+      context "when register users with revoke" do
+        params = { userlist: "authorized@example.com", authorize: "out" }
+        it_behaves_like "revoking users", params
       end
     end
 
