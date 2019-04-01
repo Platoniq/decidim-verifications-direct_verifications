@@ -15,12 +15,12 @@ module Decidim
       attr_reader :organization, :current_user, :errors, :processed, :emails
       attr_accessor :authorization_handler
 
-      def emails=(emails)
-        @emails = emails.map { |k, v| [k.to_s.downcase, v || k.split("@").first] }.to_h
+      def emails=(email_list)
+        @emails = email_list.map { |k, v| [k.to_s.downcase, v.presence || k.split("@").first] }.to_h
       end
 
       def register_users
-        emails.each do |email, name|
+        @emails.each do |email, name|
           next if find_user(email)
           form = register_form(email, name)
           begin
@@ -37,7 +37,7 @@ module Decidim
       end
 
       def authorize_users
-        emails.each do |email, _name|
+        @emails.each do |email, _name|
           if (u = find_user(email))
             auth = authorization(u)
             next if auth.granted?
@@ -56,7 +56,7 @@ module Decidim
       end
 
       def revoke_users
-        emails.each do |email, _name|
+        @emails.each do |email, _name|
           if (u = find_user(email))
             auth = authorization(u)
             next unless auth.granted?
@@ -75,12 +75,12 @@ module Decidim
       end
 
       def total(type)
-        return User.where(email: emails.keys, decidim_organization_id: @organization.id).count if type == :registered
+        return User.where(email: @emails.keys, decidim_organization_id: @organization.id).count if type == :registered
         if type == :authorized
           return Decidim::Authorization.joins(:user)
                                        .where(name: authorization_handler)
                                        .where("decidim_users.email IN (:emails) AND decidim_users.decidim_organization_id=:org",
-                                              emails: emails.keys, org: @organization.id).count
+                                              emails: @emails.keys, org: @organization.id).count
         end
         0
       end
@@ -92,12 +92,12 @@ module Decidim
       end
 
       def register_form(email, name)
-        OpenStruct.new(name: name,
+        OpenStruct.new(name: name.presence || email.split("@").first,
                        email: email.downcase,
                        organization: organization,
                        admin: false,
                        invited_by: current_user,
-                       invitation_instructions: "invite_collaborator")
+                       invitation_instructions: "invite_private_user")
       end
 
       def authorization(user)
