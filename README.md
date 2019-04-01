@@ -1,6 +1,8 @@
 # Decidim::DirectVerifications
 
-a [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
+[![Build Status](https://travis-ci.org/Platoniq/decidim-verifications-direct_verifications.svg?branch=master)](https://travis-ci.org/Platoniq/decidim-verifications-direct_verifications)
+
+A [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
 
 This plugin allows to verify users against the `Direct verification` method by default, but it is not limited to it, it can be used to directly verify users against any other method registered for the organization.
 
@@ -8,10 +10,14 @@ You can use this plugin in combination with the great [AccessRequests](https://g
 
 **Other features include:**
 
-1. Allows to massively register users directly in the platform prior (or independently) to verify them by sending them invite emails. 
+1. Allows to massively register users directly in the platform prior (or independently) to verify them by sending them invite emails.
 > **IMPORTANT:**<br>
 > You must only use this feature if you have explicit consent from your users, otherwise you might be violating the [GDPR](https://eugdpr.org/) regulation in EU.
 2. Can massively revoke authorizations given to any user with any verification method available.
+
+## Screenshot
+
+![Admin screenshot](examples/screenshot.png)
 
 ## Usage
 
@@ -19,7 +25,7 @@ DirectVerifications will be available as a new verification method under Partici
 
 Final users take no action, verification is 100% in the admin side.
 
-Verifications can only be managed by the admins. They have available a simple textarea form where to put a list of emails with no special format required. Emails (and names if possible) are detected automatically. 
+Verifications can only be managed by the admins. They have available a simple textarea form where to put a list of emails with no special format required. Emails (and names if possible) are detected automatically.
 
 With the detected list of emails admin have different options available:
 
