@@ -42,6 +42,7 @@ module Decidim
               flash[:info] = t(".info", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                         count: processor.emails.count,
                                         authorized: processor.total(:authorized),
+                                        unconfirmed: processor.total(:unconfirmed),
                                         registered: processor.total(:registered))
               render(action: :index) && return
             end

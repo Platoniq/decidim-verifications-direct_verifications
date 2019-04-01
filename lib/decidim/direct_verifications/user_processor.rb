@@ -75,11 +75,18 @@ module Decidim
       end
 
       def total(type)
-        return User.where(email: @emails.keys, decidim_organization_id: @organization.id).count if type == :registered
+        if type == :registered
+          return User.where(email: @emails.keys, decidim_organization_id: @organization.id)
+                     .where(confirmed_at: nil).count
+        end
+        if type == :unconfirmed
+          return User.where(email: @emails.keys, decidim_organization_id: @organization.id)
+                     .where.not(confirmed_at: nil).count
+        end
         if type == :authorized
           return Decidim::Authorization.joins(:user)
                                        .where(name: authorization_handler)
-                                       .where("decidim_users.email IN (:emails) AND decidim_users.decidim_organization_id=:org",
+                                       .where("decidim_users.email IN (:emails) AND decidim_users.decidim_organization_id=:org AND decidim_users.confirmed_at IS NOT NULL",
                                               emails: @emails.keys, org: @organization.id).count
         end
         0
