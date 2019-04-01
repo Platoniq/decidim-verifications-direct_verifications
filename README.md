@@ -33,7 +33,7 @@ With the detected list of emails admin have different options available:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-direct_verifications", github: "Platoniq/decidim-verifications-direct_verifications"
+gem "decidim-direct_verifications"
 ```
 
 And then execute:

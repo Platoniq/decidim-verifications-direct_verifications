@@ -8,7 +8,7 @@ module Decidim
     end
 
     def self.decidim_version
-      ">= 0.16.0"
+      "~> 0.16"
     end
   end
 end
