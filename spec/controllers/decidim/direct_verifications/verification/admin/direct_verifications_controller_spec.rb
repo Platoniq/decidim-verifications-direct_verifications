@@ -110,7 +110,9 @@ module Decidim::DirectVerifications::Verification::Admin
         it "have no registered or authorized users" do
           post :create, params: params
           expect(flash[:info]).to include("0 are registered")
-          expect(flash[:info]).to include("0 are authorized")
+          expect(flash[:info]).to include("0 authorized")
+          expect(flash[:info]).to include("unconfirmed")
+          expect(flash[:info]).to include("detected")
         end
       end
 
