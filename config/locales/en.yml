@@ -1,6 +1,12 @@
 ---
 en:
   decidim:
+    admin:
+      models:
+        user:
+          fields:
+            roles:
+              participant: Participant
     authorization_handlers:
       admin:
         direct_verifications:

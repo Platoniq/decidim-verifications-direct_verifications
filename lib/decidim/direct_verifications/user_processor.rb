@@ -27,6 +27,7 @@ module Decidim
             InviteUser.call(form) do
               on(:ok) do
                 add_processed :registered, email
+                log_action find_user(email)
               end
               on(:invalid) do
                 add_error :registered, email
@@ -124,6 +125,18 @@ module Decidim
 
       def add_error(type, email)
         @errors[type] << email unless @errors[type].include? email
+      end
+
+      def log_action(user)
+        Decidim.traceability.perform_action!(
+          "invite",
+          user,
+          current_user,
+          extra: {
+            invited_user_role: "participant",
+            invited_user_id: user.id
+          }
+        )
       end
     end
   end
