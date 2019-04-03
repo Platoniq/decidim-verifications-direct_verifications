@@ -7,12 +7,8 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
-          if confirmation_successful?
-            authorization.grant!
-            broadcast(:ok)
-          else
-            broadcast(:invalid)
-          end
+          authorization.grant!
+          broadcast(:ok)
         end
       end
     end

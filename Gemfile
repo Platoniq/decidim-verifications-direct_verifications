@@ -10,7 +10,7 @@ base_path = ""
 base_path = "../" if File.basename(__dir__) == "development_app"
 require_relative "#{base_path}lib/decidim/direct_verifications/version"
 
-gem "decidim", Decidim::DirectVerifications.decidim_version
+gem "decidim", Decidim::DirectVerifications::DECIDIM_VERSION
 gem "decidim-direct_verifications", path: "."
 
 gem "bootsnap", "~> 1.3"
@@ -20,7 +20,7 @@ gem "uglifier", "~> 4.1"
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri
 
-  gem "decidim-dev", Decidim::DirectVerifications.decidim_version
+  gem "decidim-dev", Decidim::DirectVerifications::DECIDIM_VERSION
 end
 
 group :development do

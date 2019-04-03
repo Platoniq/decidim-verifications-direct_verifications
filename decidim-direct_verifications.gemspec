@@ -5,7 +5,7 @@ $LOAD_PATH.push File.expand_path("lib", __dir__)
 require "decidim/direct_verifications/version"
 
 Gem::Specification.new do |s|
-  s.version = Decidim::DirectVerifications.version
+  s.version = Decidim::DirectVerifications::VERSION
   s.authors = ["Ivan Vergés"]
   s.email = ["ivan@platoniq.net"]
   s.license = "AGPL-3.0"
@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
   s.require_paths = ["lib"]
 
-  s.add_dependency "decidim-admin", Decidim::DirectVerifications.decidim_version
-  s.add_dependency "decidim-core", Decidim::DirectVerifications.decidim_version
+  s.add_dependency "decidim-admin", Decidim::DirectVerifications::DECIDIM_VERSION
+  s.add_dependency "decidim-core", Decidim::DirectVerifications::DECIDIM_VERSION
 end

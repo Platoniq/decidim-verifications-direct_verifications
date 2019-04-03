@@ -26,8 +26,7 @@ ca:
               authorized: S'han verificat correctament %{authorized} usuaris utilitzant
                 [%{handler}] (%{count} detectats, %{errors} errors)
               info: S'han detectat %{count} usuaris, dels quals %{registered} estan
-                registrats, %{unconfirmed} sense confirmar i %{authorized} autoritzats
-                utilitzant [%{handler}]
+                registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)
               registered: S'han registrat correctament %{registered} usuaris (%{count}
                 detectats, %{errors} errors)
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris

@@ -26,8 +26,7 @@ es:
               authorized: Se han verificado correctamente %{authorized} usuarios usando
                 [%{handler}] (%{count} detectados, %{errors} errores)
               info: Se han detectado %{count} usuarios, de los cuales %{registered}
-                están registrados, %{unconfirmed} sin confirmar y %{authorized} autorizados
-                usando [%{handler}]
+                están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed} sin confirmar)
               registered: Se han registrado correctamente %{registered} usuarios (%{count}
                 detectados, %{errors} errores)
               revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
