@@ -26,8 +26,8 @@ module Decidim
           end
 
           let(:user) { authorization.user }
-          let(:name) { 'Bob' }
-          let(:email) { 'm@rley.com' }
+          let(:name) { "Bob" }
+          let(:email) { "m@rley.com" }
 
           context "when form data is valid" do
             it "broadcasts ok" do
@@ -36,12 +36,12 @@ module Decidim
           end
 
           context "when form data is invalid" do
-            let(:email) { '' }
+            let(:email) { "" }
+
             it "broadcasts invalid" do
               expect { subject.call }.to broadcast(:invalid)
             end
           end
-
         end
       end
     end

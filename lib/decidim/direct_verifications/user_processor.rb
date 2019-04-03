@@ -33,7 +33,7 @@ module Decidim
                 add_error :registered, email
               end
             end
-          rescue
+          rescue StandardError
             add_error :registered, email
           end
         end

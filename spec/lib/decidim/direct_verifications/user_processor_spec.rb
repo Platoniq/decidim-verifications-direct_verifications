@@ -32,31 +32,32 @@ module Decidim
 
       context "when add processed" do
         it "has unique emails per type" do
-          subject.send(:add_processed, :registered, 'em@il.com')
-          subject.send(:add_processed, :registered, 'em@il.com')
+          subject.send(:add_processed, :registered, "em@il.com")
+          subject.send(:add_processed, :registered, "em@il.com")
           expect(subject.processed[:registered].count).to eq(1)
-          subject.send(:add_processed, :authorized, 'em@il.com')
-          subject.send(:add_processed, :authorized, 'em@il.com')
+          subject.send(:add_processed, :authorized, "em@il.com")
+          subject.send(:add_processed, :authorized, "em@il.com")
           expect(subject.processed[:authorized].count).to eq(1)
         end
       end
 
       context "when add errors" do
         it "has unique emails per type" do
-          subject.send(:add_error, :registered, 'em@il.com')
-          subject.send(:add_error, :registered, 'em@il.com')
+          subject.send(:add_error, :registered, "em@il.com")
+          subject.send(:add_error, :registered, "em@il.com")
           expect(subject.errors[:registered].count).to eq(1)
-          subject.send(:add_error, :authorized, 'em@il.com')
-          subject.send(:add_error, :authorized, 'em@il.com')
+          subject.send(:add_error, :authorized, "em@il.com")
+          subject.send(:add_error, :authorized, "em@il.com")
           expect(subject.errors[:authorized].count).to eq(1)
         end
       end
 
       context "when registers a valid users" do
         before do
-          subject.emails=['em@il.com', 'em@il.com', 'em@il.net']
+          subject.emails = ["em@il.com", "em@il.com", "em@il.net"]
           subject.register_users
         end
+
         it "has no errors" do
           expect(subject.processed[:registered].count).to eq(2)
           expect(subject.errors[:registered].count).to eq(0)
@@ -72,9 +73,10 @@ module Decidim
 
       context "when registers invalid users" do
         before do
-          subject.emails=['em@il.org', '']
+          subject.emails = ["em@il.org", ""]
           subject.register_users
         end
+
         it "has errors" do
           expect(subject.processed[:registered].count).to eq(1)
           expect(subject.errors[:registered].count).to eq(1)
@@ -86,10 +88,11 @@ module Decidim
 
       context "when authorize confirmed users" do
         before do
-          subject.emails={user.email => user.name}
+          subject.emails = { user.email => user.name }
           # subject.register_users
           subject.authorize_users
         end
+
         it "has no errors" do
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
@@ -101,10 +104,11 @@ module Decidim
 
       context "when authorize unconfirmed users" do
         before do
-          subject.emails=['em@mail.com']
+          subject.emails = ["em@mail.com"]
           subject.register_users
           subject.authorize_users
         end
+
         it "has no errors" do
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
@@ -117,9 +121,10 @@ module Decidim
 
       context "when authorize unregistered users" do
         before do
-          subject.emails=['em@mail.com']
+          subject.emails = ["em@mail.com"]
           subject.authorize_users
         end
+
         it "has errors" do
           expect(subject.processed[:authorized].count).to eq(0)
           expect(subject.errors[:authorized].count).to eq(1)
@@ -133,10 +138,11 @@ module Decidim
 
       context "when revoke existing users" do
         before do
-          subject.emails={user.email => user.name}
+          subject.emails = { user.email => user.name }
           subject.authorize_users
           subject.revoke_users
         end
+
         it "has no errors" do
           expect(subject.processed[:revoked].count).to eq(1)
           expect(subject.errors[:revoked].count).to eq(0)
@@ -148,10 +154,11 @@ module Decidim
 
       context "when revoke non-existing users" do
         before do
-          subject.emails=['em@il.com']
+          subject.emails = ["em@il.com"]
           subject.authorize_users
           subject.revoke_users
         end
+
         it "has no errors" do
           expect(subject.processed[:revoked].count).to eq(0)
           expect(subject.errors[:revoked].count).to eq(1)
@@ -160,8 +167,6 @@ module Decidim
           expect(subject.total(:authorized)).to eq(0)
         end
       end
-
-
     end
   end
 end
