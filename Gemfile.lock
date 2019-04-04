@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-direct_verifications (0.17.3)
+    decidim-direct_verifications (0.17.4)
       decidim-admin (>= 0.17.0)
       decidim-core (>= 0.17.0)
 

@@ -154,7 +154,7 @@ module Decidim::DirectVerifications::Verification::Admin
         expect(h).to eq({})
       end
       it "converts valid text to emails hash" do
-        txt = "test1@test.com\ntest2@test.com\nuse test3@t.com\nUser <a@b.co> another@email.com third@email.com@as.com\nTest 1 test1@test.com"
+        txt = "test1@test.com\ntest2@test.com\nuse test3@t.com\nUser <a@b.co> another@email.com third@email.com@as.com\nTest 1 test1@test.com\n\"Test\\| 4\" <test4@test.com"
         h = controller.send(:extract_emails_to_hash, txt)
         expect(h).to eq(
           "a@b.co" => "User",
@@ -162,6 +162,7 @@ module Decidim::DirectVerifications::Verification::Admin
           "test1@test.com" => "Test 1",
           "test2@test.com" => "",
           "test3@t.com" => "use",
+          "test4@test.com" => "Test 4",
           "third@email.com" => ""
         )
       end

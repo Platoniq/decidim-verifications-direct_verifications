@@ -65,7 +65,12 @@ module Decidim
 
           def extract_emails_to_hash(txt)
             reg = /([^@\r\n]*)\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/i
-            txt.scan(reg).map { |m| [m[1], m[0].delete("<>").strip] }.to_h
+            txt.scan(reg).map do |m|
+              [
+                m[1].delete("<>").strip,
+                m[0].gsub(/[^[:print:]]|[\"\$\<\>\|\\]/, "").strip
+              ]
+            end .to_h
           end
         end
       end
