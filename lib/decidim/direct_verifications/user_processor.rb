@@ -107,7 +107,7 @@ module Decidim
                        organization: organization,
                        admin: false,
                        invited_by: current_user,
-                       invitation_instructions: "invite_private_user")
+                       invitation_instructions: "direct_invite")
       end
 
       def authorization(user)
