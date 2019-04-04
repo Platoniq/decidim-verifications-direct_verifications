@@ -26,7 +26,8 @@ ca:
               authorized: S'han verificat correctament %{authorized} usuaris utilitzant
                 [%{handler}] (%{count} detectats, %{errors} errors)
               info: S'han detectat %{count} usuaris, dels quals %{registered} estan
-                registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)
+                registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed}
+                sense confirmar)
               registered: S'han registrat correctament %{registered} usuaris (%{count}
                 detectats, %{errors} errors)
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris
@@ -46,3 +47,7 @@ ca:
         authorizations:
           new:
             no_action: Aquest mètode requereix que un administrador us verifiqui
+  devise:
+    mailer:
+      direct_invite:
+        subject: Instruccions d'invitació

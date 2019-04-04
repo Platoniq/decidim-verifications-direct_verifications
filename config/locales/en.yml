@@ -26,7 +26,7 @@ en:
               authorized: "%{authorized} users have been successfully verified using
                 [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} users detected, of which %{registered} are registered,
-                 %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+                %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
               registered: "%{registered} users have been successfully registered (%{count}
                 detected, %{errors} errors) "
               revoked: Verification from %{revoked} users have been revoked using
@@ -46,3 +46,7 @@ en:
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you
+  devise:
+    mailer:
+      direct_invite:
+        subject: Invitation instructions
