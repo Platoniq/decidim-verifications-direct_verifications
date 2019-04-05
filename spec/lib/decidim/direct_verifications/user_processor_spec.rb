@@ -61,13 +61,6 @@ module Decidim
         it "has no errors" do
           expect(subject.processed[:registered].count).to eq(2)
           expect(subject.errors[:registered].count).to eq(0)
-          expect(subject.total(:unconfirmed)).to eq(2)
-        end
-        it "totals returns 0 if invalid type is given" do
-          expect(subject.total(:test)).to eq(0)
-        end
-        it "totals returns registered users" do
-          expect(subject.total(:registered)).to eq(2)
         end
       end
 
@@ -80,9 +73,6 @@ module Decidim
         it "has errors" do
           expect(subject.processed[:registered].count).to eq(1)
           expect(subject.errors[:registered].count).to eq(1)
-        end
-        it "totals returns registered users" do
-          expect(subject.total(:registered)).to eq(1)
         end
       end
 
@@ -97,9 +87,6 @@ module Decidim
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
         end
-        it "totals returns authorized users" do
-          expect(subject.total(:authorized)).to eq(1)
-        end
       end
 
       context "when authorize unconfirmed users" do
@@ -113,10 +100,6 @@ module Decidim
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
         end
-        it "totals returns authorized users" do
-          expect(subject.total(:authorized)).to eq(1)
-          expect(subject.total(:unconfirmed)).to eq(1)
-        end
       end
 
       context "when authorize unregistered users" do
@@ -128,11 +111,6 @@ module Decidim
         it "has errors" do
           expect(subject.processed[:authorized].count).to eq(0)
           expect(subject.errors[:authorized].count).to eq(1)
-        end
-        it "totals returns 0 users" do
-          expect(subject.total(:authorized)).to eq(0)
-          expect(subject.total(:unconfirmed)).to eq(0)
-          expect(subject.total(:registered)).to eq(0)
         end
       end
 
@@ -147,9 +125,6 @@ module Decidim
           expect(subject.processed[:revoked].count).to eq(1)
           expect(subject.errors[:revoked].count).to eq(0)
         end
-        it "totals returns 0 authorized users" do
-          expect(subject.total(:authorized)).to eq(0)
-        end
       end
 
       context "when revoke non-existing users" do
@@ -162,9 +137,6 @@ module Decidim
         it "has no errors" do
           expect(subject.processed[:revoked].count).to eq(0)
           expect(subject.errors[:revoked].count).to eq(1)
-        end
-        it "totals returns 0 authorized users" do
-          expect(subject.total(:authorized)).to eq(0)
         end
       end
     end

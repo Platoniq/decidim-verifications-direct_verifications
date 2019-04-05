@@ -8,7 +8,8 @@ module Decidim
         paths["db/migrate"] = nil
 
         routes do
-          resources :direct_verifications, only: [:index, :create]
+          resources :direct_verifications, only: [:index, :create, :stats]
+          resources :stats, only: [:index]
 
           root to: "direct_verifications#index"
         end

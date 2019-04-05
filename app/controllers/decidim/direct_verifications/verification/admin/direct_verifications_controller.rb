@@ -20,6 +20,8 @@ module Decidim
             processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash @userlist
             processor.authorization_handler = params[:authorization_handler] if params[:authorization_handler]
+            stats = UserStats.new(current_organization)
+            stats.authorization_handler = processor.authorization_handler
             if params[:register]
               processor.register_users
               flash[:warning] = t(".registered", count: processor.emails.count,
@@ -39,11 +41,12 @@ module Decidim
                                              revoked: processor.processed[:revoked].count,
                                              errors: processor.errors[:revoked].count)
             else
+              stats.emails = processor.emails.keys
               flash[:info] = t(".info", handler: t("#{processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                         count: processor.emails.count,
-                                        authorized: processor.total(:authorized),
-                                        unconfirmed: processor.total(:unconfirmed),
-                                        registered: processor.total(:registered))
+                                        authorized: stats.authorized,
+                                        unconfirmed: stats.unconfirmed,
+                                        registered: stats.registered)
               render(action: :index) && return
             end
             redirect_to direct_verifications_path

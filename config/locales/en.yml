@@ -33,8 +33,9 @@ en:
                 [%{handler}] (%{count} detected, %{errors} errors)
           index:
             title: Register and authorize users
+            stats: User stats
           new:
-            authorization_handler: 'Verification method:'
+            authorization_handler: Verification method
             authorize: Authorize users
             check: Check users status
             info: Enter the emails here, one per line. If the emails are preceded
@@ -42,7 +43,14 @@ en:
             register: Register users in the platform (if they exist they will be ignored)
             revoke: Revoke authorization from users
             submit: Send and process the list
-            textarea: 'Emails list:'
+            textarea: Emails list
+          stats:
+            index:
+              global: '- Any verification method -'
+              registered: Registered
+              authorized: Authorized
+              unconfirmed: Unconfirmed
+              authorized_unconfirmed: Authorized but unconfirmed
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you

@@ -34,8 +34,16 @@ es:
                 usando [%{handler}] (%{count} detectados, %{errors} errores)
           index:
             title: Inscribe y autoriza usuarios
+            stats: Estadísticas de usuarios
+          stats:
+            index:
+              global: '- Cualquier método de verificación -'
+              registered: 'Registrados'
+              authorized: 'Verificados'
+              unconfirmed: 'Sin confirmar'
+              authorized_unconfirmed: 'Verificados pero sin confirmar'
           new:
-            authorization_handler: 'Método de verificación:'
+            authorization_handler: Método de verificación
             authorize: Autoriza los usuarios
             check: Comprueba el estado de los usuarios
             info: Introduce aquí los emails, uno por linea. Si los emails están precedidos
@@ -43,7 +51,7 @@ es:
             register: Registra los usuarios a la plataforma (si existen se ignorarán)
             revoke: Revoca la autorización de los usuarios
             submit: Envía y procesa el listado
-            textarea: 'Lista de emails:'
+            textarea: Lista de emails
         authorizations:
           new:
             no_action: Este método requiere que un administrador os verifique

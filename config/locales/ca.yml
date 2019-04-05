@@ -34,8 +34,16 @@ ca:
                 utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
           index:
             title: Inscriu i autoritza usuaris
+            stats: Estadístiques d'usuaris
+          stats:
+            index:
+              global: '- Qualsevol mètode de verificació -'
+              registered: 'Registrats'
+              authorized: 'Verificats'
+              unconfirmed: 'No confirmats'
+              authorized_unconfirmed: 'Verificats però no confirmats'
           new:
-            authorization_handler: 'Mètode de verificació:'
+            authorization_handler: Mètode de verificació
             authorize: Autoritza els usuaris
             check: Comprova l'estat dels usuaris
             info: Introdueix aquí els emails, un per línia. Si els emails estan precedits
@@ -43,7 +51,7 @@ ca:
             register: Registra els usuaris a la plataforma (si existeixen s'ignoraran)
             revoke: Revoca l'autorització dels usuaris
             submit: Envia i processa el llistat
-            textarea: 'Llista d''emails:'
+            textarea: Llista d''emails
         authorizations:
           new:
             no_action: Aquest mètode requereix que un administrador us verifiqui
