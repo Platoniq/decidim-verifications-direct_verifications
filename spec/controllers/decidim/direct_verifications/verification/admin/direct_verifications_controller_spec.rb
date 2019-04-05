@@ -12,14 +12,6 @@ module Decidim::DirectVerifications::Verification::Admin
     end
     let(:verification_type) { "direct_verifications" }
     let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
-    # let(:authorization) do
-    #   create(
-    #     :authorization,
-    #     :granted,
-    #     name: verification_type,
-    #     user: authorized_user
-    #   )
-    # end
 
     before do
       request.env["decidim.current_organization"] = user.organization

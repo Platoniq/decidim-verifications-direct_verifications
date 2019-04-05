@@ -27,10 +27,10 @@
         <%= t('admin.new.check', scope: 'decidim.direct_verifications.verification') %>
       </label>
 
-      <%= label_tag :userlist, t('admin.new.authorization_handler', scope: 'decidim.direct_verifications.verification') %>
+      <%= label_tag :authorization_handler, t('admin.new.authorization_handler', scope: 'decidim.direct_verifications.verification') %>
       <%= select_tag :authorization_handler, options_for_select(current_organization.available_authorizations.map { |a|
         [t("#{a}.name", scope: "decidim.authorization_handlers"), a]
-        }, :direct_verifications) %>
+        }, @authorization_handler) %>
 
       <%= submit_tag t('admin.new.submit', scope: 'decidim.direct_verifications.verification'), class: 'button' %>
 

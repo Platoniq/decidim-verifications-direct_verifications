@@ -10,16 +10,18 @@ module Decidim
           layout "decidim/admin/users"
 
           def index
-            enforce_permission_to :index, UserProcessor
+            enforce_permission_to :index, :authorization
+            @authorization_handler = :direct_verifications
           end
 
           def create
-            enforce_permission_to :create, UserProcessor
+            enforce_permission_to :create, :authorization
 
             @userlist = params[:userlist]
+            @authorization_handler = params[:authorization_handler].presence || :direct_verifications
             processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash @userlist
-            processor.authorization_handler = params[:authorization_handler] if params[:authorization_handler]
+            processor.authorization_handler = @authorization_handler
             stats = UserStats.new(current_organization)
             stats.authorization_handler = processor.authorization_handler
             if params[:register]
@@ -50,18 +52,6 @@ module Decidim
               render(action: :index) && return
             end
             redirect_to direct_verifications_path
-          end
-
-          def permission_class_chain
-            [
-              Decidim::DirectVerifications::Verification::Admin::Permissions,
-              Decidim::Admin::Permissions,
-              Decidim::Permissions
-            ]
-          end
-
-          def permission_scope
-            :admin
           end
 
           private

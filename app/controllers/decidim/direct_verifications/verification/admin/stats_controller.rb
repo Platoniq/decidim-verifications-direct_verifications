@@ -10,7 +10,7 @@ module Decidim
           layout "decidim/admin/users"
 
           def index
-            enforce_permission_to :index, UserStats
+            enforce_permission_to :index, :authorization
             stats = UserStats.new(current_organization)
             @stats = {
               t(".global") => stats_hash(stats)
@@ -19,14 +19,6 @@ module Decidim
               stats.authorization_handler = a
               @stats[t("#{a}.name", scope: "decidim.authorization_handlers")] = stats_hash(stats)
             end
-          end
-
-          def permission_class_chain
-            [
-              Decidim::DirectVerifications::Verification::Admin::Permissions,
-              Decidim::Admin::Permissions,
-              Decidim::Permissions
-            ]
           end
 
           private

@@ -43,7 +43,7 @@ module Decidim
         @emails.each do |email, _name|
           if (u = find_user(email))
             auth = authorization(u)
-            next if auth.granted?
+            next unless !auth.granted? || auth.expired?
             Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
               on(:ok) do
                 add_processed :authorized, email
