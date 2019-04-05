@@ -33,15 +33,8 @@ ca:
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris
                 utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
           index:
-            title: Inscriu i autoritza usuaris
             stats: Estadístiques d'usuaris
-          stats:
-            index:
-              global: '- Qualsevol mètode de verificació -'
-              registered: 'Registrats'
-              authorized: 'Verificats'
-              unconfirmed: 'No confirmats'
-              authorized_unconfirmed: 'Verificats però no confirmats'
+            title: Inscriu i autoritza usuaris
           new:
             authorization_handler: Mètode de verificació
             authorize: Autoritza els usuaris
@@ -52,6 +45,13 @@ ca:
             revoke: Revoca l'autorització dels usuaris
             submit: Envia i processa el llistat
             textarea: Llista d''emails
+          stats:
+            index:
+              authorized: Verificats
+              authorized_unconfirmed: Verificats però no confirmats
+              global: "- Qualsevol mètode de verificació -"
+              registered: Registrats
+              unconfirmed: No confirmats
         authorizations:
           new:
             no_action: Aquest mètode requereix que un administrador us verifiqui

@@ -13,7 +13,7 @@ module Decidim
             enforce_permission_to :index, UserStats
             stats = UserStats.new(current_organization)
             @stats = {
-              t('.global') => stats_hash(stats)
+              t(".global") => stats_hash(stats)
             }
             current_organization.available_authorizations.map do |a|
               stats.authorization_handler = a
@@ -39,7 +39,6 @@ module Decidim
               authorized_unconfirmed: stats.authorized_unconfirmed
             }
           end
-
         end
       end
     end

@@ -5,7 +5,7 @@ module Decidim
     class UserStats
       def initialize(organization)
         @organization = organization
-        @authorization_handler = ''
+        @authorization_handler = ""
         @emails = []
       end
 
@@ -31,7 +31,7 @@ module Decidim
 
       def registered_users
         if authorization_handler.empty?
-          filter = {decidim_organization_id: organization.id}
+          filter = { decidim_organization_id: organization.id }
           filter[:email] = emails unless emails.empty?
           return User.where(filter)
         end
@@ -40,9 +40,7 @@ module Decidim
 
       def authorized_users
         q = Decidim::Authorization.joins(:user)
-        unless authorization_handler.empty?
-          q = q.where(name: authorization_handler)
-        end
+        q = q.where(name: authorization_handler) unless authorization_handler.empty?
         q = q.where("decidim_users.decidim_organization_id=:org", org: organization.id)
         return q if emails.empty?
         q.where("decidim_users.email IN (:emails)", emails: emails)

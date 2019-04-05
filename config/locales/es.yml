@@ -33,15 +33,8 @@ es:
               revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
                 usando [%{handler}] (%{count} detectados, %{errors} errores)
           index:
-            title: Inscribe y autoriza usuarios
             stats: Estadísticas de usuarios
-          stats:
-            index:
-              global: '- Cualquier método de verificación -'
-              registered: 'Registrados'
-              authorized: 'Verificados'
-              unconfirmed: 'Sin confirmar'
-              authorized_unconfirmed: 'Verificados pero sin confirmar'
+            title: Inscribe y autoriza usuarios
           new:
             authorization_handler: Método de verificación
             authorize: Autoriza los usuarios
@@ -52,6 +45,13 @@ es:
             revoke: Revoca la autorización de los usuarios
             submit: Envía y procesa el listado
             textarea: Lista de emails
+          stats:
+            index:
+              authorized: Verificados
+              authorized_unconfirmed: Verificados pero sin confirmar
+              global: "- Cualquier método de verificación -"
+              registered: Registrados
+              unconfirmed: Sin confirmar
         authorizations:
           new:
             no_action: Este método requiere que un administrador os verifique

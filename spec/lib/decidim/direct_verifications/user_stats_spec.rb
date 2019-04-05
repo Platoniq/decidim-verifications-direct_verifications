@@ -13,7 +13,7 @@ module Decidim
       let(:unconfirmed) { create(:user, organization: organization) }
       let(:unconfirmed2) { create(:user, organization: organization) }
       let(:organization) do
-        create(:organization, available_authorizations: ["direct_verifications", "other_verification"])
+        create(:organization, available_authorizations: %w(direct_verifications other_verification))
       end
       let(:direct_verification) do
         create(:authorization, :granted, user: confirmed, name: "direct_verifications", organization: organization)
@@ -45,6 +45,7 @@ module Decidim
           direct_verification2
           other_verification
         end
+
         it "has registered only " do
           expect(subject.registered).to eq(5)
           expect(subject.unconfirmed).to eq(2)
@@ -63,8 +64,9 @@ module Decidim
           direct_verification
           direct_verification2
           other_verification
-          subject.authorization_handler = 'direct_verifications'
+          subject.authorization_handler = "direct_verifications"
         end
+
         it "has registered only " do
           expect(subject.registered).to eq(2)
           expect(subject.unconfirmed).to eq(1)

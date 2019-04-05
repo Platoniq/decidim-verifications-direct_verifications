@@ -35,6 +35,5 @@ module Decidim::DirectVerifications::Verification::Admin
         end
       end
     end
-
   end
 end

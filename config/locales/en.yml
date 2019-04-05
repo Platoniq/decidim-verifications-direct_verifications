@@ -32,8 +32,8 @@ en:
               revoked: Verification from %{revoked} users have been revoked using
                 [%{handler}] (%{count} detected, %{errors} errors)
           index:
-            title: Register and authorize users
             stats: User stats
+            title: Register and authorize users
           new:
             authorization_handler: Verification method
             authorize: Authorize users
@@ -46,11 +46,11 @@ en:
             textarea: Emails list
           stats:
             index:
-              global: '- Any verification method -'
-              registered: Registered
               authorized: Authorized
-              unconfirmed: Unconfirmed
               authorized_unconfirmed: Authorized but unconfirmed
+              global: "- Any verification method -"
+              registered: Registered
+              unconfirmed: Unconfirmed
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you
