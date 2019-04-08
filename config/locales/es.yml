@@ -32,6 +32,10 @@ es:
                 detectados, %{errors} errores)
               revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
                 usando [%{handler}] (%{count} detectados, %{errors} errores)
+            gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe
+              contar con el consentimiento explícito de sus usuarios para poder registrarlos.
+              De lo contrario, estará infringiendo la regulación GDPR en los países
+              de la UE.
           index:
             stats: Estadísticas de usuarios
             title: Inscribe y autoriza usuarios

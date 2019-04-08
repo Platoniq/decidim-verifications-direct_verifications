@@ -32,6 +32,10 @@ ca:
                 detectats, %{errors} errors)
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris
                 utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
+            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu
+              de tenir el consentiment explícit dels vostres usuaris per registrar-los.
+              En cas contrari, estareu infringint la regulació GDPR als països de
+              la UE.
           index:
             stats: Estadístiques d'usuaris
             title: Inscriu i autoritza usuaris

@@ -31,6 +31,9 @@ en:
                 detected, %{errors} errors) "
               revoked: Verification from %{revoked} users have been revoked using
                 [%{handler}] (%{count} detected, %{errors} errors)
+            gdpr_disclaimer: Do this under your responsibility. Remember that you
+              need to have explicit consent from your users in order to register them.
+              Otherwise you will be infringing the GDPR regulation in EU countries.
           index:
             stats: User stats
             title: Register and authorize users

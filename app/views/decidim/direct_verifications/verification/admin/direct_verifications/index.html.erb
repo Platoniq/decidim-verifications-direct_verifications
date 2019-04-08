@@ -13,6 +13,9 @@
       <label>
         <%= check_box_tag :register %>
         <%= t('admin.new.register', scope: 'decidim.direct_verifications.verification') %>
+        <div data-alert class="callout alert hide">
+          <%= t('admin.direct_verifications.gdpr_disclaimer', scope: 'decidim.direct_verifications.verification') %>
+        </div>
       </label>
       <label>
         <%= radio_button_tag :authorize, 'in' %>
@@ -37,3 +40,5 @@
 
   </div>
 </div>
+
+<%= javascript_include_tag "decidim/direct_verifications/verification/admin/direct_verifications_admin" %>

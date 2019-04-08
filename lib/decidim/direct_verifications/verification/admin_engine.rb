@@ -13,6 +13,10 @@ module Decidim
 
           root to: "direct_verifications#index"
         end
+
+        initializer "decidim_direct_verifications.admin_assets" do |app|
+          app.config.assets.precompile += %w(direct_verifications_admin_manifest.js)
+        end
       end
     end
   end
