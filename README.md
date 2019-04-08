@@ -6,14 +6,14 @@ A [Decidim](https://github.com/decidim/decidim) that provides a verification met
 
 This plugin allows to verify users against the `Direct verification` method by default, but it is not limited to it, it can be used to directly verify users against any other method registered for the organization.
 
-You can use this plugin in combination with the great [AccessRequests](https://github.com/mainio/decidim-module-access_requests) plugin from Maino Tech to provide and manage several levels of permissions to users in the platform Decidim.
-
-**Other features include:**
+**Features:**
 
 1. Allows to massively register users directly in the platform prior (or independently) to verify them by sending them invite emails.
 > **IMPORTANT:**<br>
 > You must only use this feature if you have explicit consent from your users, otherwise you might be violating the [GDPR](https://eugdpr.org/) regulation in EU.
-2. Can massively revoke authorizations given to any user with any verification method available.
+2. Massive authroizations of users using any verification method registered for the organization **if configured**.
+3. It can massively revoke authorizations given to any user with any verification method available.
+4. Shows user's statuses per verification method in a simple stats table.
 
 ## Screenshot
 
@@ -47,6 +47,56 @@ And then execute:
 ```bash
 bundle
 ```
+
+## Using additional verification methods
+
+You can manage other verification methods (or workflow) a part from `Direct verification`. You need to configure it in a new file in the `config/initializers` folder.
+For instance, you can use this same engine to have 2 levels of permissions in the platform. 
+
+Create a file like `config/initializers/decidim_verifications.rb` with content as:
+
+**`config/initializers/decidim_verifications.rb`:**
+
+```ruby
+# frozen_string_literal: true
+
+# We are using the same DirectVerifications engine without the admin part to 
+# create a custom verification method called "direct_verifications_managers"
+Decidim::Verifications.register_workflow(:direct_verifications_managers) do |workflow|
+  workflow.engine = Decidim::DirectVerifications::Verification::Engine
+end
+
+# We need to tell the plugin to handle this method in addition to the default "Direct verification". Any registered workflow is valid.
+Decidim::DirectVerifications.configure do |config|
+  config.manage_workflows = %w(direct_verifications_managers)
+end
+
+```
+
+You will need the locales entries corresponding to your custom workflow, create as many files as languages you have in your application in `config/locales`:
+
+**`config/locales/en.yml`:**
+
+```yaml
+en:
+  decidim:
+    authorization_handlers:
+      direct_verifications_managers:
+        name: Organization managers
+        explanation: Direct Verifications Subgroup explanation
+```
+
+Similarly, you can also overwrite the default title "Direct verification" by creating the key again in your locales:
+
+```yaml
+en:
+  decidim:
+    authorization_handlers:
+      direct_verifications:
+        name: Generic organization members
+        explanation: Direct Verifications Subgroup explanation
+```
+
 
 ## Contributing
 

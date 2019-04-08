@@ -12,16 +12,17 @@ module Decidim
           def index
             enforce_permission_to :index, :authorization
             @authorization_handler = :direct_verifications
+            @workflows = workflows
           end
 
           def create
             enforce_permission_to :create, :authorization
 
             @userlist = params[:userlist]
-            @authorization_handler = params[:authorization_handler].presence || :direct_verifications
+            @workflows = workflows
             processor = UserProcessor.new(current_organization, current_user)
             processor.emails = extract_emails_to_hash @userlist
-            processor.authorization_handler = @authorization_handler
+            processor.authorization_handler = authorization_handler(params[:authorization_handler])
             stats = UserStats.new(current_organization)
             stats.authorization_handler = processor.authorization_handler
             if params[:register]
@@ -64,6 +65,22 @@ module Decidim
                 m[0].gsub(/[^[:print:]]|[\"\$\<\>\|\\]/, "").strip
               ]
             end .to_h
+          end
+
+          def authorization_handler(authorization_handler)
+            @authorization_handler = authorization_handler.presence || :direct_verifications
+          end
+
+          def configured_workflows
+            return Decidim::DirectVerifications.config.manage_workflows if Decidim::DirectVerifications.config
+            ["direct_verifications"]
+          end
+
+          def workflows
+            workflows = configured_workflows & current_organization.available_authorizations.map.to_a
+            workflows.map do |a|
+              [t("#{a}.name", scope: "decidim.authorization_handlers"), a]
+            end
           end
         end
       end
