@@ -58,13 +58,15 @@ module Decidim
           private
 
           def extract_emails_to_hash(txt)
-            reg = /([^@\r\n]*)\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/i
-            txt.scan(reg).map do |m|
-              [
-                m[1].delete("<>").strip,
-                m[0].gsub(/[^[:print:]]|[\"\$\<\>\|\\]/, "").strip
-              ]
-            end .to_h
+            reg = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i
+            emails = {}
+            txt.split(/[\r\n;,]/).each do |line|
+              reg.match line do |m|
+                n = line.split(m[0]).first
+                emails[m[0]] = (n.presence || "").gsub(/[^[:print:]]|[\"\$\<\>\|\\]/, "").strip
+              end
+            end
+            emails
           end
 
           def authorization_handler(authorization_handler)
