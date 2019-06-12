@@ -39,7 +39,7 @@ module Decidim
         if authorization_handler.empty?
           filter = { decidim_organization_id: organization.id }
           filter[:email] = emails unless emails.empty?
-          return User.where(filter)
+          return User.where(filter).where.not(email: '')
         end
         authorized_users(false)
       end
