@@ -53,7 +53,7 @@ module Decidim
             q = q.where("decidim_authorizations.granted_at >= :date", date: Time.current - expires_in) if expires_in
           end
         end
-        q = q.where("decidim_users.decidim_organization_id=:org", org: organization.id)
+        q = q.where("decidim_users.decidim_organization_id=:org and decidim_users.email!=''", org: organization.id)
         return q if emails.empty?
         q.where("decidim_users.email IN (:emails)", emails: emails)
       end
