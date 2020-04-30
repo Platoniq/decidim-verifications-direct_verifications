@@ -84,6 +84,11 @@ en:
       direct_verifications_managers:
         name: Organization managers
         explanation: Direct Verifications Subgroup explanation
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            direct_verifications_managers: Organization managers
 ```
 
 Similarly, you can also overwrite the default title "Direct verification" by creating the key again in your locales:
@@ -95,6 +100,11 @@ en:
       direct_verifications:
         name: Generic organization members
         explanation: Direct Verifications Subgroup explanation
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            direct_verifications: Generic organization members
 ```
 
 

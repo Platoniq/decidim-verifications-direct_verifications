@@ -57,6 +57,11 @@ en:
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            direct_verifications: Direct verification
   devise:
     mailer:
       direct_invite:

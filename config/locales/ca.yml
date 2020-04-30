@@ -59,6 +59,11 @@ ca:
         authorizations:
           new:
             no_action: Aquest mètode requereix que un administrador us verifiqui
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            direct_verifications: Verificació directa
   devise:
     mailer:
       direct_invite:

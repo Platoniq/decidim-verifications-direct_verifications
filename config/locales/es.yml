@@ -59,6 +59,11 @@ es:
         authorizations:
           new:
             no_action: Este método requiere que un administrador os verifique
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            direct_verifications: Verificación directa
   devise:
     mailer:
       direct_invite:
