@@ -39,7 +39,7 @@ module Decidim
         if authorization_handler.empty?
           filter = { decidim_organization_id: organization.id }
           filter[:email] = emails unless emails.empty?
-          return User.where(filter)
+          return User.where(filter).where.not(email: '')
         end
         authorized_users(false)
       end
@@ -53,7 +53,7 @@ module Decidim
             q = q.where("decidim_authorizations.granted_at >= :date", date: Time.current - expires_in) if expires_in
           end
         end
-        q = q.where("decidim_users.decidim_organization_id=:org", org: organization.id)
+        q = q.where("decidim_users.decidim_organization_id=:org and decidim_users.email!=''", org: organization.id)
         return q if emails.empty?
         q.where("decidim_users.email IN (:emails)", emails: emails)
       end
