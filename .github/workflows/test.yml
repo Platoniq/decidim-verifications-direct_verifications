@@ -49,7 +49,11 @@ jobs:
       - name: Install Ruby deps
         run: |
           gem install bundler:2.1.4
-          bundle install --path vendor/bundle --jobs 4 --retry 3
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: bundle install --path vendor/bundle --jobs 4 --retry 3
 
       - name: Lint and Rubocop
         run: |
@@ -66,7 +70,11 @@ jobs:
           ./cc-test-reporter before-build
 
       - name: Run RSpec
-        run: SIMPLECOV=1 CODECOV=1 bundle exec rake
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: SIMPLECOV=1 CODECOV=1 bundle exec rake
 
       - name: Publish code coverage
         run: |
