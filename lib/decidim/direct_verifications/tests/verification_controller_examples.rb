@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 shared_examples_for "checking users" do |params|
   context "when check without mails" do
