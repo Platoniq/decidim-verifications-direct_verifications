@@ -22,6 +22,7 @@ module Decidim
       def register_users
         @emails.each do |email, name|
           next if find_user(email)
+
           form = register_form(email, name)
           begin
             InviteUser.call(form) do
@@ -44,6 +45,7 @@ module Decidim
           if (u = find_user(email))
             auth = authorization(u)
             next unless !auth.granted? || auth.expired?
+
             Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
               on(:ok) do
                 add_processed :authorized, email
@@ -63,6 +65,7 @@ module Decidim
           if (u = find_user(email))
             auth = authorization(u)
             next unless auth.granted?
+
             Verification::DestroyUserAuthorization.call(auth) do
               on(:ok) do
                 add_processed :revoked, email

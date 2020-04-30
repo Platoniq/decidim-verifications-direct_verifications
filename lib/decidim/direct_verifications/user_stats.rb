@@ -39,7 +39,7 @@ module Decidim
         if authorization_handler.empty?
           filter = { decidim_organization_id: organization.id }
           filter[:email] = emails unless emails.empty?
-          return User.where(filter).where.not(email: '')
+          return User.where(filter).where.not(email: "")
         end
         authorized_users(false)
       end
@@ -55,17 +55,20 @@ module Decidim
         end
         q = q.where("decidim_users.decidim_organization_id=:org and decidim_users.email!=''", org: organization.id)
         return q if emails.empty?
+
         q.where("decidim_users.email IN (:emails)", emails: emails)
       end
 
       def expires_in
         return unless workflow_manifest
         return if workflow_manifest.expires_in.zero?
+
         workflow_manifest.expires_in
       end
 
       def workflow_manifest
         return if authorization_handler.empty?
+
         @workflow_manifest ||= Decidim::Verifications.find_workflow_manifest(authorization_handler)
       end
     end

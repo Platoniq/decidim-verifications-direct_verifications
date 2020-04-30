@@ -75,6 +75,7 @@ module Decidim
 
           def configured_workflows
             return Decidim::DirectVerifications.config.manage_workflows if Decidim::DirectVerifications.config
+
             ["direct_verifications"]
           end
 

@@ -140,11 +140,13 @@ module Decidim::DirectVerifications::Verification::Admin
         h = controller.send(:extract_emails_to_hash, txt)
         expect(h).to eq({})
       end
+
       it "converts invalid text to empty hash" do
         txt = "nonsense emails...\nnot_an@email\nno em@il"
         h = controller.send(:extract_emails_to_hash, txt)
         expect(h).to eq({})
       end
+
       it "converts valid text to emails hash" do
         txt = "test1@test.com\ntest2@test.com\nuse test3@t.com\nUser <a@b.co>\ranother@email.com,third@email.com@as.com\nTest 1 test1@test.com\n\"Test\\| 4\" <test4@test.com\ndot.email@test.com\rMy.Dot:Name with.dot@email.dot.com;\"My name\" <my@email.net>, My other name <my-other@email.org>"
         h = controller.send(:extract_emails_to_hash, txt)

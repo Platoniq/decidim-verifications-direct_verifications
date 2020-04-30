@@ -1,0 +1,79 @@
+name: "[CI] Test"
+
+on:
+  push:
+  pull_request:
+
+env:
+  RUBY_VERSION: 2.6.5
+
+jobs:
+  test-report:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_PASSWORD: postgres
+    env:
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: localhost
+
+jobs:
+  lint-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+        with:
+          fetch-depth: 1
+
+      - uses: ruby/setup-ruby@master
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: Recover Ruby dependency cache
+        uses: actions/cache@v1
+        with:
+          path: ./vendor/bundle
+          key: ${{ runner.OS }}-rubydeps-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-rubydeps-${{ env.cache-name }}-
+            ${{ runner.OS }}-rubydeps-
+            ${{ runner.OS }}-
+
+      - name: Install Ruby deps
+        run: |
+          gem install bundler:2.1.4
+          bundle install --path vendor/bundle --jobs 4 --retry 3
+
+      - name: Lint and Rubocop
+        run: |
+          bundle exec rubocop
+          bundle exec erblint app/views/**/*.erb
+
+      - name: Setup Database
+        run: bundle exec rake test_app
+
+      - name: Setup Code Climate test-reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+
+      - name: Run RSpec
+        run: SIMPLECOV=1 CODECOV=1 bundle exec rake
+
+      - name: Publish code coverage
+        run: |
+          export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+          ./cc-test-reporter after-build -r "$CC_TEST_REPORTER_ID"
+        env:
+          CC_TEST_REPORTER_ID: 91564b5d6fef4bea80bbc8e50bf97bfadd95bf460fd7d3f563d0f39a57c16cdc

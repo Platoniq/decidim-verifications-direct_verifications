@@ -17,6 +17,7 @@ module Decidim
           subject.send(:emails=, "em@il.com" => "")
           expect(subject.emails).to eq("em@il.com" => "em")
         end
+
         it "has hash with passed names" do
           subject.send(:emails=, "em@il.com" => "", "em@il.net" => "A name")
           expect(subject.emails).to eq("em@il.com" => "em", "em@il.net" => "A name")
