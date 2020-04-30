@@ -47,8 +47,6 @@ jobs:
             ${{ runner.OS }}-
 
       - name: Install Ruby deps
-        run: |
-          gem install bundler:2.1.4
         uses: nick-invision/retry@v1
         with:
           timeout_minutes: 10
