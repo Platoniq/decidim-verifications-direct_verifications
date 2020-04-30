@@ -1,6 +1,9 @@
 # Decidim::DirectVerifications
 
-[![Build Status](https://travis-ci.org/Platoniq/decidim-verifications-direct_verifications.svg?branch=master)](https://travis-ci.org/Platoniq/decidim-verifications-direct_verifications)
+![[CI] Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/workflows/%5BCI%5D%20Test/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2195deb4de6c6354a6bc/maintainability)](https://codeclimate.com/github/Platoniq/decidim-verifications-direct_verifications/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2195deb4de6c6354a6bc/test_coverage)](https://codeclimate.com/github/Platoniq/decidim-verifications-direct_verifications/test_coverage)
+
 
 A [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
 
