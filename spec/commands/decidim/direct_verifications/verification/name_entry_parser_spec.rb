@@ -58,24 +58,6 @@ module Decidim::DirectVerifications::Verification
           )
         end
       end
-
-      context "when in metadata mode" do
-        subject { described_class.new(txt, mode: :metadata) }
-
-        let(:txt) do
-          <<-EMAILS.strip_heredoc
-            username test1@test.com consumer
-            test2@test.com producer
-          EMAILS
-        end
-
-        it "returns extra columns as nested hash" do
-          expect(subject.to_h).to eq(
-            "test1@test.com" => { name: "username", type: "consumer" },
-            "test2@test.com" => { name: "", type: "producer" }
-          )
-        end
-      end
     end
   end
 end

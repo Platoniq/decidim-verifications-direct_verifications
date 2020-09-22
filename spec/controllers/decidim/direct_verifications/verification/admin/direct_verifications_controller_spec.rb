@@ -73,7 +73,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
           it "stores any extra columns as authorization metadata" do
             post :create, params: {
-              userlist: "username mail@example.com consumer",
+              userlist: "username,mail@example.com,consumer",
               register: true,
               authorize: "in"
             }

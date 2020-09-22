@@ -4,9 +4,24 @@ module Decidim
   module DirectVerifications
     module Verification
       class MetadataEntryParser
-        def parse_data(email, name, line)
-          remainder = line.split(email).last
-          { name: name.strip, type: remainder.split(/\s/).last }
+        def lines(txt)
+          StringIO.new(txt).readlines
+        end
+
+        def parse_data(email, line)
+          tokens = tokenize(line)
+
+          if tokens[0].chomp == email
+            { name: "", type: tokens[1].chomp }
+          else
+            { name: tokens[0].strip, type: tokens[2].chomp }
+          end
+        end
+
+        private
+
+        def tokenize(line)
+          line.split(",")
         end
       end
     end
