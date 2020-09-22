@@ -20,11 +20,14 @@ module Decidim
 
             @userlist = params[:userlist]
             @workflows = workflows
+
             processor = UserProcessor.new(current_organization, current_user)
             processor.emails = Parser.new(@userlist).to_h
             processor.authorization_handler = authorization_handler(params[:authorization_handler])
+
             stats = UserStats.new(current_organization)
             stats.authorization_handler = processor.authorization_handler
+
             if params[:register]
               processor.register_users
               flash[:warning] = t(".registered", count: processor.emails.count,

@@ -54,11 +54,34 @@ module Decidim::DirectVerifications::Verification::Admin
 
       context "when register users with authorize" do
         params = { userlist: "mail@example.com", register: true, authorize: "in" }
+
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
+
         it "redirects with notice and warning messages" do
           post :create, params: params
           expect(subject).to redirect_to(action: :index)
+        end
+
+        context "when in metadata mode" do
+          around do |example|
+            original_processor = Rails.configuration.direct_verifications_processor
+            Rails.configuration.direct_verifications_processor = :metadata
+            example.run
+            Rails.configuration.direct_verifications_processor = original_processor
+          end
+
+          it "stores any extra columns as authorization metadata" do
+            post :create, params: {
+              userlist: "username mail@example.com consumer",
+              register: true,
+              authorize: "in"
+            }
+
+            user = Decidim::User.find_by(email: "mail@example.com")
+            authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+            expect(authorization.metadata).to eq("name" => "username", "type" => "consumer")
+          end
         end
       end
 

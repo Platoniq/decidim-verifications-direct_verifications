@@ -6,20 +6,20 @@ module Decidim
       class Parser
         LINE_DELIMITER = /[\r\n;,]/.freeze
         EMAIL_REGEXP = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i.freeze
-        NON_ALPHA_CHARS = /[^[:print:]]|[\"\$\<\>\|\\]/.freeze
 
-        def initialize(txt)
+        def initialize(txt, mode: Rails.configuration.direct_verifications_processor)
           @txt = txt
           @emails = {}
+          @entry_parser = (mode == :metadata ? MetadataEntryParser.new : NameEntryParser.new)
         end
 
         def to_h
           reading_lines do |line|
             EMAIL_REGEXP.match(line) do |match|
               email = match[0]
-              name = name_from(line, email)
+              name = parse_name(line, email)
 
-              emails[email] = strip_non_alpha_chars(name)
+              emails[email] = entry_parser.parse_data(email, name, line)
             end
           end
 
@@ -28,7 +28,7 @@ module Decidim
 
         private
 
-        attr_reader :txt, :emails
+        attr_reader :txt, :emails, :entry_parser
 
         def reading_lines
           txt.split(LINE_DELIMITER).each do |line|
@@ -36,12 +36,8 @@ module Decidim
           end
         end
 
-        def name_from(line, email)
+        def parse_name(line, email)
           line.split(email).first
-        end
-
-        def strip_non_alpha_chars(str)
-          (str.presence || "").gsub(NON_ALPHA_CHARS, "").strip
         end
       end
     end
