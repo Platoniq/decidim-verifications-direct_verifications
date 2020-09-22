@@ -13,19 +13,19 @@ module Decidim
       end
 
       context "when emails are passed" do
-        it "has hash with automatic names" do
+        it "infers the name from the email when it is not specified" do
           subject.emails = { "em@il.com" => "" }
           expect(subject.emails).to eq("em@il.com" => "em")
         end
 
-        it "has hash with passed names" do
+        it "uses the specified name when specified" do
           subject.emails = { "em@il.com" => "", "em@il.net" => "A name" }
           expect(subject.emails).to eq("em@il.com" => "em", "em@il.net" => "A name")
         end
       end
 
       context "when emails are not passed" do
-        it "has empty hash" do
+        it "uses an empty hash" do
           subject.emails = {}
           expect(subject.emails).to eq({})
         end
