@@ -20,8 +20,14 @@ module Decidim
       end
 
       def register_users
-        @emails.each do |email, name|
+        @emails.each do |email, data|
           next if find_user(email)
+
+          name = if data.is_a?(Hash)
+                   data[:name]
+                 else
+                   data
+                 end
 
           form = register_form(email, name)
           begin
@@ -41,9 +47,11 @@ module Decidim
       end
 
       def authorize_users
-        @emails.each do |email, _name|
+        @emails.each do |email, data|
           if (u = find_user(email))
             auth = authorization(u)
+            auth.metadata = data
+
             next unless !auth.granted? || auth.expired?
 
             Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
