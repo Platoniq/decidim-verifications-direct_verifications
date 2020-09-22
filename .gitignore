@@ -18,3 +18,7 @@ spec/decidim_dummy_app
 
 # default development application
 development_app
+
+.byebug_history
+.ruby-version
+tags
