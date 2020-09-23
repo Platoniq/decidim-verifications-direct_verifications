@@ -3,15 +3,19 @@
 module Decidim
   module DirectVerifications
     module Verification
-      class NameEntryParser
+      class NameEntryParser < Parser
         LINE_DELIMITER = /[\r\n;,]/.freeze
         NON_ALPHA_CHARS = /[^[:print:]]|[\"\$\<\>\|\\]/.freeze
 
-        def lines(txt)
+        def header
+          nil
+        end
+
+        def lines
           txt.split(LINE_DELIMITER)
         end
 
-        def parse_data(email, line)
+        def parse_data(email, line, _header)
           name = parse_name(email, line)
           strip_non_alpha_chars(name)
         end

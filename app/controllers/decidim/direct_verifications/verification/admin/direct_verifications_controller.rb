@@ -22,7 +22,7 @@ module Decidim
             @workflows = workflows
 
             processor = UserProcessor.new(current_organization, current_user)
-            processor.emails = Parser.new(@userlist).to_h
+            processor.emails = parser_class.new(@userlist).to_h
             processor.authorization_handler = authorization_handler(params[:authorization_handler])
 
             stats = UserStats.new(current_organization)
@@ -60,6 +60,14 @@ module Decidim
           end
 
           private
+
+          def parser_class
+            if Rails.configuration.direct_verifications_processor == :metadata
+              MetadataEntryParser
+            else
+              NameEntryParser
+            end
+          end
 
           def authorization_handler(authorization_handler)
             @authorization_handler = authorization_handler.presence || :direct_verifications

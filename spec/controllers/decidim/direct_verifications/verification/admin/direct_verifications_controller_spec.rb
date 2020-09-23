@@ -73,14 +73,14 @@ module Decidim::DirectVerifications::Verification::Admin
 
           it "stores any extra columns as authorization metadata" do
             post :create, params: {
-              userlist: "username,mail@example.com,consumer",
+              userlist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
               register: true,
               authorize: "in"
             }
 
-            user = Decidim::User.find_by(email: "mail@example.com")
+            user = Decidim::User.find_by(email: "brandy@example.com")
             authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
-            expect(authorization.metadata).to eq("name" => "username", "type" => "consumer")
+            expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
           end
         end
       end

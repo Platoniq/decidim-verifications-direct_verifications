@@ -3,25 +3,37 @@
 module Decidim
   module DirectVerifications
     module Verification
-      class MetadataEntryParser
-        def lines(txt)
-          StringIO.new(txt).readlines
+      class MetadataEntryParser < Parser
+        def header
+          header_row = lines[0].chomp
+          column_names = tokenize(header_row)
+          column_names.map(&:to_sym).map(&:downcase)
         end
 
-        def parse_data(email, line)
+        def lines
+          @lines ||= StringIO.new(txt).readlines
+        end
+
+        def parse_data(_email, line, header)
           tokens = tokenize(line)
 
-          if tokens[0].chomp == email
-            { name: "", type: tokens[1].chomp }
-          else
-            { name: tokens[0].strip, type: tokens[2].chomp }
+          hash = {}
+          header.each_with_index do |column, index|
+            next if email_column?(index)
+
+            hash[column] = tokens[index].strip.chomp
           end
+          hash
         end
 
         private
 
         def tokenize(line)
           line.split(",")
+        end
+
+        def email_column?(index)
+          index == 1
         end
       end
     end

@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim::DirectVerifications::Verification
-  describe Parser do
+  describe NameEntryParser do
     subject { described_class.new(txt) }
 
     describe "#to_h" do

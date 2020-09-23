@@ -6,17 +6,16 @@ module Decidim
       class Parser
         EMAIL_REGEXP = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i.freeze
 
-        def initialize(txt, mode: Rails.configuration.direct_verifications_processor)
+        def initialize(txt)
           @txt = txt
           @emails = {}
-          @entry_parser = (mode == :metadata ? MetadataEntryParser.new : NameEntryParser.new)
         end
 
         def to_h
           lines.each do |line|
             EMAIL_REGEXP.match(line) do |match|
               email = match[0]
-              emails[email] = entry_parser.parse_data(email, line)
+              emails[email] = parse_data(email, line, header)
             end
           end
 
@@ -25,11 +24,7 @@ module Decidim
 
         private
 
-        attr_reader :txt, :emails, :entry_parser
-
-        def lines
-          entry_parser.lines(txt)
-        end
+        attr_reader :txt, :emails
       end
     end
   end
