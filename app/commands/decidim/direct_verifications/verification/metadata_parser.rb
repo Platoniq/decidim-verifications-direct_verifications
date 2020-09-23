@@ -3,7 +3,7 @@
 module Decidim
   module DirectVerifications
     module Verification
-      class MetadataEntryParser < Parser
+      class MetadataParser < BaseParser
         def header
           header_row = lines[0].chomp
           column_names = tokenize(header_row)

@@ -63,9 +63,9 @@ module Decidim
 
           def parser_class
             if Rails.configuration.direct_verifications_processor == :metadata
-              MetadataEntryParser
+              MetadataParser
             else
-              NameEntryParser
+              NameParser
             end
           end
 
