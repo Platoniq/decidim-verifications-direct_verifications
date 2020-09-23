@@ -17,7 +17,8 @@ module Decidim
 
         def parse_data(email, line, _header)
           name = parse_name(email, line)
-          strip_non_alpha_chars(name)
+          name = strip_non_alpha_chars(name)
+          name.presence || fallback_name(email)
         end
 
         private
@@ -28,6 +29,10 @@ module Decidim
 
         def parse_name(email, line)
           line.split(email).first
+        end
+
+        def fallback_name(email)
+          email.split("@").first
         end
       end
     end

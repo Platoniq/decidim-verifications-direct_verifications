@@ -67,6 +67,33 @@ module Decidim::DirectVerifications::Verification
             )
           end
         end
+
+        context "when the name is not specified" do
+          let(:txt) do
+            <<-EMAILS.strip_heredoc
+              email
+              em@il.com
+            EMAILS
+          end
+
+          it "infers the name from the email" do
+            expect(subject.to_h).to eq("em@il.com" => {})
+          end
+        end
+
+        context "when entries are duplicate" do
+          let(:txt) do
+            <<-EMAILS.strip_heredoc
+              name,email
+              brandy,brandy@example.com
+              brandy,brandy@example.com
+            EMAILS
+          end
+
+          it "keeps only one" do
+            expect(subject.to_h).to eq("brandy@example.com" => { name: "brandy" })
+          end
+        end
       end
     end
   end

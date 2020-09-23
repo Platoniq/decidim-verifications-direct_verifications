@@ -13,13 +13,8 @@ module Decidim
       end
 
       context "when emails are passed" do
-        it "infers the name from the email when it is not specified" do
-          subject.emails = { "em@il.com" => "" }
-          expect(subject.emails).to eq("em@il.com" => "em")
-        end
-
-        it "uses the specified name when specified" do
-          subject.emails = { "em@il.com" => "", "em@il.net" => "A name" }
+        it "uses the specified name" do
+          subject.emails = { "em@il.com" => "em", "em@il.net" => "A name" }
           expect(subject.emails).to eq("em@il.com" => "em", "em@il.net" => "A name")
         end
 

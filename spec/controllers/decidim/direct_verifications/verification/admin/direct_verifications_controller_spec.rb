@@ -63,6 +63,19 @@ module Decidim::DirectVerifications::Verification::Admin
           expect(subject).to redirect_to(action: :index)
         end
 
+        context "when the name is not specified" do
+          it "infers the name from the email" do
+            post :create, params: {
+              userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+              register: true,
+              authorize: "in"
+            }
+
+            user = Decidim::User.find_by(email: "brandy@example.com")
+            expect(user.name).to eq("brandy")
+          end
+        end
+
         context "when in metadata mode" do
           around do |example|
             original_processor = Rails.configuration.direct_verifications_parser
@@ -81,6 +94,19 @@ module Decidim::DirectVerifications::Verification::Admin
             user = Decidim::User.find_by(email: "brandy@example.com")
             authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
             expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
+          end
+
+          context "when the name is not specified" do
+            it "infers the name from the email" do
+              post :create, params: {
+                userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+                register: true,
+                authorize: "in"
+              }
+
+              user = Decidim::User.find_by(email: "brandy@example.com")
+              expect(user.name).to eq("brandy")
+            end
           end
         end
       end

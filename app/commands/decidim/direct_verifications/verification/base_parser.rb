@@ -16,7 +16,7 @@ module Decidim
         def to_h
           lines.each do |line|
             EMAIL_REGEXP.match(line) do |match|
-              email = match[0]
+              email = normalize(match[0])
               emails[email] = parse_data(email, line, header)
             end
           end
@@ -27,6 +27,10 @@ module Decidim
         private
 
         attr_reader :txt, :emails
+
+        def normalize(value)
+          value.to_s.downcase
+        end
       end
     end
   end

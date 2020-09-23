@@ -16,14 +16,15 @@ module Decidim
           @lines ||= StringIO.new(txt).readlines
         end
 
-        def parse_data(_email, line, header)
+        def parse_data(email, line, header)
           tokens = tokenize(line)
 
           hash = {}
           header.each_with_index do |column, index|
-            next if email_column?(index)
+            value = tokens[index].strip.chomp
+            next if value.include?(email)
 
-            hash[column] = tokens[index].strip.chomp
+            hash[column] = value
           end
           hash
         end
@@ -32,10 +33,6 @@ module Decidim
 
         def tokenize(line)
           CSV.parse(line)[0]
-        end
-
-        def email_column?(index)
-          index == 1
         end
       end
     end
