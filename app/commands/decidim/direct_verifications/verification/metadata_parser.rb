@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "csv"
+
 module Decidim
   module DirectVerifications
     module Verification
@@ -29,7 +31,7 @@ module Decidim
         private
 
         def tokenize(line)
-          line.split(",")
+          CSV.parse(line)[0]
         end
 
         def email_column?(index)

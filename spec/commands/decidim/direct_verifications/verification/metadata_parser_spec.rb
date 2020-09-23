@@ -49,23 +49,21 @@ module Decidim::DirectVerifications::Verification
 
         context "and the CSV includes quotes" do
           let(:txt) do
-            <<-ROWS.strip_heredoc
+            <<-CSV.strip_heredoc
             Name,Email,Type
             use,test3@t.com,type
-            User,"<a@b.co>\ranother@email.com",third@email.com@as.com
-            "Test 1",test1@test.com,customer
-            "\"Test\\| 4\"",<test4@test.com,producer
-            "dot.email@test.com\rMy.Dot:Name",with.dot@email.dot.com,type
-            ROWS
+            User,<a@b.co> another@email.com,third@email.com@as.com
+            Test 1, test1@test.com, customer
+            \"Test\\| 4\", <test4@test.com, producer
+            CSV
           end
 
           it "returns the data in a hash with the email as key" do
             expect(subject.to_h).to eq(
               "test3@t.com" => { name: "use", type: "type" },
               "a@b.co" => { name: "User", type: "third@email.com@as.com" },
-              "test1@test.com" => { name: "\"Test 1\"", type: "customer" },
-              "test4@test.com" => { name: "\"\"Test\\| 4\"\"", type: "producer" },
-              "dot.email@test.com" => { name: "\"dot.email@test.com\rMy.Dot:Name\"", type: "type" }
+              "test1@test.com" => { name: "Test 1", type: "customer" },
+              "test4@test.com" => { name: "Test\\| 4", type: "producer" }
             )
           end
         end
