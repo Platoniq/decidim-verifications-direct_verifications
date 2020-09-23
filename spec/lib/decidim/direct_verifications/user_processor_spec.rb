@@ -58,7 +58,7 @@ module Decidim
         end
       end
 
-      context "when registers a valid users" do
+      context "when registering valid users" do
         before do
           subject.emails = ["em@il.com", "em@il.com", "em@il.net"]
           subject.register_users
@@ -70,7 +70,35 @@ module Decidim
         end
       end
 
-      context "when registers invalid users" do
+      context "when registering valid users with metadata" do
+        before do
+          subject.emails = { "em@il.com" => { name: "Brandy", type: "producer" } }
+          subject.register_users
+        end
+
+        it "has no errors" do
+          expect(subject.processed[:registered].count).to eq(1)
+          expect(subject.errors[:registered].count).to eq(0)
+        end
+      end
+
+      context "when registering users without name" do
+        before do
+          subject.emails = { "em@il.com" => { type: "producer" } }
+          subject.register_users
+        end
+
+        it "has no errors" do
+          expect(subject.processed[:registered].count).to eq(1)
+          expect(subject.errors[:registered].count).to eq(0)
+        end
+
+        it "infers the name from the email" do
+          expect(Decidim::User.find_by(email: "em@il.com").name).to eq("em")
+        end
+      end
+
+      context "when registering invalid users" do
         before do
           subject.emails = ["em@il.org", ""]
           subject.register_users
