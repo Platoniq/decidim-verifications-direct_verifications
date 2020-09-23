@@ -62,7 +62,7 @@ module Decidim
           private
 
           def parser_class
-            if Rails.configuration.direct_verifications_processor == :metadata
+            if Rails.configuration.direct_verifications_parser == :metadata
               MetadataParser
             else
               NameParser

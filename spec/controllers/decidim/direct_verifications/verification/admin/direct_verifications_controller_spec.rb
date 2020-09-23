@@ -65,10 +65,10 @@ module Decidim::DirectVerifications::Verification::Admin
 
         context "when in metadata mode" do
           around do |example|
-            original_processor = Rails.configuration.direct_verifications_processor
-            Rails.configuration.direct_verifications_processor = :metadata
+            original_processor = Rails.configuration.direct_verifications_parser
+            Rails.configuration.direct_verifications_parser = :metadata
             example.run
-            Rails.configuration.direct_verifications_processor = original_processor
+            Rails.configuration.direct_verifications_parser = original_processor
           end
 
           it "stores any extra columns as authorization metadata" do
