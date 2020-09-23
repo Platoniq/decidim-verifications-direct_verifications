@@ -21,7 +21,7 @@ module Decidim
 
           hash = {}
           header.each_with_index do |column, index|
-            value = tokens[index].strip.chomp
+            value = tokens[index].strip
             next if value.include?(email)
 
             hash[column] = value
