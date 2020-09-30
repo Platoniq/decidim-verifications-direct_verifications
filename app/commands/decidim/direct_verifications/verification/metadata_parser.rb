@@ -7,9 +7,11 @@ module Decidim
     module Verification
       class MetadataParser < BaseParser
         def header
-          header_row = lines[0].chomp
-          column_names = tokenize(header_row)
-          column_names.map(&:to_sym).map(&:downcase)
+          @header ||= begin
+                        header_row = lines[0].chomp
+                        column_names = tokenize(header_row)
+                        column_names.map(&:to_sym).map(&:downcase)
+                      end
         end
 
         def lines
