@@ -44,8 +44,19 @@ module Decidim::DirectVerifications::Verification::Admin
 
       context "when register users with check" do
         params = { userlist: "mail@example.com", register: true }
+
         it_behaves_like "checking users", params
-        it_behaves_like "registering users", params
+
+        it "creates warning message" do
+          post :create, params: params
+
+          expect(flash[:warning]).not_to be_empty
+          expect(flash[:warning]).to include("1 detected")
+          expect(flash[:warning]).to include("0 errors")
+          expect(flash[:warning]).to include("1 users")
+          expect(flash[:warning]).to include("registered")
+        end
+
         it "renders the index with warning message" do
           post :create, params: params
           expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
