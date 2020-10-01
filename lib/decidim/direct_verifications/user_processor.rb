@@ -12,16 +12,18 @@ module Decidim
         @emails = {}
       end
 
-      attr_reader :organization, :current_user, :errors, :processed, :emails
-      attr_accessor :authorization_handler
-
-      def emails=(email_list)
-        @emails = email_list.map { |k, v| [k.to_s.downcase, v.presence || k.split("@").first] }.to_h
-      end
+      attr_reader :organization, :current_user, :errors, :processed
+      attr_accessor :authorization_handler, :emails
 
       def register_users
-        @emails.each do |email, name|
+        emails.each do |email, data|
           next if find_user(email)
+
+          name = if data.is_a?(Hash)
+                   data[:name]
+                 else
+                   data
+                 end
 
           form = register_form(email, name)
           begin
@@ -41,9 +43,11 @@ module Decidim
       end
 
       def authorize_users
-        @emails.each do |email, _name|
+        emails.each do |email, data|
           if (u = find_user(email))
             auth = authorization(u)
+            auth.metadata = data
+
             next unless !auth.granted? || auth.expired?
 
             Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
@@ -61,7 +65,7 @@ module Decidim
       end
 
       def revoke_users
-        @emails.each do |email, _name|
+        emails.each do |email, _name|
           if (u = find_user(email))
             auth = authorization(u)
             next unless auth.granted?
@@ -87,12 +91,16 @@ module Decidim
       end
 
       def register_form(email, name)
-        OpenStruct.new(name: name.presence || email.split("@").first,
+        OpenStruct.new(name: name.presence || fallback_name(email),
                        email: email.downcase,
                        organization: organization,
                        admin: false,
                        invited_by: current_user,
                        invitation_instructions: "direct_invite")
+      end
+
+      def fallback_name(email)
+        email.split("@").first
       end
 
       def authorization(user)

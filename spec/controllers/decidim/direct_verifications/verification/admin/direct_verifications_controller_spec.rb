@@ -44,8 +44,19 @@ module Decidim::DirectVerifications::Verification::Admin
 
       context "when register users with check" do
         params = { userlist: "mail@example.com", register: true }
+
         it_behaves_like "checking users", params
-        it_behaves_like "registering users", params
+
+        it "creates warning message" do
+          post :create, params: params
+
+          expect(flash[:warning]).not_to be_empty
+          expect(flash[:warning]).to include("1 detected")
+          expect(flash[:warning]).to include("0 errors")
+          expect(flash[:warning]).to include("1 users")
+          expect(flash[:warning]).to include("registered")
+        end
+
         it "renders the index with warning message" do
           post :create, params: params
           expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
@@ -54,49 +65,66 @@ module Decidim::DirectVerifications::Verification::Admin
 
       context "when register users with authorize" do
         params = { userlist: "mail@example.com", register: true, authorize: "in" }
+
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
+
         it "redirects with notice and warning messages" do
           post :create, params: params
           expect(subject).to redirect_to(action: :index)
+        end
+
+        context "when the name is not specified" do
+          it "infers the name from the email" do
+            post :create, params: {
+              userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+              register: true,
+              authorize: "in"
+            }
+
+            user = Decidim::User.find_by(email: "brandy@example.com")
+            expect(user.name).to eq("brandy")
+          end
+        end
+
+        context "when in metadata mode" do
+          around do |example|
+            original_processor = Rails.configuration.direct_verifications_parser
+            Rails.configuration.direct_verifications_parser = :metadata
+            example.run
+            Rails.configuration.direct_verifications_parser = original_processor
+          end
+
+          it "stores any extra columns as authorization metadata" do
+            post :create, params: {
+              userlist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
+              register: true,
+              authorize: "in"
+            }
+
+            user = Decidim::User.find_by(email: "brandy@example.com")
+            authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+            expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
+          end
+
+          context "when the name is not specified" do
+            it "infers the name from the email" do
+              post :create, params: {
+                userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+                register: true,
+                authorize: "in"
+              }
+
+              user = Decidim::User.find_by(email: "brandy@example.com")
+              expect(user.name).to eq("brandy")
+            end
+          end
         end
       end
 
       context "when register users with revoke" do
         params = { userlist: "authorized@example.com", authorize: "out" }
         it_behaves_like "revoking users", params
-      end
-    end
-
-    describe "email extractor" do
-      it "converts empty text to empty hash" do
-        txt = ""
-        h = controller.send(:extract_emails_to_hash, txt)
-        expect(h).to eq({})
-      end
-
-      it "converts invalid text to empty hash" do
-        txt = "nonsense emails...\nnot_an@email\nno em@il"
-        h = controller.send(:extract_emails_to_hash, txt)
-        expect(h).to eq({})
-      end
-
-      it "converts valid text to emails hash" do
-        txt = "test1@test.com\ntest2@test.com\nuse test3@t.com\nUser <a@b.co>\ranother@email.com,third@email.com@as.com\nTest 1 test1@test.com\n\"Test\\| 4\" <test4@test.com\ndot.email@test.com\rMy.Dot:Name with.dot@email.dot.com;\"My name\" <my@email.net>, My other name <my-other@email.org>"
-        h = controller.send(:extract_emails_to_hash, txt)
-        expect(h).to eq(
-          "a@b.co" => "User",
-          "another@email.com" => "",
-          "dot.email@test.com" => "",
-          "my-other@email.org" => "My other name",
-          "my@email.net" => "My name",
-          "test1@test.com" => "Test 1",
-          "test2@test.com" => "",
-          "test3@t.com" => "use",
-          "test4@test.com" => "Test 4",
-          "third@email.com" => "",
-          "with.dot@email.dot.com" => "My.Dot:Name"
-        )
       end
     end
   end
