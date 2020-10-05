@@ -5,56 +5,56 @@ cs:
         user:
           fields:
             roles:
-              participant: Participant
+              participant: Účastník
     authorization_handlers:
       admin:
         direct_verifications:
           help:
-            - 'Allows the massive introduction of users in order to:'
-            - Direct register in the organization and sends invitations
-            - Verify them in any active verification method
-            - Revoke their verification in any active verification method
+            - 'Umožňuje masivní zavedení uživatelů:'
+            - Přímá registrace v organizaci a odeslání pozvánek
+            - Ověřit je pomocí jakékoliv metody aktivního ověření
+            - Zrušit jejich ověření pomocí jakékoli metody aktivního ověření
       direct_verifications:
-        explanation: Manual verification by the administrators of the organization
-        name: Direct verification
+        explanation: Ruční ověření správcem organizace
+        name: Přímé ověření
     direct_verifications:
       verification:
         admin:
           direct_verifications:
             create:
-              authorized: "%{authorized} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
-              info: "%{count} users detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
-              registered: "%{registered} users have been successfully registered (%{count} detected, %{errors} errors) "
-              revoked: Verification from %{revoked} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
-            gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your users in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
+              authorized: "%{authorized} uživatelů bylo úspěšně ověřeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)"
+              info: "Zjištěno %{count} uživatelů, z nichž %{registered} jsou registrováni, %{authorized} autorizováni pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)"
+              registered: "%{registered} uživatelů bylo úspěšně zaregistrováno (%{count} detekováno, %{errors} chyb) "
+              revoked: Ověření od %{revoked} uživatelů bylo zrušeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)
+            gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že potřebujete mít výslovný souhlas svých uživatelů, abyste je mohli zaregistrovat. V opačném případě můžete porušovat nařízení o GDPR v zemích EU.
           index:
-            stats: User stats
-            title: Register and authorize users
+            stats: Statistiky uživatelů
+            title: Registrovat a autorizovat uživatele
           new:
-            authorization_handler: Verification method
-            authorize: Authorize users
-            check: Check users status
-            info: Enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name
-            register: Register users in the platform (if they exist they will be ignored)
-            revoke: Revoke authorization from users
-            submit: Send and process the list
-            textarea: Emails list
+            authorization_handler: Ověřovací metoda
+            authorize: Autorizovat uživatele
+            check: Zkontrolovat stav uživatelů
+            info: Zadejte e-maily zde, jeden na řádek. Pokud e-mailům předchází text, bude interpretován jako jméno uživatele
+            register: Registrovat uživatele na platformě (pokud existují, budou ignorováni)
+            revoke: Zrušit autorizaci od uživatelů
+            submit: Odeslat a zpracovat seznam
+            textarea: Seznam e-mailů
           stats:
             index:
-              authorized: Authorized
-              authorized_unconfirmed: Authorized but unconfirmed
-              global: "- Any verification method -"
-              registered: Registered
-              unconfirmed: Unconfirmed
+              authorized: Autorizováno
+              authorized_unconfirmed: Autorizováno, ale nepotvrzeno
+              global: "- Jakákoli metoda ověřování -"
+              registered: Registrován
+              unconfirmed: Nepotvrzeno
         authorizations:
           new:
-            no_action: This method requires an administrator that verifies you
+            no_action: Tato metoda vyžaduje administrátora, který vás ověřuje
     verifications:
       authorizations:
         first_login:
           actions:
-            direct_verifications: Direct verification
+            direct_verifications: Přímé ověření
   devise:
     mailer:
       direct_invite:
-        subject: Invitation instructions
+        subject: Pokyny pro pozvání
