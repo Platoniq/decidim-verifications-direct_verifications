@@ -4,6 +4,7 @@
   <div class="card-divider">
     <h2 class="card-title">
       <%= t('.title') %>
+      <%= link_to t(".new_import"), direct_verifications_path, class: "button tiny button--title" %>
     </h2>
   </div>
   <div class="card-section">
@@ -15,6 +16,7 @@
             <th><%= t('.metadata') %></th>
             <th><%= t('.user_name') %></th>
             <th><%= t('.created_at') %></th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +28,10 @@
               </td>
               <td><%= authorization.decidim_user_id %></td>
               <td><%= authorization.created_at %></td>
+
+              <td class="table-list__actions">
+                <%= icon_link_to "circle-x", authorization_path(authorization), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
+              </td>
             </tr>
           <% end %>
         </tbody>

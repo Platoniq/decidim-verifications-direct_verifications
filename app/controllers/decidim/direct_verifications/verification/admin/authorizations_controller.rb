@@ -8,7 +8,24 @@ module Decidim
           layout "decidim/admin/users"
 
           def index
-            @authorizations = Decidim::Authorization.where(name: "direct_verifications")
+            @authorizations = collection
+          end
+
+          def destroy
+            if authorization.destroy
+              flash[:notice] = "successfully"
+              redirect_to authorizations_path
+            end
+          end
+
+          private
+
+          def collection
+            Decidim::Authorization.where(name: "direct_verifications")
+          end
+
+          def authorization
+            @authorization ||= collection.find_by(id: params[:id])
           end
         end
       end

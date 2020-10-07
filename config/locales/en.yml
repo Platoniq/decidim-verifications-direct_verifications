@@ -28,6 +28,7 @@ en:
               name: Name
               title: Authorizations
               user_name: User name
+              new_import: New import
           direct_verifications:
             create:
               authorized: "%{authorized} users have been successfully verified using
@@ -42,7 +43,7 @@ en:
               need to have explicit consent from your users in order to register them.
               Otherwise you will be infringing the GDPR regulation in EU countries.
           index:
-            authorizations: Imported emails
+            authorizations: Authorized users
             stats: User stats
             title: Register and authorize users
           new:
