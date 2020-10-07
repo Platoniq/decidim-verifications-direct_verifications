@@ -10,6 +10,7 @@ module Decidim
         routes do
           resources :direct_verifications, only: [:index, :create, :stats]
           resources :stats, only: [:index]
+          resources :authorizations, only: [:index]
 
           root to: "direct_verifications#index"
         end

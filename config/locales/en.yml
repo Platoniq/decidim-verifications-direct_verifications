@@ -21,6 +21,13 @@ en:
     direct_verifications:
       verification:
         admin:
+          authorizations:
+            index:
+              created_at: Created at
+              metadata: Metadata
+              name: Name
+              title: Authorizations
+              user_name: User name
           direct_verifications:
             create:
               authorized: "%{authorized} users have been successfully verified using
@@ -35,6 +42,7 @@ en:
               need to have explicit consent from your users in order to register them.
               Otherwise you will be infringing the GDPR regulation in EU countries.
           index:
+            authorizations: Imported emails
             stats: User stats
             title: Register and authorize users
           new:
