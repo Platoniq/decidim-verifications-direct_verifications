@@ -15,6 +15,12 @@ module Decidim::DirectVerifications::Verification::Admin
     end
 
     describe "#index" do
+      it "authorizes the action" do
+        expect(controller).to receive(:allowed_to?).with(:index, :authorization, {})
+
+        get :index
+      end
+
       it "renders the decidim/admin/users layout" do
         get :index
         expect(response).to render_template("layouts/decidim/admin/users")

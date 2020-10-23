@@ -8,6 +8,7 @@ module Decidim
           layout "decidim/admin/users"
 
           def index
+            enforce_permission_to :index, :authorization
             @authorizations = collection
           end
 
