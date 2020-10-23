@@ -21,7 +21,7 @@ module Decidim
           private
 
           def collection
-            Decidim::Authorization.where(name: "direct_verifications")
+            Decidim::Authorization.where(name: "direct_verifications").includes(:user)
           end
 
           def authorization

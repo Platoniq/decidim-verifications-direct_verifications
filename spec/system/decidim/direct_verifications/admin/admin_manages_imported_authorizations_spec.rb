@@ -31,7 +31,7 @@ describe "Admin manages imported authorizations", type: :system do
       within "tr[data-authorization-id=\"#{authorization.id}\"]" do
         expect(page).to have_content(authorization.name)
         expect(page).to have_content(authorization.metadata)
-        expect(page).to have_content(authorization.decidim_user_id)
+        expect(page).to have_content(authorization.user.name)
         expect(page).to have_content(authorization.created_at)
       end
 
