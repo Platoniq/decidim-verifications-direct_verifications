@@ -4,6 +4,7 @@
   <div class="card-divider">
     <h2 class="card-title">
       <%= t('.title') %>
+      <%= link_to t("admin.index.stats", scope: 'decidim.direct_verifications.verification'), stats_path, class: "button tiny button--title" %>
       <%= link_to t(".new_import"), direct_verifications_path, class: "button tiny button--title" %>
     </h2>
   </div>

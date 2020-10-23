@@ -37,6 +37,11 @@ describe "Admin manages imported authorizations", type: :system do
 
       expect(page).not_to have_content(non_direct_authorization.name)
     end
+
+    it "lets users navigate to stats and new import" do
+      expect(page).to have_link(t("decidim.direct_verifications.verification.admin.index.stats"))
+      expect(page).to have_link(t("decidim.direct_verifications.verification.admin.authorizations.index.new_import"))
+    end
   end
 
   context "when destroying an authorization" do
