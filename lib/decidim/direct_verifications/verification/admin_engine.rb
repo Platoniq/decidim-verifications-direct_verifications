@@ -16,7 +16,10 @@ module Decidim
         end
 
         initializer "decidim_direct_verifications.admin_assets" do |app|
-          app.config.assets.precompile += %w(direct_verifications_admin_manifest.js)
+          app.config.assets.precompile += %w(
+            direct_verifications_admin_manifest.js
+            direct_verifications_admin_manifest.css
+          )
         end
       end
     end
