@@ -21,7 +21,7 @@ module Decidim
             @userlist = params[:userlist]
             @workflows = workflows
 
-            processor = UserProcessor.new(current_organization, current_user)
+            processor = UserProcessor.new(current_organization, current_user, session)
             processor.emails = parser_class.new(@userlist).to_h
             processor.authorization_handler = authorization_handler(params[:authorization_handler])
 
