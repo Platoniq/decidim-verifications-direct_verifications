@@ -50,7 +50,7 @@ module Decidim
 
             next unless !auth.granted? || auth.expired?
 
-            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
+            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u), session) do
               on(:ok) do
                 add_processed :authorized, email
               end
