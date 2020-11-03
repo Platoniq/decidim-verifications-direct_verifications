@@ -9,7 +9,7 @@
     <p><%= t("decidim.direct_verifications.verification.admin.new.info") %></p>
     <%= form_tag direct_verifications_path, multipart: true, class: "form" do %>
       <%= label_tag :userlist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
-      <%= text_area_tag :userlist, @userlist, rows: 10 %>
+      <%= text_area_tag :userlist, @userslist, rows: 10 %>
       <label>
         <%= check_box_tag :register %>
         <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
@@ -32,7 +32,7 @@
 
       <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
 
-      <%= select_tag :authorization_handler, options_for_select(@workflows, @authorization_handler) %>
+      <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
 
       <%= submit_tag t("admin.new.submit", scope: "decidim.direct_verifications.verification"), class: "button" %>
 
