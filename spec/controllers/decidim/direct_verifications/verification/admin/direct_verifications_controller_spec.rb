@@ -34,11 +34,13 @@ module Decidim::DirectVerifications::Verification::Admin
         params = { userlist: "" }
         it_behaves_like "checking users", params
         it "have no registered or authorized users" do
-          post :create, params: params
-          expect(flash[:info]).to include("0 are registered")
-          expect(flash[:info]).to include("0 authorized")
-          expect(flash[:info]).to include("unconfirmed")
-          expect(flash[:info]).to include("detected")
+          perform_enqueued_jobs do
+            post :create, params: params
+            expect(flash[:info]).to include("0 are registered")
+            expect(flash[:info]).to include("0 authorized")
+            expect(flash[:info]).to include("unconfirmed")
+            expect(flash[:info]).to include("detected")
+          end
         end
       end
 
@@ -47,8 +49,10 @@ module Decidim::DirectVerifications::Verification::Admin
         it_behaves_like "checking users", params
         it_behaves_like "registering users", params
         it "renders the index with warning message" do
-          post :create, params: params
-          expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
+          perform_enqueued_jobs do
+            post :create, params: params
+            expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
+          end
         end
       end
 
@@ -57,8 +61,10 @@ module Decidim::DirectVerifications::Verification::Admin
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
         it "redirects with notice and warning messages" do
-          post :create, params: params
-          expect(subject).to redirect_to(action: :index)
+          perform_enqueued_jobs do
+            post :create, params: params
+            expect(subject).to redirect_to(action: :index)
+          end
         end
       end
 
