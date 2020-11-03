@@ -1,4 +1,3 @@
----
 ca:
   decidim:
     admin:
@@ -11,40 +10,40 @@ ca:
       admin:
         direct_verifications:
           help:
-          - 'Permet la introducció massiva d''usuaris per tal de:'
-          - Registrar-los directament a la organització amb l'enviament d'invitacions
-          - Verificar-los en qualsevol mètode de verificació actiu
-          - Revocar la verificació en qualsevol mètode de verificació actiu
+            - 'Permet la introducció massiva d''usuaris per tal de:'
+            - Registrar-los directament a la organització amb l'enviament d'invitacions
+            - Verificar-los en qualsevol mètode de verificació actiu
+            - Revocar la verificació en qualsevol mètode de verificació actiu
       direct_verifications:
         explanation: Verificació manual per par dels administradors de l'organització
         name: Verificació directa
     direct_verifications:
       verification:
         admin:
+          authorizations:
+            index:
+              created_at: Data de creació
+              metadata: Metadades
+              name: Nom
+              title: Autoritzacions
+              user_name: Nom d'usuari
+              new_import: Nova importació
           direct_verifications:
             create:
-              authorized: S'han verificat correctament %{authorized} usuaris utilitzant
-                [%{handler}] (%{count} detectats, %{errors} errors)
-              info: S'han detectat %{count} usuaris, dels quals %{registered} estan
-                registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed}
-                sense confirmar)
-              registered: S'han registrat correctament %{registered} usuaris (%{count}
-                detectats, %{errors} errors)
-              revoked: S'ha revocat correctament la verificació de %{revoked} usuaris
-                utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
-            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu
-              de tenir el consentiment explícit dels vostres usuaris per registrar-los.
-              En cas contrari, estareu infringint la regulació GDPR als països de
-              la UE.
+              authorized: "S'han verificat correctament %{authorized} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"
+              info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              registered: "S'han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)"
+              revoked: S'ha revocat correctament la verificació de %{revoked} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
+            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu de tenir el consentiment explícit dels vostres usuaris per registrar-los. En cas contrari, estareu infringint la regulació GDPR als països de la UE.
           index:
+            authorizations: Usuaris autoritzats
             stats: Estadístiques d'usuaris
             title: Inscriu i autoritza usuaris
           new:
             authorization_handler: Mètode de verificació
             authorize: Autoritza els usuaris
             check: Comprova l'estat dels usuaris
-            info: Introdueix aquí els emails, un per línia. Si els emails estan precedits
-              per un text, s'interpretarà com el nom de l'usuari
+            info: Introdueix aquí els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
             register: Registra els usuaris a la plataforma (si existeixen s'ignoraran)
             revoke: Revoca l'autorització dels usuaris
             submit: Envia i processa el llistat

@@ -19,7 +19,7 @@ module Decidim
 
             @userslist = params[:userlist]
             @processor = UserProcessor.new(current_organization, current_user)
-            @processor.emails = extract_emails_to_hash @userslist
+            @processor.emails = parser_class.new(@userslist).to_h
             @processor.authorization_handler = current_authorization_handler
             @stats = UserStats.new(current_organization)
             @stats.authorization_handler = @processor.authorization_handler
@@ -75,16 +75,12 @@ module Decidim
             true
           end
 
-          def extract_emails_to_hash(txt)
-            reg = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i
-            emails = {}
-            txt.split(/[\r\n;,]/).each do |line|
-              reg.match line do |m|
-                n = line.split(m[0]).first
-                emails[m[0]] = (n.presence || "").gsub(/[^[:print:]]|[\"\$\<\>\|\\]/, "").strip
-              end
+          def parser_class
+            if Rails.configuration.direct_verifications_parser == :metadata
+              MetadataParser
+            else
+              NameParser
             end
-            emails
           end
 
           def authorization_handler(authorization_handler)

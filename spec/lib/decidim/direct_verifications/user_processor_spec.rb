@@ -13,20 +13,20 @@ module Decidim
       end
 
       context "when emails are passed" do
-        it "has hash with automatic names" do
-          subject.send(:emails=, "em@il.com" => "")
-          expect(subject.emails).to eq("em@il.com" => "em")
+        it "uses the specified name" do
+          subject.emails = { "em@il.com" => "em", "em@il.net" => "A name" }
+          expect(subject.emails).to eq("em@il.com" => "em", "em@il.net" => "A name")
         end
 
-        it "has hash with passed names" do
-          subject.send(:emails=, "em@il.com" => "", "em@il.net" => "A name")
-          expect(subject.emails).to eq("em@il.com" => "em", "em@il.net" => "A name")
+        it "passes all the extra data when specified" do
+          subject.emails = { "em@il.com" => { name: "A name", type: "consumer" } }
+          expect(subject.emails).to eq("em@il.com" => { name: "A name", type: "consumer" })
         end
       end
 
       context "when emails are not passed" do
-        it "has empty hash" do
-          subject.send(:emails=, {})
+        it "uses an empty hash" do
+          subject.emails = {}
           expect(subject.emails).to eq({})
         end
       end
@@ -53,7 +53,7 @@ module Decidim
         end
       end
 
-      context "when registers a valid users" do
+      context "when registering valid users" do
         before do
           subject.emails = ["em@il.com", "em@il.com", "em@il.net"]
           subject.register_users
@@ -65,7 +65,35 @@ module Decidim
         end
       end
 
-      context "when registers invalid users" do
+      context "when registering valid users with metadata" do
+        before do
+          subject.emails = { "em@il.com" => { name: "Brandy", type: "producer" } }
+          subject.register_users
+        end
+
+        it "has no errors" do
+          expect(subject.processed[:registered].count).to eq(1)
+          expect(subject.errors[:registered].count).to eq(0)
+        end
+      end
+
+      context "when registering users without name" do
+        before do
+          subject.emails = { "em@il.com" => { type: "producer" } }
+          subject.register_users
+        end
+
+        it "has no errors" do
+          expect(subject.processed[:registered].count).to eq(1)
+          expect(subject.errors[:registered].count).to eq(0)
+        end
+
+        it "infers the name from the email" do
+          expect(Decidim::User.find_by(email: "em@il.com").name).to eq("em")
+        end
+      end
+
+      context "when registering invalid users" do
         before do
           subject.emails = ["em@il.org", ""]
           subject.register_users
@@ -77,33 +105,44 @@ module Decidim
         end
       end
 
-      context "when authorize confirmed users" do
-        before do
-          subject.emails = { user.email => user.name }
-          # subject.register_users
-          subject.authorize_users
-        end
-
+      context "when authorizing confirmed users" do
         it "has no errors" do
+          subject.emails = { user.email => user.name }
+          subject.authorize_users
+
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
         end
+
+        it "stores user data as authorization metadata" do
+          subject.emails = { user.email => { name: user.name, type: "consumer" } }
+          subject.authorize_users
+
+          expect(Authorization.last.metadata).to eq("name" => user.name, "type" => "consumer")
+        end
       end
 
-      context "when authorize unconfirmed users" do
-        before do
+      context "when authorizing unconfirmed users" do
+        it "has no errors" do
           subject.emails = ["em@mail.com"]
           subject.register_users
           subject.authorize_users
-        end
 
-        it "has no errors" do
           expect(subject.processed[:authorized].count).to eq(1)
           expect(subject.errors[:authorized].count).to eq(0)
         end
+
+        it "stores user data as authorization metadata" do
+          subject.emails = { "em@mail.com" => { type: "consumer" } }
+          subject.register_users
+          subject.authorize_users
+
+          expect(Decidim::User.find_by(email: "em@mail.com").name).to eq("em")
+          expect(Authorization.last.metadata).to eq("type" => "consumer")
+        end
       end
 
-      context "when authorize unregistered users" do
+      context "when authorizing unregistered users" do
         before do
           subject.emails = ["em@mail.com"]
           subject.authorize_users
@@ -115,7 +154,7 @@ module Decidim
         end
       end
 
-      context "when revoke existing users" do
+      context "when revoking existing users" do
         before do
           subject.emails = { user.email => user.name }
           subject.authorize_users
@@ -128,7 +167,7 @@ module Decidim
         end
       end
 
-      context "when revoke non-existing users" do
+      context "when revoking non-existing users" do
         before do
           subject.emails = ["em@il.com"]
           subject.authorize_users

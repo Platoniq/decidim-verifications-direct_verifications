@@ -36,6 +36,21 @@ With the detected list of emails admin have different options available:
 3. Revoke the authorization for the list of users using any verification method available.
 4. Check the status of the users in order to know if they are verified or registered.
 
+### Metadata mode
+
+This mode provides extra capabilities over the default processing:
+
+* Reads CSV format with header (copy and paste it from your spreadsheet)
+* Stores all columns except the email as authorization metadata
+
+This enables querying the authorization metadata however fits you best.
+
+To enable it create a new initializer called `config/initializers/decidim_direct_verifications.rb` with the following contents
+
+```rb
+Rails.application.config.direct_verifications_parser = :metadata
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
