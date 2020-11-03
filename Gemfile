@@ -14,7 +14,7 @@ gem "decidim", Decidim::DirectVerifications::DECIDIM_VERSION
 gem "decidim-direct_verifications", path: "."
 
 gem "bootsnap", "~> 1.3"
-gem "puma", "~> 3.0"
+gem "puma", "~> 4.0"
 gem "uglifier", "~> 4.1"
 
 group :development, :test do
@@ -34,8 +34,5 @@ end
 
 group :test do
   gem "codecov", require: false
-  # Workaround for cc-test-reporter with SimpleCov 0.18.
-  # Stop upgrading SimpleCov until the following issue will be resolved.
-  # https://github.com/codeclimate/test-reporter/issues/418
-  gem "simplecov", "~> 0.10", "< 0.18"
+  gem "simplecov", "~> 0.18.5"
 end
