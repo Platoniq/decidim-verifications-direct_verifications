@@ -19,6 +19,9 @@ spec/decidim_dummy_app
 # default development application
 development_app
 
+.vscode
 .byebug_history
+node_modules/
+npm_debug.log
 .ruby-version
 tags
