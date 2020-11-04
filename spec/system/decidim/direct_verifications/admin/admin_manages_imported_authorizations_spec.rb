@@ -6,7 +6,7 @@ describe "Admin manages imported authorizations", type: :system do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
-  let!(:authorization) { create(:authorization, :direct_verification) }
+  let!(:authorization) { create(:authorization, :direct_verification, user: user) }
   let!(:non_direct_authorization) { create(:authorization) }
 
   let(:scope) { "decidim.direct_verifications.verification.admin" }
