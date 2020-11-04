@@ -5,8 +5,10 @@ require "spec_helper"
 describe "Admin manages imported authorizations", type: :system do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:out_of_scope_user) { create(:user, :confirmed) }
 
   let!(:authorization) { create(:authorization, :direct_verification, user: user) }
+  let!(:out_of_scope_authorization) { create(:authorization, :direct_verification, user: out_of_scope_user) }
   let!(:non_direct_authorization) { create(:authorization) }
 
   let(:scope) { "decidim.direct_verifications.verification.admin" }
@@ -36,6 +38,7 @@ describe "Admin manages imported authorizations", type: :system do
       end
 
       expect(page).not_to have_content(non_direct_authorization.name)
+      expect(page).not_to have_content(out_of_scope_authorization.user.name)
     end
 
     it "lets users navigate to stats and new import" do
