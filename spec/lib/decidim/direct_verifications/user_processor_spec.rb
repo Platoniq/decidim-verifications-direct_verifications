@@ -5,9 +5,10 @@ require "spec_helper"
 module Decidim
   module DirectVerifications
     describe UserProcessor do
-      subject { described_class.new(organization, user) }
+      subject { described_class.new(organization, user, session) }
 
       let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+      let(:session) { double(:session) }
       let(:organization) do
         create(:organization, available_authorizations: ["direct_verifications"])
       end
