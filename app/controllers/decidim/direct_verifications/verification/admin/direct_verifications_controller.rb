@@ -64,7 +64,7 @@ module Decidim
           end
 
           def show_users_info
-            return if params[:authorize] != "check"
+            return if params[:authorize].in? %w(in out)
 
             @stats.emails = @processor.emails.keys
             flash.now[:info] = t(".info", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
