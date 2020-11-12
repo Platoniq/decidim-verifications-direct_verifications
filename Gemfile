@@ -13,8 +13,8 @@ require_relative "#{base_path}lib/decidim/direct_verifications/version"
 gem "decidim", Decidim::DirectVerifications::DECIDIM_VERSION
 gem "decidim-direct_verifications", path: "."
 
-gem "bootsnap", "~> 1.3"
-gem "puma", "~> 3.0"
+gem "bootsnap", "~> 1.4"
+gem "puma", "~> 4.3.5"
 gem "uglifier", "~> 4.1"
 
 group :development, :test do
