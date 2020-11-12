@@ -1,6 +1,6 @@
 # Decidim::DirectVerifications
 
-![[CI] Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/workflows/%5BCI%5D%20Test/badge.svg)
+![Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/workflows/Test/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2195deb4de6c6354a6bc/maintainability)](https://codeclimate.com/github/Platoniq/decidim-verifications-direct_verifications/maintainability)
 [![codecov](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications/branch/master/graph/badge.svg?token=FR1zkV71S2)](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications)
 
