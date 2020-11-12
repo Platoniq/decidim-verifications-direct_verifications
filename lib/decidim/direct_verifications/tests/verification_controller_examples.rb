@@ -3,7 +3,7 @@
 shared_examples_for "checking users" do |params|
   context "when check without mails" do
     it "renders the index with info message" do
-      params[:userlist] = ""
+      params[:userslist] = ""
       perform_enqueued_jobs do
         post :create, params: params
         expect(flash[:info]).not_to be_empty
@@ -15,7 +15,7 @@ shared_examples_for "checking users" do |params|
 
   context "when check with mails" do
     it "renders the index with info message" do
-      params[:userlist] = "mail@example.com"
+      params[:userslist] = "mail@example.com"
       perform_enqueued_jobs do
         post :create, params: params
         expect(flash[:info]).not_to be_empty

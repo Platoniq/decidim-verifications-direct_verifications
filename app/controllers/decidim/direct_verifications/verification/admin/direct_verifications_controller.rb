@@ -17,7 +17,7 @@ module Decidim
           def create
             enforce_permission_to :create, :authorization
 
-            @userslist = params[:userlist]
+            @userslist = params[:userslist]
             @processor = UserProcessor.new(current_organization, current_user, session)
             @processor.emails = extract_emails_to_hash @userslist
             @processor.authorization_handler = current_authorization_handler
@@ -64,7 +64,7 @@ module Decidim
           end
 
           def show_users_info
-            return if params[:authorize]
+            return if params[:authorize] != "check"
 
             @stats.emails = @processor.emails.keys
             flash.now[:info] = t(".info", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
