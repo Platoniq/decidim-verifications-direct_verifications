@@ -18,7 +18,7 @@ module Decidim
             enforce_permission_to :create, :authorization
 
             @userslist = params[:userlist]
-            @processor = UserProcessor.new(current_organization, current_user)
+            @processor = UserProcessor.new(current_organization, current_user, session)
             @processor.emails = parser_class.new(@userslist).to_h
             @processor.authorization_handler = current_authorization_handler
             @stats = UserStats.new(current_organization)

@@ -3,16 +3,17 @@
 module Decidim
   module DirectVerifications
     class UserProcessor
-      def initialize(organization, current_user)
+      def initialize(organization, current_user, session)
         @organization = organization
         @current_user = current_user
         @authorization_handler = :direct_verifications
         @errors = { registered: [], authorized: [], revoked: [] }
         @processed = { registered: [], authorized: [], revoked: [] }
         @emails = {}
+        @session = session
       end
 
-      attr_reader :organization, :current_user, :errors, :processed
+      attr_reader :organization, :current_user, :session, :errors, :processed
       attr_accessor :authorization_handler, :emails
 
       def register_users
@@ -50,7 +51,7 @@ module Decidim
 
             next unless !auth.granted? || auth.expired?
 
-            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u)) do
+            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u), session) do
               on(:ok) do
                 add_processed :authorized, email
               end

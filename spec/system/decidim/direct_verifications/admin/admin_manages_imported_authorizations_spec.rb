@@ -24,10 +24,10 @@ describe "Admin manages imported authorizations", type: :system do
   context "when listing authorizations" do
     it "lists authorizations imported through direct_verifications" do
       within "table thead" do
-        expect(page).to have_content(I18n.t("authorizations.index.name", scope: scope).upcase)
-        expect(page).to have_content(I18n.t("authorizations.index.metadata", scope: scope).upcase)
-        expect(page).to have_content(I18n.t("authorizations.index.user_name", scope: scope).upcase)
-        expect(page).to have_content(I18n.t("authorizations.index.created_at", scope: scope).upcase)
+        expect(page).to have_content(I18n.t("authorizations.index.name", scope: scope))
+        expect(page).to have_content(I18n.t("authorizations.index.metadata", scope: scope))
+        expect(page).to have_content(I18n.t("authorizations.index.user_name", scope: scope))
+        expect(page).to have_content(I18n.t("authorizations.index.created_at", scope: scope))
       end
 
       within "tr[data-authorization-id=\"#{authorization.id}\"]" do
