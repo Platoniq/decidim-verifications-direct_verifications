@@ -22,12 +22,12 @@ es:
         admin:
           authorizations:
             index:
-              created_at: Created at
-              metadata: Metadata
-              name: Name
-              title: Authorizations
-              user_name: User name
-              new_import: New import
+              created_at: Creado el
+              metadata: Metadatos
+              name: Nombre
+              title: Autorizaciones
+              user_name: Nombre de usuario
+              new_import: Nueva importación
           direct_verifications:
             create:
               authorized: "Se han verificado correctamente %{authorized} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)"
@@ -36,7 +36,7 @@ es:
               revoked: Se ha revocado correctament la verificación de %{revoked} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)
             gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe contar con el consentimiento explícito de sus usuarios para poder registrarlos. De lo contrario, estará infringiendo la regulación GDPR en los países de la UE.
           index:
-            authorizations: Authorized users
+            authorizations: Usuarios autorizados
             stats: Estadísticas de usuarios
             title: Inscribe y autoriza usuarios
           new:
