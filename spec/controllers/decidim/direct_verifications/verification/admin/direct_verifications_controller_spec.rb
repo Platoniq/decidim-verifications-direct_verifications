@@ -31,7 +31,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
     describe "POST create" do
       context "when parameters are defaults" do
-        params = { userlist: "" }
+        params = { userslist: "" }
         it_behaves_like "checking users", params
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
@@ -68,7 +68,7 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with authorize" do
-        params = { userlist: "mail@example.com", register: true, authorize: "in" }
+        params = { userslist: "mail@example.com", register: true, authorize: "in" }
 
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
