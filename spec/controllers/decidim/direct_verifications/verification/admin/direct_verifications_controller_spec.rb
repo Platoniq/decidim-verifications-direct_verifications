@@ -31,7 +31,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
     describe "POST create" do
       context "when parameters are defaults" do
-        params = { userlist: "" }
+        params = { userslist: "" }
         it_behaves_like "checking users", params
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
@@ -45,7 +45,7 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with check" do
-        params = { userlist: "mail@example.com", register: true }
+        params = { userslist: "mail@example.com", register: true }
 
         it_behaves_like "checking users", params
 
@@ -68,7 +68,7 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with authorize" do
-        params = { userlist: "mail@example.com", register: true, authorize: "in" }
+        params = { userslist: "mail@example.com", register: true, authorize: "in" }
 
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
@@ -83,7 +83,7 @@ module Decidim::DirectVerifications::Verification::Admin
         context "when the name is not specified" do
           it "infers the name from the email" do
             post :create, params: {
-              userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+              userslist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
               register: true,
               authorize: "in"
             }
@@ -103,7 +103,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
           it "stores any extra columns as authorization metadata" do
             post :create, params: {
-              userlist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
+              userslist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
               register: true,
               authorize: "in"
             }
@@ -116,7 +116,7 @@ module Decidim::DirectVerifications::Verification::Admin
           context "when the name is not specified" do
             it "infers the name from the email" do
               post :create, params: {
-                userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
+                userslist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
                 register: true,
                 authorize: "in"
               }
@@ -129,7 +129,7 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with revoke" do
-        params = { userlist: "authorized@example.com", authorize: "out" }
+        params = { userslist: "authorized@example.com", authorize: "out" }
         it_behaves_like "revoking users", params
       end
     end

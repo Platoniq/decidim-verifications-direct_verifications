@@ -2,7 +2,7 @@
 
 shared_examples_for "checking users" do |params|
   context "when check without mails" do
-    before { params[:userlist] = "" }
+    before { params[:userslist] = "" }
 
     it "renders the index with info message" do
       perform_enqueued_jobs do
@@ -15,7 +15,7 @@ shared_examples_for "checking users" do |params|
   end
 
   context "when check with mails" do
-    before { params[:userlist] = "mail@example.com" }
+    before { params[:userslist] = "mail@example.com" }
 
     it "renders the index with info message" do
       perform_enqueued_jobs do
