@@ -44,8 +44,8 @@ jobs:
       - run: bundle exec rubocop -P
         name: Lint Ruby files
 
-      - run: bundle exec erblint app/{cells,views}/**/*.erb
-        name: Lint ERB files
+      # - run: bundle exec erblint app/{cells,views}/**/*.erb
+      #   name: Lint ERB files
 
       - run: npm run lint
         name: Lint JS files
