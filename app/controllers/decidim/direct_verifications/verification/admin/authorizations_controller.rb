@@ -9,7 +9,7 @@ module Decidim
 
           def index
             enforce_permission_to :index, :authorization
-            @authorizations = collection
+            @authorizations = collection.includes(:user)
           end
 
           def destroy
