@@ -23,7 +23,7 @@ module Decidim
                  data
                end
 
-        form = register_form(email, name)
+        form = build_form(email, name)
         begin
           InviteUser.call(form) do
             on(:ok) do
@@ -48,13 +48,15 @@ module Decidim
         User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
-      def register_form(email, name)
-        OpenStruct.new(name: name.presence || fallback_name(email),
-                       email: email.downcase,
-                       organization: organization,
-                       admin: false,
-                       invited_by: current_user,
-                       invitation_instructions: "direct_invite")
+      def build_form(email, name)
+        RegistrationForm.new(
+          name: name.presence || fallback_name(email),
+          email: email.downcase,
+          organization: organization,
+          admin: false,
+          invited_by: current_user,
+          invitation_instructions: "direct_invite"
+        )
       end
 
       def fallback_name(email)
