@@ -14,38 +14,43 @@ module Decidim
       def call
         user = find_user
 
-        if user
-          auth = authorization(user)
-          auth.metadata = data
-
-          return unless !auth.granted? || auth.expired?
-
-          Verification::ConfirmUserAuthorization.call(auth, authorize_form(user), session) do
-            on(:ok) do
-              instrumenter.add_processed :authorized, email
-            end
-            on(:invalid) do
-              instrumenter.add_error :authorized, email
-            end
-          end
-        else
+        unless user
           instrumenter.add_error :authorized, email
+          return
+        end
+
+        @authorization = find_or_create_authorization(user)
+        return unless valid_authorization?
+
+        Verification::ConfirmUserAuthorization.call(authorization, authorize_form(user), session) do
+          on(:ok) do
+            instrumenter.add_processed :authorized, email
+          end
+          on(:invalid) do
+            instrumenter.add_error :authorized, email
+          end
         end
       end
 
       private
 
-      attr_reader :email, :data, :session, :organization, :instrumenter
+      attr_reader :email, :data, :session, :organization, :instrumenter, :authorization
+
+      def valid_authorization?
+        !authorization.granted? || authorization.expired?
+      end
 
       def find_user
         User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
-      def authorization(user)
-        Authorization.find_or_initialize_by(
+      def find_or_create_authorization(user)
+        auth = Authorization.find_or_initialize_by(
           user: user,
           name: :direct_verifications
         )
+        auth.metadata = data
+        auth
       end
 
       def authorize_form(user)
