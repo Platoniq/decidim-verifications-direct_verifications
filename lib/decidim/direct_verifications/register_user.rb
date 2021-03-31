@@ -3,7 +3,6 @@
 module Decidim
   module DirectVerifications
     class RegisterUser
-
       def initialize(email, name, organization, current_user, instrumenter)
         @email = email
         @name = name
