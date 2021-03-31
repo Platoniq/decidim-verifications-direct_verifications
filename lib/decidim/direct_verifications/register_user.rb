@@ -12,8 +12,6 @@ module Decidim
         @instrumenter = instrumenter
       end
 
-      delegate :add_error, :add_processed, :log_action, to: :instrumenter
-
       def call
         return if find_user
 
@@ -22,15 +20,15 @@ module Decidim
         begin
           InviteUser.call(form) do
             on(:ok) do
-              add_processed :registered, email
-              log_action find_user
+              instrumenter.add_processed :registered, email
+              instrumenter.log_action find_user
             end
             on(:invalid) do
-              add_error :registered, email
+              instrumenter.add_error :registered, email
             end
           end
         rescue StandardError => e
-          add_error :registered, email
+          instrumenter.add_error :registered, email
           raise e if Rails.env.test? || Rails.env.development?
         end
       end
