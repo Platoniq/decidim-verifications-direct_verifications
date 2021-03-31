@@ -4,9 +4,9 @@ module Decidim
   module DirectVerifications
     class RegisterUser
 
-      def initialize(email, data, organization, current_user, instrumenter)
+      def initialize(email, name, organization, current_user, instrumenter)
         @email = email
-        @data = data
+        @name = name
         @organization = organization
         @current_user = current_user
         @instrumenter = instrumenter
@@ -16,12 +16,6 @@ module Decidim
 
       def call
         return if find_user(email)
-
-        name = if data.is_a?(Hash)
-                 data[:name]
-               else
-                 data
-               end
 
         form = build_form(email, name)
         begin
@@ -42,7 +36,7 @@ module Decidim
 
       private
 
-      attr_reader :email, :data, :organization, :current_user, :instrumenter
+      attr_reader :email, :name, :organization, :current_user, :instrumenter
 
       def find_user(email)
         User.find_by(email: email, decidim_organization_id: organization.id)
