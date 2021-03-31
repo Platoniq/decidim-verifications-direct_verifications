@@ -15,14 +15,15 @@ module Decidim
       delegate :add_error, :add_processed, :log_action, to: :instrumenter
 
       def call
-        return if find_user(email)
+        return if find_user
 
-        form = build_form(email, name)
+        form = build_form
+
         begin
           InviteUser.call(form) do
             on(:ok) do
               add_processed :registered, email
-              log_action find_user(email)
+              log_action find_user
             end
             on(:invalid) do
               add_error :registered, email
@@ -38,13 +39,13 @@ module Decidim
 
       attr_reader :email, :name, :organization, :current_user, :instrumenter
 
-      def find_user(email)
+      def find_user
         User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
-      def build_form(email, name)
+      def build_form
         RegistrationForm.new(
-          name: name.presence || fallback_name(email),
+          name: name.presence || fallback_name,
           email: email.downcase,
           organization: organization,
           admin: false,
@@ -53,7 +54,7 @@ module Decidim
         )
       end
 
-      def fallback_name(email)
+      def fallback_name
         email.split("@").first
       end
     end
