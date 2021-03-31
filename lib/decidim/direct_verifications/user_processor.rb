@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "decidim/direct_verifications/register_user"
+
 module Decidim
   module DirectVerifications
     class UserProcessor
@@ -18,28 +20,12 @@ module Decidim
 
       def register_users
         emails.each do |email, data|
-          next if find_user(email)
-
           name = if data.is_a?(Hash)
                    data[:name]
                  else
                    data
                  end
-
-          form = register_form(email, name)
-          begin
-            InviteUser.call(form) do
-              on(:ok) do
-                add_processed :registered, email
-                log_action find_user(email)
-              end
-              on(:invalid) do
-                add_error :registered, email
-              end
-            end
-          rescue StandardError
-            add_error :registered, email
-          end
+          RegisterUser.new(email, name, organization, current_user, self).call
         end
       end
 
@@ -85,42 +71,23 @@ module Decidim
         end
       end
 
+      def track(event, email, user = nil)
+        if user
+          add_processed event, email
+          log_action user
+        else
+          add_error event, email
+        end
+      end
+
       private
 
-      def find_user(email)
-        User.find_by(email: email, decidim_organization_id: @organization.id)
-      end
-
-      def register_form(email, name)
-        OpenStruct.new(name: name.presence || fallback_name(email),
-                       email: email.downcase,
-                       organization: organization,
-                       admin: false,
-                       invited_by: current_user,
-                       invitation_instructions: "direct_invite")
-      end
-
-      def fallback_name(email)
-        email.split("@").first
-      end
-
-      def authorization(user)
-        Authorization.find_or_initialize_by(
-          user: user,
-          name: authorization_handler
-        )
-      end
-
-      def authorize_form(user)
-        Verification::DirectVerificationsForm.new(email: user.email, name: user.name)
+      def add_error(type, email)
+        @errors[type] << email unless @errors[type].include? email
       end
 
       def add_processed(type, email)
         @processed[type] << email unless @processed[type].include? email
-      end
-
-      def add_error(type, email)
-        @errors[type] << email unless @errors[type].include? email
       end
 
       def log_action(user)
@@ -133,6 +100,21 @@ module Decidim
             invited_user_id: user.id
           }
         )
+      end
+
+      def find_user(email)
+        User.find_by(email: email, decidim_organization_id: @organization.id)
+      end
+
+      def authorization(user)
+        Authorization.find_or_initialize_by(
+          user: user,
+          name: authorization_handler
+        )
+      end
+
+      def authorize_form(user)
+        Verification::DirectVerificationsForm.new(email: user.email, name: user.name)
       end
     end
   end
