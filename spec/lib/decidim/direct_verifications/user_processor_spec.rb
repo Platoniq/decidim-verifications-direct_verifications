@@ -66,6 +66,25 @@ module Decidim
         end
       end
 
+      context "when registering users that already exist" do
+        before do
+          create(:user, email: "em@il.com", organization: organization)
+          subject.emails = ["em@il.com"]
+        end
+
+        it "registers none" do
+          subject.register_users
+
+          expect(subject.processed[:registered].count).to eq(0)
+          expect(subject.errors[:registered].count).to eq(0)
+        end
+
+        it "skips all processing" do
+          expect(InviteUser).not_to receive(:call)
+          subject.register_users
+        end
+      end
+
       context "when registering valid users with metadata" do
         before do
           subject.emails = { "em@il.com" => { name: "Brandy", type: "producer" } }
@@ -97,10 +116,11 @@ module Decidim
       context "when registering invalid users" do
         before do
           subject.emails = ["em@il.org", ""]
-          subject.register_users
         end
 
         it "has errors" do
+          expect { subject.register_users }.to raise_error(ActiveRecord::NotNullViolation)
+
           expect(subject.processed[:registered].count).to eq(1)
           expect(subject.errors[:registered].count).to eq(1)
         end
