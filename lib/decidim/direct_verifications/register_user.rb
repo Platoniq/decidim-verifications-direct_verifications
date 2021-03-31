@@ -14,21 +14,17 @@ module Decidim
       def call
         return if find_user
 
-        form = build_form
-
-        begin
-          InviteUser.call(form) do
-            on(:ok) do
-              instrumenter.track(:registered, email, find_user)
-            end
-            on(:invalid) do
-              instrumenter.track(:registered, email)
-            end
+        InviteUser.call(form) do
+          on(:ok) do
+            instrumenter.track(:registered, email, find_user)
           end
-        rescue StandardError => e
-          instrumenter.track(:registered, email)
-          raise e if Rails.env.test? || Rails.env.development?
+          on(:invalid) do
+            instrumenter.track(:registered, email)
+          end
         end
+      rescue StandardError => e
+        instrumenter.track(:registered, email)
+        raise e if Rails.env.test? || Rails.env.development?
       end
 
       private
@@ -39,7 +35,7 @@ module Decidim
         User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
-      def build_form
+      def form
         RegistrationForm.new(
           name: name.presence || fallback_name,
           email: email.downcase,
