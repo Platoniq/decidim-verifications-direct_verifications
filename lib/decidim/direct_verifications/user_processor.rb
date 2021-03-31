@@ -33,9 +33,6 @@ module Decidim
                 add_processed :registered, email
                 log_action find_user(email)
               end
-              on(:invalid) do
-                add_error :registered, email
-              end
             end
           rescue StandardError
             add_error :registered, email
