@@ -71,6 +71,17 @@ module Decidim
         end
       end
 
+      def track(event, email, user = nil)
+        if user
+          add_processed event, email
+          log_action user
+        else
+          add_error event, email
+        end
+      end
+
+      private
+
       def add_error(type, email)
         @errors[type] << email unless @errors[type].include? email
       end
@@ -90,8 +101,6 @@ module Decidim
           }
         )
       end
-
-      private
 
       def find_user(email)
         User.find_by(email: email, decidim_organization_id: @organization.id)

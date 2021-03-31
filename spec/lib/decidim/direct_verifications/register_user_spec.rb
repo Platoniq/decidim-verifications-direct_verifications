@@ -9,9 +9,7 @@ module Decidim
 
       let(:user) { build(:user) }
       let(:organization) { build(:organization) }
-      let(:instrumenter) do
-        instance_double(UserProcessor, add_processed: true, add_error: true, log_action: true)
-      end
+      let(:instrumenter) { instance_double(UserProcessor, track: true) }
 
       let(:email) { "em@il.com" }
       let(:name) { "Joni" }
@@ -24,9 +22,7 @@ module Decidim
           it "tracks the operation" do
             subject.call
 
-            expect(instrumenter).to have_received(:add_processed).with(:registered, email)
-            expect(instrumenter).to have_received(:log_action).with(kind_of(Decidim::User))
-            expect(instrumenter).not_to have_received(:add_error)
+            expect(instrumenter).to have_received(:track).with(:registered, email, kind_of(Decidim::User))
           end
 
           it "invites the user" do
@@ -43,9 +39,7 @@ module Decidim
 
           it "doesn't track the operation" do
             subject.call
-
-            expect(instrumenter).not_to have_received(:add_processed)
-            expect(instrumenter).not_to have_received(:add_error)
+            expect(instrumenter).not_to have_received(:track)
           end
 
           it "does not invite the user" do
@@ -60,9 +54,7 @@ module Decidim
 
           it "tracks the operation" do
             subject.call
-
-            expect(instrumenter).to have_received(:add_processed)
-            expect(instrumenter).not_to have_received(:add_error)
+            expect(instrumenter).to have_received(:track).with(:registered, email, kind_of(Decidim::User))
           end
 
           it "infers the name from the email" do
@@ -82,7 +74,7 @@ module Decidim
 
           it "tracks the operation" do
             expect { subject.call }.to raise_error(ActiveRecord::NotNullViolation)
-            expect(instrumenter).to have_received(:add_error).with(:registered, email)
+            expect(instrumenter).to have_received(:track).with(:registered, email)
           end
 
           it "tries to invite the user" do

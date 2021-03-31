@@ -20,15 +20,14 @@ module Decidim
         begin
           InviteUser.call(form) do
             on(:ok) do
-              instrumenter.add_processed :registered, email
-              instrumenter.log_action find_user
+              instrumenter.track(:registered, email, find_user)
             end
             on(:invalid) do
-              instrumenter.add_error :registered, email
+              instrumenter.track(:registered, email)
             end
           end
         rescue StandardError => e
-          instrumenter.add_error :registered, email
+          instrumenter.track(:registered, email)
           raise e if Rails.env.test? || Rails.env.development?
         end
       end
