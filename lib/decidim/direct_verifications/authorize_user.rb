@@ -12,15 +12,15 @@ module Decidim
       end
 
       def call
-        u = find_user(email)
+        user = find_user
 
-        if u
-          auth = authorization(u)
+        if user
+          auth = authorization(user)
           auth.metadata = data
 
           return unless !auth.granted? || auth.expired?
 
-          Verification::ConfirmUserAuthorization.call(auth, authorize_form(u), session) do
+          Verification::ConfirmUserAuthorization.call(auth, authorize_form(user), session) do
             on(:ok) do
               instrumenter.add_processed :authorized, email
             end
@@ -37,7 +37,7 @@ module Decidim
 
       attr_reader :email, :data, :session, :organization, :instrumenter
 
-      def find_user(email)
+      def find_user
         User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
