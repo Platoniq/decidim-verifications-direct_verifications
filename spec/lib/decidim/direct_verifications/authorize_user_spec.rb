@@ -8,6 +8,8 @@ module Decidim
       subject { described_class.new(email, data, session, organization, instrumenter) }
 
       describe "#call" do
+        let(:data) { user.name }
+
         context "when authorizing confirmed users" do
           let(:organization) { build(:organization) }
           let(:user) { create(:user, organization: organization) }
@@ -42,6 +44,45 @@ module Decidim
             it "authorizes the user" do
               expect(Verification::ConfirmUserAuthorization).to receive(:call)
               subject.call
+            end
+          end
+
+          context "when the authorization already exists" do
+            context "when the authorization is not granted" do
+              let!(:authorization) { create(:authorization, :pending, user: user, name: :direct_verifications) }
+
+              it "authorizes the user" do
+                expect(Verification::ConfirmUserAuthorization).to receive(:call)
+                subject.call
+              end
+            end
+
+            context "when the authorization is already granted and expired" do
+              let!(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+
+              before do
+                allow(authorization).to receive(:expired?).and_return(true)
+                allow(Decidim::Authorization).to receive(:find_or_initialize_by).and_return(authorization)
+              end
+
+              it "does not authorize the user" do
+                expect(Verification::ConfirmUserAuthorization).to receive(:call)
+                subject.call
+              end
+            end
+
+            context "when the authorization is already granted and not expired" do
+              let!(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+
+              before do
+                allow(authorization).to receive(:expired?).and_return(false)
+                allow(Decidim::Authorization).to receive(:find_or_initialize_by).and_return(authorization)
+              end
+
+              it "does not authorize the user" do
+                expect(Verification::ConfirmUserAuthorization).not_to receive(:call)
+                subject.call
+              end
             end
           end
 
