@@ -2,6 +2,7 @@
 
 require "decidim/direct_verifications/register_user"
 require "decidim/direct_verifications/authorize_user"
+require "decidim/direct_verifications/revoke_user"
 
 module Decidim
   module DirectVerifications
@@ -38,21 +39,7 @@ module Decidim
 
       def revoke_users
         emails.each do |email, _name|
-          if (u = find_user(email))
-            auth = authorization(u)
-            next unless auth.granted?
-
-            Verification::DestroyUserAuthorization.call(auth) do
-              on(:ok) do
-                add_processed :revoked, email
-              end
-              on(:invalid) do
-                add_error :revoked, email
-              end
-            end
-          else
-            add_error :revoked, email
-          end
+          RevokeUser.new(email, organization, self).call
         end
       end
 
@@ -84,17 +71,6 @@ module Decidim
             invited_user_role: "participant",
             invited_user_id: user.id
           }
-        )
-      end
-
-      def find_user(email)
-        User.find_by(email: email, decidim_organization_id: @organization.id)
-      end
-
-      def authorization(user)
-        Authorization.find_or_initialize_by(
-          user: user,
-          name: authorization_handler
         )
       end
     end

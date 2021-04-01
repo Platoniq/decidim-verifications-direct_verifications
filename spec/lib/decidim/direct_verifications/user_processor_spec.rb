@@ -140,10 +140,11 @@ module Decidim
         before do
           subject.emails = { user.email => user.name }
           subject.authorize_users
-          subject.revoke_users
         end
 
         it "has no errors" do
+          subject.revoke_users
+
           expect(subject.processed[:revoked].count).to eq(1)
           expect(subject.errors[:revoked].count).to eq(0)
         end
@@ -153,12 +154,43 @@ module Decidim
         before do
           subject.emails = ["em@il.com"]
           subject.authorize_users
+        end
+
+        it "has errors" do
           subject.revoke_users
+
+          expect(subject.processed[:revoked].count).to eq(0)
+          expect(subject.errors[:revoked].count).to eq(1)
+        end
+      end
+
+      context "when the authorization does not exist" do
+        before do
+          create(:user, email: "em@il.com", organization: organization)
+          subject.emails = ["em@il.com"]
         end
 
         it "has no errors" do
+          subject.revoke_users
+
           expect(subject.processed[:revoked].count).to eq(0)
-          expect(subject.errors[:revoked].count).to eq(1)
+          expect(subject.errors[:revoked].count).to eq(0)
+        end
+      end
+
+      context "when the authorization is not granted" do
+        let(:user) { create(:user, email: "em@il.com", organization: organization) }
+
+        before do
+          subject.emails = ["em@il.com"]
+          create(:authorization, :pending, user: user, name: :direct_verifications)
+        end
+
+        it "has no errors" do
+          subject.revoke_users
+
+          expect(subject.processed[:revoked].count).to eq(0)
+          expect(subject.errors[:revoked].count).to eq(0)
         end
       end
     end
