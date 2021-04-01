@@ -34,22 +34,24 @@ module Decidim
 
       context "when add processed" do
         it "has unique emails per type" do
-          subject.send(:add_processed, :registered, "em@il.com")
-          subject.send(:add_processed, :registered, "em@il.com")
+          subject.add_processed(:registered, "em@il.com")
+          subject.add_processed(:registered, "em@il.com")
           expect(subject.processed[:registered].count).to eq(1)
-          subject.send(:add_processed, :authorized, "em@il.com")
-          subject.send(:add_processed, :authorized, "em@il.com")
+
+          subject.add_processed(:authorized, "em@il.com")
+          subject.add_processed(:authorized, "em@il.com")
           expect(subject.processed[:authorized].count).to eq(1)
         end
       end
 
       context "when add errors" do
         it "has unique emails per type" do
-          subject.send(:add_error, :registered, "em@il.com")
-          subject.send(:add_error, :registered, "em@il.com")
+          subject.add_error(:registered, "em@il.com")
+          subject.add_error(:registered, "em@il.com")
           expect(subject.errors[:registered].count).to eq(1)
-          subject.send(:add_error, :authorized, "em@il.com")
-          subject.send(:add_error, :authorized, "em@il.com")
+
+          subject.add_error(:authorized, "em@il.com")
+          subject.add_error(:authorized, "em@il.com")
           expect(subject.errors[:authorized].count).to eq(1)
         end
       end
