@@ -82,52 +82,57 @@ module Decidim
         end
       end
 
-      context "when authorizing confirmed users" do
-        it "has no errors" do
-          subject.emails = { user.email => user.name }
-          subject.authorize_users
+      describe "#authorize_users" do
+        context "when authorizing confirmed users" do
+          before do
+            subject.emails = { user.email => user.name }
+          end
 
-          expect(subject.processed[:authorized].count).to eq(1)
-          expect(subject.errors[:authorized].count).to eq(0)
+          it "has no errors" do
+            subject.authorize_users
+
+            expect(subject.processed[:authorized].count).to eq(1)
+            expect(subject.errors[:authorized].count).to eq(0)
+          end
         end
 
-        it "stores user data as authorization metadata" do
-          subject.emails = { user.email => { name: user.name, type: "consumer" } }
-          subject.authorize_users
+        context "when authorizing confirmed users with metadata" do
+          before do
+            subject.emails = { user.email => { name: user.name, type: "consumer" } }
+          end
 
-          expect(Authorization.last.metadata).to eq("name" => user.name, "type" => "consumer")
-        end
-      end
-
-      context "when authorizing unconfirmed users" do
-        it "has no errors" do
-          subject.emails = ["em@mail.com"]
-          subject.register_users
-          subject.authorize_users
-
-          expect(subject.processed[:authorized].count).to eq(1)
-          expect(subject.errors[:authorized].count).to eq(0)
+          it "stores user data as authorization metadata" do
+            subject.authorize_users
+            expect(Authorization.last.metadata).to eq("name" => user.name, "type" => "consumer")
+          end
         end
 
-        it "stores user data as authorization metadata" do
-          subject.emails = { "em@mail.com" => { type: "consumer" } }
-          subject.register_users
-          subject.authorize_users
+        context "when authorizing unconfirmed users" do
+          before do
+            subject.emails = ["em@mail.com"]
+            subject.register_users
+          end
 
-          expect(Decidim::User.find_by(email: "em@mail.com").name).to eq("em")
-          expect(Authorization.last.metadata).to eq("type" => "consumer")
-        end
-      end
+          it "has no errors" do
+            subject.authorize_users
 
-      context "when authorizing unregistered users" do
-        before do
-          subject.emails = ["em@mail.com"]
-          subject.authorize_users
+            expect(subject.processed[:authorized].count).to eq(1)
+            expect(subject.errors[:authorized].count).to eq(0)
+          end
         end
 
-        it "has errors" do
-          expect(subject.processed[:authorized].count).to eq(0)
-          expect(subject.errors[:authorized].count).to eq(1)
+        context "when authorizing unconfirmed users with metadata" do
+          before do
+            subject.emails = { "em@mail.com" => { type: "consumer" } }
+            subject.register_users
+          end
+
+          it "stores user data as authorization metadata" do
+            subject.authorize_users
+
+            expect(Decidim::User.find_by(email: "em@mail.com").name).to eq("em")
+            expect(Authorization.last.metadata).to eq("type" => "consumer")
+          end
         end
       end
 
