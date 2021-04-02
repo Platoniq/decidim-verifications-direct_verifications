@@ -21,9 +21,6 @@ module Decidim
           on(:ok) do
             instrumenter.add_processed :revoked, email
           end
-          on(:invalid) do
-            add_error :revoked, email
-          end
         end
       end
 
