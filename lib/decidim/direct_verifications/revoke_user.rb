@@ -15,7 +15,7 @@ module Decidim
           return
         end
 
-        return unless authorization.granted?
+        return unless valid_authorization?
 
         Verification::DestroyUserAuthorization.call(authorization) do
           on(:ok) do
@@ -36,10 +36,11 @@ module Decidim
       end
 
       def authorization
-        @authorization ||= Authorization.find_or_initialize_by(
-          user: user,
-          name: :direct_verifications
-        )
+        @authorization ||= Authorization.find_by(user: user, name: :direct_verifications)
+      end
+
+      def valid_authorization?
+        authorization&.granted?
       end
     end
   end
