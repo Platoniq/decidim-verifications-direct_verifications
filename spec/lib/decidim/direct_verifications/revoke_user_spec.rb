@@ -9,7 +9,7 @@ module Decidim
 
       describe "#call" do
         let(:organization) { build(:organization) }
-        let(:instrumenter) { instance_double(UserProcessor, add_processed: true, add_error: true) }
+        let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 
         context "when revoking existing users" do
           let(:user) { create(:user, organization: organization) }
