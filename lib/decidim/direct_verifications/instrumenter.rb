@@ -5,8 +5,8 @@ module Decidim
     class Instrumenter
       def initialize(current_user)
         @current_user = current_user
-        @errors = { registered: [], authorized: [], revoked: [] }
-        @processed = { registered: [], authorized: [], revoked: [] }
+        @errors = { registered: Set.new, authorized: Set.new, revoked: Set.new }
+        @processed = { registered: Set.new, authorized: Set.new, revoked: Set.new }
       end
 
       def processed_count(key)
@@ -27,11 +27,11 @@ module Decidim
       end
 
       def add_error(type, email)
-        @errors[type] << email unless @errors[type].include? email
+        @errors[type] << email
       end
 
       def add_processed(type, email)
-        @processed[type] << email unless @processed[type].include? email
+        @processed[type] << email
       end
 
       private
