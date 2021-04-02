@@ -75,6 +75,24 @@ module Decidim
             subject.call
           end
         end
+
+        context "when the authorization fails to be destroyed" do
+          let(:user) { create(:user, organization: organization) }
+          let(:email) { user.email }
+          let(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+
+          before do
+            allow(authorization).to receive(:destroy!).and_raise(ActiveRecord::ActiveRecordError)
+            allow(Authorization)
+              .to receive(:find_by)
+              .with(user: user, name: :direct_verifications)
+              .and_return(authorization)
+          end
+
+          it "lets lower-level exceptions to pass through" do
+            expect { subject.call }.to raise_error(ActiveRecord::ActiveRecordError)
+          end
+        end
       end
     end
   end
