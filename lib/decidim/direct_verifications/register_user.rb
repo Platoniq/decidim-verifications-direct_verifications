@@ -12,11 +12,11 @@ module Decidim
       end
 
       def call
-        return if find_user
+        return if user
 
         InviteUser.call(form) do
           on(:ok) do
-            instrumenter.track(:registered, email, find_user)
+            instrumenter.track(:registered, email, user)
           end
           on(:invalid) do
             instrumenter.track(:registered, email)
@@ -31,8 +31,8 @@ module Decidim
 
       attr_reader :email, :name, :organization, :current_user, :instrumenter
 
-      def find_user
-        User.find_by(email: email, decidim_organization_id: organization.id)
+      def user
+        @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
       def form
