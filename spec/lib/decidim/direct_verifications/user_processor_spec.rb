@@ -41,8 +41,8 @@ module Decidim
           end
 
           it "has no errors" do
-            expect(instrumenter.processed[:registered].count).to eq(2)
-            expect(instrumenter.errors[:registered].count).to eq(0)
+            expect(instrumenter.processed_count(:registered)).to eq(2)
+            expect(instrumenter.errors_count(:registered)).to eq(0)
           end
         end
 
@@ -53,8 +53,8 @@ module Decidim
           end
 
           it "has no errors" do
-            expect(instrumenter.processed[:registered].count).to eq(1)
-            expect(instrumenter.errors[:registered].count).to eq(0)
+            expect(instrumenter.processed_count(:registered)).to eq(1)
+            expect(instrumenter.errors_count(:registered)).to eq(0)
           end
         end
       end
@@ -68,8 +68,8 @@ module Decidim
           it "has no errors" do
             subject.authorize_users
 
-            expect(instrumenter.processed[:authorized].count).to eq(1)
-            expect(instrumenter.errors[:authorized].count).to eq(0)
+            expect(instrumenter.processed_count(:authorized)).to eq(1)
+            expect(instrumenter.errors_count(:authorized)).to eq(0)
           end
         end
 
@@ -93,8 +93,8 @@ module Decidim
           it "has no errors" do
             subject.authorize_users
 
-            expect(instrumenter.processed[:authorized].count).to eq(1)
-            expect(instrumenter.errors[:authorized].count).to eq(0)
+            expect(instrumenter.processed_count(:authorized)).to eq(1)
+            expect(instrumenter.errors_count(:authorized)).to eq(0)
           end
         end
 
@@ -122,8 +122,8 @@ module Decidim
         it "has no errors" do
           subject.revoke_users
 
-          expect(instrumenter.processed[:revoked].count).to eq(1)
-          expect(instrumenter.errors[:revoked].count).to eq(0)
+          expect(instrumenter.processed_count(:revoked)).to eq(1)
+          expect(instrumenter.errors_count(:revoked)).to eq(0)
         end
       end
 
@@ -136,8 +136,8 @@ module Decidim
         it "has errors" do
           subject.revoke_users
 
-          expect(instrumenter.processed[:revoked].count).to eq(0)
-          expect(instrumenter.errors[:revoked].count).to eq(1)
+          expect(instrumenter.processed_count(:revoked)).to eq(0)
+          expect(instrumenter.errors_count(:revoked)).to eq(1)
         end
       end
     end

@@ -13,7 +13,7 @@ module Decidim
         context "when the email does not exist" do
           it "adds the email" do
             subject.add_error(type, "email@example.com")
-            expect(subject.errors[type]).to contain_exactly("email@example.com")
+            expect(subject.errors_count(type)).to eq(1)
           end
         end
 
@@ -22,7 +22,7 @@ module Decidim
 
           it "does not duplicate the email" do
             subject.add_error(type, "email@example.com")
-            expect(subject.errors[type]).to contain_exactly("email@example.com")
+            expect(subject.errors_count(type)).to eq(1)
           end
         end
       end
@@ -31,7 +31,7 @@ module Decidim
         context "when the email does not exist" do
           it "adds the email" do
             subject.add_processed(type, "email@example.com")
-            expect(subject.processed[type]).to contain_exactly("email@example.com")
+            expect(subject.processed_count(type)).to eq(1)
           end
         end
 
@@ -40,7 +40,7 @@ module Decidim
 
           it "does not duplicate the email" do
             subject.add_processed(type, "email@example.com")
-            expect(subject.processed[type]).to contain_exactly("email@example.com")
+            expect(subject.processed_count(type)).to eq(1)
           end
         end
       end
@@ -84,7 +84,7 @@ module Decidim
 
             it "adds the process event" do
               subject.track(type, "email@example.com", user)
-              expect(subject.processed[type]).to contain_exactly("email@example.com")
+              expect(subject.processed_count(type)).to eq(1)
             end
 
             it "logs the action" do
@@ -116,7 +116,7 @@ module Decidim
 
             it "adds the error event" do
               subject.track(type, "email@example.com")
-              expect(subject.errors[type]).to contain_exactly("email@example.com")
+              expect(subject.errors_count(type)).to eq(1)
             end
           end
 

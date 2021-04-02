@@ -3,12 +3,18 @@
 module Decidim
   module DirectVerifications
     class Instrumenter
-      attr_reader :processed, :errors
-
       def initialize(current_user)
         @current_user = current_user
         @errors = { registered: [], authorized: [], revoked: [] }
         @processed = { registered: [], authorized: [], revoked: [] }
+      end
+
+      def processed_count(key)
+        processed[key].size
+      end
+
+      def errors_count(key)
+        errors[key].size
       end
 
       def track(event, email, user = nil)
@@ -30,7 +36,7 @@ module Decidim
 
       private
 
-      attr_reader :current_user
+      attr_reader :current_user, :processed, :errors
 
       def log_action(user)
         Decidim.traceability.perform_action!(
