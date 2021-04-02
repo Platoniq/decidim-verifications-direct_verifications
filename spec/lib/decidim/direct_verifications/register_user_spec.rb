@@ -9,7 +9,7 @@ module Decidim
 
       let(:user) { build(:user) }
       let(:organization) { build(:organization) }
-      let(:instrumenter) { instance_double(UserProcessor, track: true) }
+      let(:instrumenter) { instance_double(Instrumenter, track: true) }
 
       let(:email) { "em@il.com" }
       let(:name) { "Joni" }

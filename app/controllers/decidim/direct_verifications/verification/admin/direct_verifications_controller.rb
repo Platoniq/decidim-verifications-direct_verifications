@@ -18,11 +18,16 @@ module Decidim
             enforce_permission_to :create, :authorization
 
             @userslist = params[:userslist]
-            @processor = UserProcessor.new(current_organization, current_user, session)
+
+            @instrumenter = Instrumenter.new(current_user)
+
+            @processor = UserProcessor.new(current_organization, current_user, session, @instrumenter)
             @processor.emails = parser_class.new(@userslist).to_h
             @processor.authorization_handler = current_authorization_handler
+
             @stats = UserStats.new(current_organization)
             @stats.authorization_handler = @processor.authorization_handler
+
             register_users
             authorize_users
             revoke_users
@@ -39,8 +44,8 @@ module Decidim
 
             @processor.register_users
             flash[:warning] = t(".registered", count: @processor.emails.count,
-                                               registered: @processor.processed[:registered].count,
-                                               errors: @processor.errors[:registered].count)
+                                               registered: @instrumenter.processed[:registered].count,
+                                               errors: @instrumenter.errors[:registered].count)
           end
 
           def authorize_users
@@ -49,8 +54,8 @@ module Decidim
             @processor.authorize_users
             flash[:notice] = t(".authorized", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                               count: @processor.emails.count,
-                                              authorized: @processor.processed[:authorized].count,
-                                              errors: @processor.errors[:authorized].count)
+                                              authorized: @instrumenter.processed[:authorized].count,
+                                              errors: @instrumenter.errors[:authorized].count)
           end
 
           def revoke_users
@@ -59,8 +64,8 @@ module Decidim
             @processor.revoke_users
             flash[:notice] = t(".revoked", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                            count: @processor.emails.count,
-                                           revoked: @processor.processed[:revoked].count,
-                                           errors: @processor.errors[:revoked].count)
+                                           revoked: @instrumenter.processed[:revoked].count,
+                                           errors: @instrumenter.errors[:revoked].count)
           end
 
           def show_users_info

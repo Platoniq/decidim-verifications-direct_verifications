@@ -5,13 +5,14 @@ require "spec_helper"
 module Decidim
   module DirectVerifications
     describe UserProcessor do
-      subject { described_class.new(organization, user, session) }
+      subject { described_class.new(organization, user, session, instrumenter) }
 
       let(:user) { create(:user, :confirmed, :admin, organization: organization) }
       let(:session) { double(:session) }
       let(:organization) do
         create(:organization, available_authorizations: ["direct_verifications"])
       end
+      let(:instrumenter) { Instrumenter.new(nil) }
 
       context "when emails are passed" do
         it "uses the specified name" do
@@ -34,29 +35,31 @@ module Decidim
 
       context "when add processed" do
         it "has unique emails per type" do
-          subject.add_processed(:registered, "em@il.com")
-          subject.add_processed(:registered, "em@il.com")
-          expect(subject.processed[:registered].count).to eq(1)
+          instrumenter.add_processed(:registered, "em@il.com")
+          instrumenter.add_processed(:registered, "em@il.com")
+          expect(instrumenter.processed[:registered].count).to eq(1)
 
-          subject.add_processed(:authorized, "em@il.com")
-          subject.add_processed(:authorized, "em@il.com")
-          expect(subject.processed[:authorized].count).to eq(1)
+          instrumenter.add_processed(:authorized, "em@il.com")
+          instrumenter.add_processed(:authorized, "em@il.com")
+          expect(instrumenter.processed[:authorized].count).to eq(1)
         end
       end
 
       context "when add errors" do
         it "has unique emails per type" do
-          subject.add_error(:registered, "em@il.com")
-          subject.add_error(:registered, "em@il.com")
-          expect(subject.errors[:registered].count).to eq(1)
+          instrumenter.add_error(:registered, "em@il.com")
+          instrumenter.add_error(:registered, "em@il.com")
+          expect(instrumenter.errors[:registered].count).to eq(1)
 
-          subject.add_error(:authorized, "em@il.com")
-          subject.add_error(:authorized, "em@il.com")
-          expect(subject.errors[:authorized].count).to eq(1)
+          instrumenter.add_error(:authorized, "em@il.com")
+          instrumenter.add_error(:authorized, "em@il.com")
+          expect(instrumenter.errors[:authorized].count).to eq(1)
         end
       end
 
       describe "#register_users" do
+        subject { described_class.new(organization, user, session, instrumenter) }
+
         context "when registering valid users" do
           before do
             subject.emails = ["em@il.com", "em@il.com", "em@il.net"]
@@ -64,8 +67,8 @@ module Decidim
           end
 
           it "has no errors" do
-            expect(subject.processed[:registered].count).to eq(2)
-            expect(subject.errors[:registered].count).to eq(0)
+            expect(instrumenter.processed[:registered].count).to eq(2)
+            expect(instrumenter.errors[:registered].count).to eq(0)
           end
         end
 
@@ -76,8 +79,8 @@ module Decidim
           end
 
           it "has no errors" do
-            expect(subject.processed[:registered].count).to eq(1)
-            expect(subject.errors[:registered].count).to eq(0)
+            expect(instrumenter.processed[:registered].count).to eq(1)
+            expect(instrumenter.errors[:registered].count).to eq(0)
           end
         end
       end
@@ -91,8 +94,8 @@ module Decidim
           it "has no errors" do
             subject.authorize_users
 
-            expect(subject.processed[:authorized].count).to eq(1)
-            expect(subject.errors[:authorized].count).to eq(0)
+            expect(instrumenter.processed[:authorized].count).to eq(1)
+            expect(instrumenter.errors[:authorized].count).to eq(0)
           end
         end
 
@@ -116,8 +119,8 @@ module Decidim
           it "has no errors" do
             subject.authorize_users
 
-            expect(subject.processed[:authorized].count).to eq(1)
-            expect(subject.errors[:authorized].count).to eq(0)
+            expect(instrumenter.processed[:authorized].count).to eq(1)
+            expect(instrumenter.errors[:authorized].count).to eq(0)
           end
         end
 
@@ -145,8 +148,8 @@ module Decidim
         it "has no errors" do
           subject.revoke_users
 
-          expect(subject.processed[:revoked].count).to eq(1)
-          expect(subject.errors[:revoked].count).to eq(0)
+          expect(instrumenter.processed[:revoked].count).to eq(1)
+          expect(instrumenter.errors[:revoked].count).to eq(0)
         end
       end
 
@@ -159,8 +162,8 @@ module Decidim
         it "has errors" do
           subject.revoke_users
 
-          expect(subject.processed[:revoked].count).to eq(0)
-          expect(subject.errors[:revoked].count).to eq(1)
+          expect(instrumenter.processed[:revoked].count).to eq(0)
+          expect(instrumenter.errors[:revoked].count).to eq(1)
         end
       end
     end
