@@ -27,6 +27,8 @@ en:
               file: CSV file with users data
             create:
               success: successfully
+            successful_import:
+              subject: File imported successfully
           authorizations:
             index:
               created_at: Created at

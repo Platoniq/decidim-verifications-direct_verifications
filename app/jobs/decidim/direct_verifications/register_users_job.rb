@@ -14,6 +14,7 @@ module Decidim
         @instrumenter = Instrumenter.new(current_user)
 
         register_users
+        send_email_notification
       end
 
       private
@@ -29,6 +30,10 @@ module Decidim
                  end
           RegisterUser.new(email, name, organization, current_user, instrumenter).call
         end
+      end
+
+      def send_email_notification
+        ImportMailer.successful_import(current_user).deliver_now
       end
     end
   end

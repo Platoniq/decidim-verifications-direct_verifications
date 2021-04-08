@@ -34,6 +34,8 @@ describe "Admin imports users", type: :system do
       expect(page).to have_admin_callout("successfully")
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
       expect(Decidim::User.last.email).to eq("brandy@example.com")
+      expect(ActionMailer::Base.deliveries.last.subject)
+        .to eq(I18n.t("decidim.direct_verifications.verification.admin.imports.successful_import.subject"))
     end
   end
 end
