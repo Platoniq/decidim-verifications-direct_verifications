@@ -12,12 +12,20 @@ module Decidim
           def create
             enforce_permission_to :create, :authorization
 
-            CreateImport.call(params[:file], current_organization, current_user) do
+            defaults = { organization: current_organization, user: current_user }
+            form = form(CreateImportForm).from_params(params.merge(defaults))
+
+            CreateImport.call(form) do
               on(:ok) do
                 flash[:notice] = t(".success")
-                redirect_to decidim_admin_direct_verifications.new_import_path
+              end
+
+              on(:invalid) do
+                flash[:alert] = t(".error")
               end
             end
+
+            redirect_to new_import_path
           end
         end
       end

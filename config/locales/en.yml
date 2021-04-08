@@ -27,6 +27,7 @@ en:
               file: CSV file with users data
             create:
               success: successfully
+              error: There was an error importing the file
             successful_import:
               subject: File imported successfully
           authorizations:

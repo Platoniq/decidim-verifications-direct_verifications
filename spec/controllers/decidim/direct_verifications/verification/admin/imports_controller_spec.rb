@@ -32,9 +32,33 @@ module Decidim::DirectVerifications::Verification::Admin
         end
       end
 
-      it "authorizes the action" do
-        expect(controller).to receive(:allowed_to?).with(:create, :authorization, {})
-        post :create, params: { file: file }
+      context "when the import is valid" do
+        it "authorizes the action" do
+          expect(controller).to receive(:allowed_to?).with(:create, :authorization, {})
+          post :create, params: { file: file }
+        end
+
+        it "redirects to :new" do
+          post :create, params: { file: file }
+          expect(response).to redirect_to(new_import_path)
+        end
+      end
+
+      context "when the import is not valid" do
+        it "authorizes the action" do
+          expect(controller).to receive(:allowed_to?).with(:create, :authorization, {})
+          post :create, params: {}
+        end
+
+        it "redirects to :new" do
+          post :create, params: {}
+          expect(response).to redirect_to(new_import_path)
+        end
+
+        it "displays an error" do
+          post :create, params: {}
+          expect(flash[:alert]).to eq(I18n.t("decidim.direct_verifications.verification.admin.imports.create.error"))
+        end
       end
     end
   end
