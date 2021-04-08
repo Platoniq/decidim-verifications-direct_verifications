@@ -5,9 +5,13 @@ module Decidim
     module Verification
       module Admin
         class ImportsController < Decidim::Admin::ApplicationController
-          def new; end
+          def new
+            enforce_permission_to :create, :authorization
+          end
 
           def create
+            enforce_permission_to :create, :authorization
+
             CreateImport.call(params[:file], current_organization, current_user) do
               on(:ok) do
                 flash[:notice] = t(".success")
