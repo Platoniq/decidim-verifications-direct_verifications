@@ -4,12 +4,23 @@ module Decidim
   module DirectVerifications
     module Verification
       class CreateImportForm < Form
-        attribute :file
+        ACTIONS = {
+          "in" => :register,
+          "out" => :revoke,
+          "check" => :check
+        }.freeze
 
+        attribute :file
         attribute :organization, Decidim::Organization
         attribute :user, Decidim::User
+        attribute :authorize
 
         validates :file, :organization, :user, presence: true
+        validates :authorize, inclusion: { in: ACTIONS.keys }
+
+        def action
+          ACTIONS[authorize]
+        end
       end
     end
   end
