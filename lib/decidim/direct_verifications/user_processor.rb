@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "decidim/direct_verifications/register_user"
+require "decidim/direct_verifications/authorize_user"
 
 module Decidim
   module DirectVerifications
@@ -31,23 +32,7 @@ module Decidim
 
       def authorize_users
         emails.each do |email, data|
-          if (u = find_user(email))
-            auth = authorization(u)
-            auth.metadata = data
-
-            next unless !auth.granted? || auth.expired?
-
-            Verification::ConfirmUserAuthorization.call(auth, authorize_form(u), session) do
-              on(:ok) do
-                add_processed :authorized, email
-              end
-              on(:invalid) do
-                add_error :authorized, email
-              end
-            end
-          else
-            add_error :authorized, email
-          end
+          AuthorizeUser.new(email, data, session, organization, self).call
         end
       end
 
@@ -80,8 +65,6 @@ module Decidim
         end
       end
 
-      private
-
       def add_error(type, email)
         @errors[type] << email unless @errors[type].include? email
       end
@@ -89,6 +72,8 @@ module Decidim
       def add_processed(type, email)
         @processed[type] << email unless @processed[type].include? email
       end
+
+      private
 
       def log_action(user)
         Decidim.traceability.perform_action!(
@@ -111,10 +96,6 @@ module Decidim
           user: user,
           name: authorization_handler
         )
-      end
-
-      def authorize_form(user)
-        Verification::DirectVerificationsForm.new(email: user.email, name: user.name)
       end
     end
   end
