@@ -22,15 +22,8 @@ module Decidim::DirectVerifications::Verification::Admin
     end
 
     describe "#create" do
-      let(:filename) { "fixture.csv" }
+      let(:filename) { file_fixture("users.csv") }
       let(:file) { Rack::Test::UploadedFile.new(filename, "text/csv") }
-
-      before do
-        CSV.open(filename, "wb") do |csv|
-          csv << %w(Name Email Type)
-          csv << %w(Brandy brandy@example.com consumer)
-        end
-      end
 
       context "when the import is valid" do
         it "authorizes the action" do

@@ -14,15 +14,7 @@ describe "Admin imports users", type: :system do
   end
 
   context "when visiting the imports page" do
-    let(:filename) { "fixture.csv" }
-    let!(:fixture_file) do
-      CSV.open(filename, "wb") do |csv|
-        csv << %w(Name Email Type)
-        csv << %w(Brandy brandy@example.com consumer)
-      end
-    end
-
-    after { File.delete(filename) }
+    let(:filename) { file_fixture("users.csv") }
 
     it "enables uploading a CSV file" do
       attach_file("CSV file with users data", filename)
