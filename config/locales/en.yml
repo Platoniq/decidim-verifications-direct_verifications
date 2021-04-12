@@ -21,6 +21,15 @@ en:
     direct_verifications:
       verification:
         admin:
+          imports:
+            new:
+              submit: Upload file
+              file: CSV file with users data
+            create:
+              success: successfully
+              error: There was an error importing the file
+            successful_import:
+              subject: File imported successfully
           authorizations:
             index:
               created_at: Created at
