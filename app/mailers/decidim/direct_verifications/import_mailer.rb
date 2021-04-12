@@ -3,24 +3,21 @@
 module Decidim
   module DirectVerifications
     class ImportMailer < Decidim::Admin::ApplicationMailer
-      Stats = Struct.new(:count, :registered, :errors, keyword_init: true)
-
       include LocalisedMailer
 
       layout "decidim/mailer"
 
-      def finished_registration(user, instrumenter)
+      I18N_SCOPE = "decidim.direct_verifications.verification.admin.imports.mailer"
+
+      def finished_processing(user, instrumenter, type)
+        @stats = Stats.from(instrumenter, type)
         @organization = user.organization
-        @stats = Stats.new(
-          count: instrumenter.emails_count(:registered),
-          registered: instrumenter.processed_count(:registered),
-          errors: instrumenter.errors_count(:registered)
-        )
+        @i18n_key = "#{I18N_SCOPE}.#{type}"
 
         with_user(user) do
           mail(
             to: user.email,
-            subject: I18n.t("decidim.direct_verifications.verification.admin.imports.mailer.subject")
+            subject: I18n.t("#{I18N_SCOPE}.subject")
           )
         end
       end
