@@ -4,24 +4,8 @@ require "decidim/direct_verifications/instrumenter"
 
 module Decidim
   module DirectVerifications
-    class RegisterUsersJob < ApplicationJob
-      queue_as :default
-
-      def perform(userslist, organization, user)
-        @emails = Verification::MetadataParser.new(userslist).to_h
-        @organization = organization
-        @current_user = user
-        @instrumenter = Instrumenter.new(current_user)
-
-        register_users
-        send_email_notification
-      end
-
-      private
-
-      attr_reader :organization, :current_user, :instrumenter, :emails
-
-      def register_users
+    class RegisterUsersJob < BaseImportJob
+      def process_users
         emails.each do |email, data|
           name = if data.is_a?(Hash)
                    data[:name]
