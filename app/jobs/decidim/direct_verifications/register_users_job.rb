@@ -33,7 +33,7 @@ module Decidim
       end
 
       def send_email_notification
-        ImportMailer.successful_import(current_user).deliver_now
+        ImportMailer.finished_registration(current_user, instrumenter).deliver_now
       end
     end
   end
