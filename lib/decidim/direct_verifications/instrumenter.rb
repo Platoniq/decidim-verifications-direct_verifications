@@ -25,6 +25,10 @@ module Decidim
         errors[key].size
       end
 
+      def emails_count(key)
+        @processed[key].size + @errors[key].size
+      end
+
       def track(event, email, user = nil)
         if user
           add_processed event, email

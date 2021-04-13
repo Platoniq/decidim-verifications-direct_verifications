@@ -28,8 +28,8 @@ en:
             create:
               success: successfully
               error: There was an error importing the file
-            successful_import:
-              subject: File imported successfully
+            mailer:
+              subject: Users processed
           authorizations:
             index:
               created_at: Created at

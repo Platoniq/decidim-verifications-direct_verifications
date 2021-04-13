@@ -15,7 +15,10 @@ module Decidim
       end
 
       before do
-        allow(ImportMailer).to receive(:successful_import).with(current_user).and_return(mailer)
+        allow(ImportMailer)
+          .to receive(:finished_registration)
+          .with(current_user, kind_of(Instrumenter))
+          .and_return(mailer)
       end
 
       it "creates the user" do
