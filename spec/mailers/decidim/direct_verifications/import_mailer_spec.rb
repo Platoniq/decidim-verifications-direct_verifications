@@ -24,6 +24,10 @@ module Decidim
         it "renders the body" do
           expect(mail.body.encoded).to include("Register successful")
         end
+
+        it "sets the organization" do
+          expect(mail.body.encoded).to include(user.organization.name)
+        end
       end
     end
   end

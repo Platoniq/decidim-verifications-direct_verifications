@@ -5,7 +5,11 @@ module Decidim
     class ImportMailer < Decidim::Admin::ApplicationMailer
       include LocalisedMailer
 
+      layout "decidim/mailer"
+
       def successful_import(user)
+        @organization = user.organization
+
         with_user(user) do
           mail(
             to: user.email,
