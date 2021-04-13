@@ -30,6 +30,14 @@ en:
               error: There was an error importing the file
             mailer:
               subject: Users processed
+              authorized: "%{successful} users have been successfully verified using
+                [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} users detected, of which %{registered} are registered,
+                %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              registered: "%{successful} users have been successfully registered (%{count}
+                detected, %{errors} errors) "
+              revoked: Verification from %{successful} users have been revoked using
+                [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Created at

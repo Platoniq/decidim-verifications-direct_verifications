@@ -9,21 +9,32 @@ module Decidim
           @file = form.file
           @organization = form.organization
           @user = form.user
+          @action = form.action
         end
 
         def call
           return broadcast(:invalid) unless form.valid?
 
-          register_users_async
+          case action
+          when :register
+            register_users_async
+          when :revoke
+            revoke_users_async
+          end
+
           broadcast(:ok)
         end
 
         private
 
-        attr_reader :form, :file, :organization, :user
+        attr_reader :form, :file, :organization, :user, :action
 
         def register_users_async
           RegisterUsersJob.perform_later(file.read, organization, user)
+        end
+
+        def revoke_users_async
+          RevokeUsersJob.perform_later(file.read, organization, user)
         end
       end
     end
