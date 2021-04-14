@@ -13,9 +13,9 @@ module Decidim
         attribute :file
         attribute :organization, Decidim::Organization
         attribute :user, Decidim::User
-        attribute :authorize
+        attribute :authorize, String
 
-        validates :file, :organization, :user, presence: true
+        validates :file, :organization, :user, :authorize, presence: true
         validates :authorize, inclusion: { in: ACTIONS.keys }
 
         def action
