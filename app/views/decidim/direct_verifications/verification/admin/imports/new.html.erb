@@ -7,12 +7,13 @@
     </h2>
   </div>
   <div class="card-section">
-    <p><%= t("decidim.direct_verifications.verification.admin.new.info") %></p>
+    <p><%= t("decidim.direct_verifications.verification.admin.imports.new.info") %></p>
     <pre class="code-block">
-    foo
+      <strong><%= t("decidim.direct_verifications.verification.admin.imports.new.template.header") %></strong>
+      <%= t("decidim.direct_verifications.verification.admin.imports.new.template.body") %>
     </pre>
-    <%= form_tag imports_path, multipart: true, class: "form" do %>
-      <%= label_tag :userslist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
+
+    <%= decidim_form_for(@form, url: imports_path, html: { class: "form" }) do |form| %>
       <label>
         <%= check_box_tag :register %>
         <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
@@ -35,9 +36,8 @@
 
       <%# TODO: add authorization_handler field %>
 
-      <%= label_tag :file, t(".file") %>
-      <%= file_field_tag :file %>
-      <%= submit_tag t(".submit"), class: "button" %>
+      <%= form.file_field :file, label: t(".file") %>
+      <%= form.submit t(".submit"), class: "button" %>
     <% end %>
 
   </div>

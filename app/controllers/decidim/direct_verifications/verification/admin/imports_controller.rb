@@ -7,6 +7,7 @@ module Decidim
         class ImportsController < Decidim::Admin::ApplicationController
           def new
             enforce_permission_to :create, :authorization
+            @form = form(CreateImportForm).instance
           end
 
           def create

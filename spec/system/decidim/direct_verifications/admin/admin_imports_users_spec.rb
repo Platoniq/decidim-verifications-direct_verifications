@@ -28,7 +28,7 @@ describe "Admin imports users", type: :system do
           click_button("Upload file")
         end
 
-        expect(page).to have_admin_callout("successfully")
+        expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
         expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
         expect(Decidim::User.last.email).to eq("brandy@example.com")
