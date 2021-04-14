@@ -22,34 +22,87 @@ module Decidim
           it { is_expected.to be_valid }
         end
 
-        context "when action is in" do
-          let(:action) { "in" }
+        context "when :register is provided" do
+          let(:attributes) do
+            {
+              user: build(:user),
+              organization: build(:organization),
+              file: double(File),
+              authorize: action,
+              register: "1"
+            }
+          end
 
-          it "returns it as :register" do
-            expect(form.action).to eq(:register)
+          context "when action is in" do
+            let(:action) { "in" }
+
+            it "returns it as :register_and_authorize" do
+              expect(form.action).to eq(:register_and_authorize)
+            end
+          end
+
+          context "when action is out" do
+            let(:action) { "out" }
+
+            it "returns it as :register" do
+              expect(form.action).to eq(:register)
+            end
+          end
+
+          context "when action is check" do
+            let(:action) { "check" }
+
+            it "returns it as :register" do
+              expect(form.action).to eq(:register)
+            end
+          end
+
+          context "when action is unknown" do
+            let(:action) { "dummy" }
+
+            it { is_expected.not_to be_valid }
           end
         end
 
-        context "when action is out" do
-          let(:action) { "out" }
-
-          it "returns it as :revoke" do
-            expect(form.action).to eq(:revoke)
+        context "when :register is not provided" do
+          let(:attributes) do
+            {
+              user: build(:user),
+              organization: build(:organization),
+              file: double(File),
+              authorize: action
+            }
           end
-        end
 
-        context "when action is check" do
-          let(:action) { "check" }
+          context "when action is in" do
+            let(:action) { "in" }
 
-          it "returns it as :check" do
-            expect(form.action).to eq(:check)
+            it "returns it as :authorize" do
+              expect(form.action).to eq(:authorize)
+            end
           end
-        end
 
-        context "when action is unknown" do
-          let(:action) { "dummy" }
+          context "when action is out" do
+            let(:action) { "out" }
 
-          it { is_expected.not_to be_valid }
+            it "returns it as :revoke" do
+              expect(form.action).to eq(:revoke)
+            end
+          end
+
+          context "when action is check" do
+            let(:action) { "check" }
+
+            it "returns it as :check" do
+              expect(form.action).to eq(:check)
+            end
+          end
+
+          context "when action is unknown" do
+            let(:action) { "dummy" }
+
+            it { is_expected.not_to be_valid }
+          end
         end
       end
     end

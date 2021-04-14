@@ -18,6 +18,10 @@ module Decidim
           case action
           when :register
             register_users_async
+          when :register_and_authorize
+            register_users_async
+            file.rewind
+            authorize_users_async
           when :revoke
             revoke_users_async
           end
@@ -35,6 +39,10 @@ module Decidim
 
         def revoke_users_async
           RevokeUsersJob.perform_later(file.read, organization, user)
+        end
+
+        def authorize_users_async
+          AuthorizeUsersJob.perform_later(file.read, organization, user)
         end
       end
     end
