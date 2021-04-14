@@ -7,9 +7,10 @@
     </h2>
   </div>
   <div class="card-section">
-    <p><%= t("decidim.direct_verifications.verification.admin.new.info") %></p>
+    <p><%= t("decidim.direct_verifications.verification.admin.imports.new.info") %></p>
     <pre class="code-block">
-    foo
+      <strong><%= t("decidim.direct_verifications.verification.admin.imports.new.template.header") %></strong>
+      <%= t("decidim.direct_verifications.verification.admin.imports.new.template.body") %>
     </pre>
 
     <%= decidim_form_for(@form, url: imports_path, html: { class: "form" }) do |form| %>
