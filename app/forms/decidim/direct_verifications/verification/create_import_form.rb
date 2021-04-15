@@ -5,7 +5,7 @@ module Decidim
     module Verification
       class CreateImportForm < Form
         ACTIONS = {
-          "in" => :register,
+          "in" => :authorize,
           "out" => :revoke,
           "check" => :check
         }.freeze
@@ -14,12 +14,19 @@ module Decidim
         attribute :organization, Decidim::Organization
         attribute :user, Decidim::User
         attribute :authorize, String
+        attribute :register, Boolean
 
         validates :file, :organization, :user, :authorize, presence: true
         validates :authorize, inclusion: { in: ACTIONS.keys }
 
         def action
-          ACTIONS[authorize]
+          if register && authorize == "in"
+            :register_and_authorize
+          elsif register
+            :register
+          else
+            ACTIONS[authorize]
+          end
         end
       end
     end
