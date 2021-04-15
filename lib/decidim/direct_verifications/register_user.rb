@@ -3,9 +3,9 @@
 module Decidim
   module DirectVerifications
     class RegisterUser
-      def initialize(email, name, organization, current_user, instrumenter)
+      def initialize(email, data, organization, current_user, instrumenter)
         @email = email
-        @name = name
+        @name = data.is_a?(Hash) ? data[:name] : data
         @organization = organization
         @current_user = current_user
         @instrumenter = instrumenter
