@@ -9,8 +9,8 @@ module Decidim
         end
       end
 
-      def send_email_notification
-        ImportMailer.finished_processing(current_user, instrumenter, :revoked).deliver_now
+      def type
+        :revoked
       end
     end
   end
