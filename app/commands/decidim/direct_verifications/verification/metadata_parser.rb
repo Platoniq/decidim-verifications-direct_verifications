@@ -9,8 +9,8 @@ module Decidim
         def header
           @header ||= begin
                         header_row = lines[0].chomp
-                        column_names = tokenize(header_row)
-                        column_names.map(&:to_sym).map(&:downcase)
+                        header_row = tokenize(header_row)
+                        normalize_header(header_row)
                       end
         end
 
@@ -23,7 +23,7 @@ module Decidim
 
           hash = {}
           header.each_with_index do |column, index|
-            value = tokens[index].strip
+            value = tokens[index]
             next if value.include?(email)
 
             hash[column] = value
@@ -34,7 +34,13 @@ module Decidim
         private
 
         def tokenize(line)
-          CSV.parse(line)[0]
+          CSV.parse(line)[0].map(&:strip)
+        end
+
+        def normalize_header(line)
+          line.map do |text|
+            text.to_sym.downcase
+          end
         end
       end
     end

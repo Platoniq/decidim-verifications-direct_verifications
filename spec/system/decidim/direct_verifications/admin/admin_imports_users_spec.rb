@@ -7,8 +7,6 @@ describe "Admin imports users", type: :system do
   let(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
   let(:i18n_scope) { "decidim.direct_verifications.verification.admin" }
-  let(:last_email_delivery) { ActionMailer::Base.deliveries.last }
-
   let(:filename) { file_fixture("users.csv") }
 
   before do
@@ -31,9 +29,10 @@ describe "Admin imports users", type: :system do
       expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
-      expect(Decidim::User.last.email).to eq("brandy@example.com")
+      expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
+      expect(ActionMailer::Base.deliveries.first.subject).to eq("Invitation instructions")
 
-      expect(last_email_delivery.body.encoded).to include(
+      expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t("#{i18n_scope}.imports.mailer.registered", count: 1, successful: 1, errors: 0)
       )
     end
@@ -54,10 +53,12 @@ describe "Admin imports users", type: :system do
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       user = Decidim::User.last
-      expect(user.email).to eq("brandy@example.com")
       expect(Decidim::Authorization.find_by(decidim_user_id: user.id)).not_to be_nil
 
-      expect(last_email_delivery.body.encoded).to include(
+      expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
+      expect(ActionMailer::Base.deliveries.first.subject).to eq("Invitation instructions")
+
+      expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.authorized",
           handler: :direct_verifications,
@@ -78,7 +79,7 @@ describe "Admin imports users", type: :system do
       create(:authorization, :granted, user: user_to_revoke, name: :direct_verifications)
     end
 
-    it "registers users through a CSV file" do
+    it "revokes users through a CSV file" do
       attach_file("CSV file with users data", filename)
 
       choose(I18n.t("#{i18n_scope}.new.revoke"))
@@ -92,7 +93,7 @@ describe "Admin imports users", type: :system do
 
       expect(Decidim::Authorization.find_by(decidim_user_id: user_to_revoke.id)).to be_nil
 
-      expect(last_email_delivery.body.encoded).to include(
+      expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.revoked",
           handler: :direct_verifications,

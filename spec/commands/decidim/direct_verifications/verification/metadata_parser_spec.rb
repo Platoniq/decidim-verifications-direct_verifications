@@ -68,6 +68,21 @@ module Decidim::DirectVerifications::Verification
           end
         end
 
+        context "and the CSV includes trailing or leading whitespaces" do
+          let(:txt) do
+            <<-CSV.strip_heredoc
+            Name, Email, Type
+            Ava Hawkins, ava@example.com, collaborator
+            CSV
+          end
+
+          it "returns the data in a hash with the email as key" do
+            expect(subject.to_h).to eq(
+              "ava@example.com" => { name: "Ava Hawkins", type: "collaborator" }
+            )
+          end
+        end
+
         context "when the name is not specified" do
           let(:txt) do
             <<-EMAILS.strip_heredoc
