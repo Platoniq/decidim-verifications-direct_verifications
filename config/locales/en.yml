@@ -24,13 +24,6 @@ en:
           imports:
             new:
               info: Import a CSV file with a user entry per line copying the format from the example below
-              template:
-                header: email, name, membership_phone, membership_type, membership_weight
-                body: |
-                  ava@example.com, Ava Hawkins, +3476318371, consumer, 1
-                  ewan@example.com, Ewan Cooper, +34653565765, worker, 1
-                  tilly@example.com, Tilly Jones, +34653565761, collaborator, 0.67
-                  ...
               submit: Upload file
               file: CSV file with users data
             create:

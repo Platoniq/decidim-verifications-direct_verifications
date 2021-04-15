@@ -9,8 +9,11 @@
   <div class="card-section">
     <p><%= t("decidim.direct_verifications.verification.admin.imports.new.info") %></p>
     <pre class="code-block">
-      <strong><%= t("decidim.direct_verifications.verification.admin.imports.new.template.header") %></strong>
-      <%= t("decidim.direct_verifications.verification.admin.imports.new.template.body") %>
+      <strong>email, name, membership_phone, membership_type, membership_weight</strong>
+      ava@example.com, Ava Hawkins, +3476318371, consumer, 1
+      ewan@example.com, Ewan Cooper, +34653565765, worker, 1
+      tilly@example.com, Tilly Jones, +34653565761, collaborator, 0.67
+      ...
     </pre>
 
     <%= decidim_form_for(@form, url: imports_path, html: { class: "form" }) do |form| %>
