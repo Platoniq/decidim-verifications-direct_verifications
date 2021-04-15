@@ -23,12 +23,7 @@ module Decidim
 
       def register_users
         emails.each do |email, data|
-          name = if data.is_a?(Hash)
-                   data[:name]
-                 else
-                   data
-                 end
-          RegisterUser.new(email, name, organization, current_user, instrumenter).call
+          RegisterUser.new(email, data, organization, current_user, instrumenter).call
         end
       end
 
