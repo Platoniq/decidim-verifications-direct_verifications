@@ -5,6 +5,8 @@ module Decidim
     module Verification
       module Admin
         class ImportsController < Decidim::Admin::ApplicationController
+          layout "decidim/admin/users"
+
           def new
             enforce_permission_to :create, :authorization
             @form = form(CreateImportForm).instance

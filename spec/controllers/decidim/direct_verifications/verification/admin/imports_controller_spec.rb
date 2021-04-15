@@ -19,6 +19,11 @@ module Decidim::DirectVerifications::Verification::Admin
         expect(controller).to receive(:allowed_to?).with(:create, :authorization, {})
         get :new
       end
+
+      it "renders the decidim/admin/users layout" do
+        get :new
+        expect(response).to render_template("layouts/decidim/admin/users")
+      end
     end
 
     describe "#create" do
