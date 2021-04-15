@@ -16,8 +16,8 @@ module Decidim
         end
       end
 
-      def send_email_notification
-        ImportMailer.finished_processing(current_user, instrumenter, :registered).deliver_now
+      def type
+        :registered
       end
     end
   end
