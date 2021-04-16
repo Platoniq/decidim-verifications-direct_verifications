@@ -30,7 +30,7 @@ en:
               success: File successfully uploaded. We'll email you when all users are imported.
               error: There was an error importing the file
             mailer:
-              subject: Users processed
+              subject: File import results
               authorized: "%{successful} users have been successfully verified using
                 [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} users detected, of which %{registered} are registered,
