@@ -52,8 +52,8 @@ describe "Admin imports users", type: :system do
       expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
-      user = Decidim::User.last
-      expect(Decidim::Authorization.find_by(decidim_user_id: user.id)).not_to be_nil
+      click_link I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
+      expect(page).to have_content("Brandy")
 
       expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
       expect(ActionMailer::Base.deliveries.first.subject).to eq("Invitation instructions")
@@ -91,7 +91,8 @@ describe "Admin imports users", type: :system do
       expect(page).to have_admin_callout("successfully")
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
-      expect(Decidim::Authorization.find_by(decidim_user_id: user_to_revoke.id)).to be_nil
+      click_link I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
+      expect(page).not_to have_content("Brandy")
 
       expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
