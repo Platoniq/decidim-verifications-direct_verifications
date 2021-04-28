@@ -24,6 +24,7 @@ module Decidim
           hash = {}
           header.each_with_index do |column, index|
             value = tokens[index]
+            next if value.nil?
             next if value.include?(email)
 
             hash[column] = value
@@ -34,7 +35,13 @@ module Decidim
         private
 
         def tokenize(line)
-          CSV.parse(line)[0].map(&:strip)
+          CSV.parse_line(line).map do |token|
+            if token.nil?
+              nil
+            else
+              token.strip
+            end
+          end
         end
 
         def normalize_header(line)

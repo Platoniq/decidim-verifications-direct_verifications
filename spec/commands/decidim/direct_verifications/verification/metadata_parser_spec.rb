@@ -29,6 +29,21 @@ module Decidim::DirectVerifications::Verification
         end
       end
 
+      context "when the text has empty columns" do
+        let(:txt) do
+          <<-EMAILS.strip_heredoc
+            Name,Email,Department,Salary
+            Bob,bob@example.com,,1000
+          EMAILS
+        end
+
+        it "skips those columns" do
+          expect(subject.to_h).to eq(
+            "bob@example.com" => { name: "Bob", salary: "1000" }
+          )
+        end
+      end
+
       context "when the text is a CSV with headers" do
         let(:txt) do
           <<-ROWS.strip_heredoc
