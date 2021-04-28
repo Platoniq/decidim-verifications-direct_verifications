@@ -113,6 +113,20 @@ module Decidim::DirectVerifications::Verification::Admin
             expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
           end
 
+          context "when a column is empty" do
+            it "sets it nil" do
+              post :create, params: {
+                userslist: "Name,Email,Type,City\r\nBrandy,brandy@example.com,,Barcelona",
+                register: true,
+                authorize: "in"
+              }
+
+              user = Decidim::User.find_by(email: "brandy@example.com")
+              authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+              expect(authorization.metadata).to eq("name" => "Brandy", "type" => nil, "city" => "Barcelona")
+            end
+          end
+
           context "when the name is not specified" do
             it "infers the name from the email" do
               post :create, params: {

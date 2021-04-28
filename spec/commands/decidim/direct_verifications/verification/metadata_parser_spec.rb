@@ -39,7 +39,7 @@ module Decidim::DirectVerifications::Verification
 
         it "skips those columns" do
           expect(subject.to_h).to eq(
-            "bob@example.com" => { name: "Bob", salary: "1000" }
+            "bob@example.com" => { department: nil, name: "Bob", salary: "1000" }
           )
         end
       end

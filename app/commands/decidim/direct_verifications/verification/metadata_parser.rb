@@ -24,8 +24,7 @@ module Decidim
           hash = {}
           header.each_with_index do |column, index|
             value = tokens[index]
-            next if value.nil?
-            next if value.include?(email)
+            next if value&.include?(email)
 
             hash[column] = value
           end
@@ -36,11 +35,7 @@ module Decidim
 
         def tokenize(line)
           CSV.parse_line(line).map do |token|
-            if token.nil?
-              nil
-            else
-              token.strip
-            end
+            token&.strip
           end
         end
 
