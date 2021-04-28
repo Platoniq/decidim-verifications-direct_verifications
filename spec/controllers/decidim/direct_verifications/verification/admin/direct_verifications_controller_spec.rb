@@ -32,10 +32,13 @@ module Decidim::DirectVerifications::Verification::Admin
     describe "POST create" do
       context "when parameters are defaults" do
         params = { userslist: "" }
+
         it_behaves_like "checking users", params
+
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
             post :create, params: params
+
             expect(flash[:info]).to include("0 are registered")
             expect(flash[:info]).to include("0 authorized")
             expect(flash[:info]).to include("unconfirmed")
@@ -62,7 +65,9 @@ module Decidim::DirectVerifications::Verification::Admin
         it "renders the index with warning message" do
           perform_enqueued_jobs do
             post :create, params: params
-            expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
+            expect(subject).to render_template(
+              "decidim/direct_verifications/verification/admin/direct_verifications/index"
+            )
           end
         end
       end
@@ -81,12 +86,10 @@ module Decidim::DirectVerifications::Verification::Admin
         end
 
         context "when the name is not specified" do
+          let(:data) { "Name,Email,Type\r\n\"\",brandy@example.com,consumer" }
+
           it "infers the name from the email" do
-            post :create, params: {
-              userslist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
-              register: true,
-              authorize: "in"
-            }
+            post :create, params: { userslist: data, register: true, authorize: "in" }
 
             user = Decidim::User.find_by(email: "brandy@example.com")
             expect(user.name).to eq("brandy")
@@ -94,6 +97,10 @@ module Decidim::DirectVerifications::Verification::Admin
         end
 
         context "when in metadata mode" do
+          let(:data) do
+            "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3"
+          end
+
           around do |example|
             original_processor = Rails.configuration.direct_verifications_parser
             Rails.configuration.direct_verifications_parser = :metadata
@@ -102,24 +109,32 @@ module Decidim::DirectVerifications::Verification::Admin
           end
 
           it "stores any extra columns as authorization metadata" do
-            post :create, params: {
-              userslist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
-              register: true,
-              authorize: "in"
-            }
+            post :create, params: { userslist: data, register: true, authorize: "in" }
 
             user = Decidim::User.find_by(email: "brandy@example.com")
             authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
             expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
           end
 
+          context "when a column is empty" do
+            let(:data) { "Name,Email,Type,City\r\nBrandy,brandy@example.com,,Barcelona" }
+
+            it "sets it nil" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+
+              user = Decidim::User.find_by(email: "brandy@example.com")
+              authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+
+              expect(authorization.metadata)
+                .to eq("name" => "Brandy", "type" => nil, "city" => "Barcelona")
+            end
+          end
+
           context "when the name is not specified" do
+            let(:data) { "Name,Email,Type\r\n\"\",brandy@example.com,consumer" }
+
             it "infers the name from the email" do
-              post :create, params: {
-                userslist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
-                register: true,
-                authorize: "in"
-              }
+              post :create, params: { userslist: data, register: true, authorize: "in" }
 
               user = Decidim::User.find_by(email: "brandy@example.com")
               expect(user.name).to eq("brandy")
