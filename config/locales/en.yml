@@ -68,8 +68,7 @@ en:
             authorization_handler: Verification method
             authorize: Authorize users
             check: Check users status
-            info: Enter the emails here, one per line. If the emails are preceded
-              by a text, it will be interpreted as the user's name
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
             register: Register users in the platform (if they exist they will be ignored)
             revoke: Revoke authorization from users
             submit: Send and process the list

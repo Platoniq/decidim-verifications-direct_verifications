@@ -16,6 +16,12 @@ describe "Admin imports users", type: :system do
     visit decidim_admin_direct_verifications.new_import_path
   end
 
+  it "can be accessed from direct_verifications_path" do
+    visit decidim_admin_direct_verifications.direct_verifications_path
+    click_link "import a CSV"
+    expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
+  end
+
   context "when registering users" do
     it "registers users through a CSV file" do
       attach_file("CSV file with users data", filename)
