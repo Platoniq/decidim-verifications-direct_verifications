@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "tempfile"
 
 module Decidim
   module DirectVerifications
@@ -22,24 +23,39 @@ module Decidim
       end
 
       it "creates the user" do
-        expect { described_class.perform_later(userslist, organization, current_user) }
-          .to change(Decidim::User, :count).from(1).to(2)
+        Tempfile.create("import.csv") do |file|
+          file.write(userslist)
+          file.rewind
 
-        user = Decidim::User.find_by(email: "brandy@example.com")
-        expect(user.name).to eq("brandy")
+          expect { described_class.perform_later(file.path, organization, current_user) }
+            .to change(Decidim::User, :count).from(1).to(2)
+
+          user = Decidim::User.find_by(email: "brandy@example.com")
+          expect(user.name).to eq("brandy")
+        end
       end
 
       it "does not authorize the user" do
-        described_class.perform_later(userslist, organization, current_user)
+        Tempfile.create("import.csv") do |file|
+          file.write(userslist)
+          file.rewind
 
-        user = Decidim::User.find_by(email: "brandy@example.com")
-        authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
-        expect(authorization).to be_nil
+          described_class.perform_later(file.path, organization, current_user)
+
+          user = Decidim::User.find_by(email: "brandy@example.com")
+          authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+          expect(authorization).to be_nil
+        end
       end
 
       it "notifies the result by email" do
-        described_class.perform_later(userslist, organization, current_user)
-        expect(mailer).to have_received(:deliver_now)
+        Tempfile.create("import.csv") do |file|
+          file.write(userslist)
+          file.rewind
+
+          described_class.perform_later(file.path, organization, current_user)
+          expect(mailer).to have_received(:deliver_now)
+        end
       end
     end
   end

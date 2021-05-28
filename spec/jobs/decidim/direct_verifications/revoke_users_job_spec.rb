@@ -25,13 +25,23 @@ module Decidim
       end
 
       it "deletes the user authorization" do
-        described_class.perform_later(userslist, organization, current_user)
-        expect(Decidim::Authorization.find_by(id: authorization.id)).to be_nil
+        Tempfile.create("import.csv") do |file|
+          file.write(userslist)
+          file.rewind
+
+          described_class.perform_later(file.path, organization, current_user)
+          expect(Decidim::Authorization.find_by(id: authorization.id)).to be_nil
+        end
       end
 
       it "notifies the result by email" do
-        described_class.perform_later(userslist, organization, current_user)
-        expect(mailer).to have_received(:deliver_now)
+        Tempfile.create("import.csv") do |file|
+          file.write(userslist)
+          file.rewind
+
+          described_class.perform_later(file.path, organization, current_user)
+          expect(mailer).to have_received(:deliver_now)
+        end
       end
     end
   end
