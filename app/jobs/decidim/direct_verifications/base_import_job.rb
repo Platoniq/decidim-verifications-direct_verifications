@@ -10,8 +10,7 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(path, organization, current_user)
-        userslist = File.read(path)
+      def perform(userslist, organization, current_user)
         @emails = Verification::MetadataParser.new(userslist).to_h
         @organization = organization
         @current_user = current_user
