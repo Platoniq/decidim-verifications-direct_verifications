@@ -22,48 +22,48 @@ fr:
         admin:
           authorizations:
             index:
-              created_at: Created at
-              metadata: Metadata
-              name: Name
-              title: Authorizations
-              user_name: User name
-              new_import: New import
+              created_at: Créé à
+              metadata: Métadonnées
+              name: Nom
+              title: Autorisations
+              user_name: Nom de l'utilisateur
+              new_import: Nouvel import
           direct_verifications:
             create:
               authorized: "%{authorized} utilisateurs ont été vérifiés avec succès en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)"
               info: "%{count} utilisateurs détectés, dont %{registered} sont enregistrés, %{authorized} autorisés à utiliser [%{handler}] (%{unconfirmed} non confirmés)"
-              registered: "%{registered} users have been successfully registered (%{count} detected, %{errors} errors) "
-              revoked: Verification from %{revoked} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
-            gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your users in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
+              registered: "%{registered} utilisateurs ont été enregistrés avec succès (%{count} détectés, %{errors} erreurs) "
+              revoked: La vérification de %{revoked} utilisateurs ont été révoqués en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)
+            gdpr_disclaimer: Faites-le sous votre responsabilité. N'oubliez pas que vous devez avoir le consentement explicite de vos utilisateurs afin de les enregistrer. Dans le cas contraire, vous enfreindrez le règlement du RGPD dans les pays de l'UE.
           index:
-            authorizations: Authorized users
-            stats: User stats
-            title: Register and authorize users
+            authorizations: Utilisateurs autorisés
+            stats: Statistiques des utilisateurs
+            title: Inscription et autorisation des utilisateurs
           new:
-            authorization_handler: Verification method
-            authorize: Authorize users
-            check: Check users status
-            info: Enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name
-            register: Register users in the platform (if they exist they will be ignored)
-            revoke: Revoke authorization from users
-            submit: Send and process the list
-            textarea: Emails list
+            authorization_handler: Méthode de vérification
+            authorize: Utilisateurs autorisés
+            check: Vérifier le statut des utilisateurs
+            info: Entrez les e-mails ici, un par ligne. Si les e-mails sont précédés d'un texte, il sera interprété comme le nom de l'utilisateur
+            register: Inscrire des utilisateurs sur la plateforme (si ils existent, ils seront ignorés)
+            revoke: Révoquer l'autorisation des utilisateurs
+            submit: Envoyer et traiter la liste
+            textarea: Liste d'emails
           stats:
             index:
-              authorized: Authorized
-              authorized_unconfirmed: Authorized but unconfirmed
-              global: "- Any verification method -"
-              registered: Registered
-              unconfirmed: Unconfirmed
+              authorized: Autorisé
+              authorized_unconfirmed: Autorisé mais non confirmé
+              global: "- N'importe quelle méthode de vérification -"
+              registered: Inscrits
+              unconfirmed: Non confirmé
         authorizations:
           new:
-            no_action: This method requires an administrator that verifies you
+            no_action: Cette méthode nécessite un administrateur qui vous vérifie
     verifications:
       authorizations:
         first_login:
           actions:
-            direct_verifications: Direct verification
+            direct_verifications: Vérification directe
   devise:
     mailer:
       direct_invite:
-        subject: Invitation instructions
+        subject: Instructions d'invitation
