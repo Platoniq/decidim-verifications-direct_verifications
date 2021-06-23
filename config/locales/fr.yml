@@ -10,13 +10,13 @@ fr:
       admin:
         direct_verifications:
           help:
-            - 'Allows the massive introduction of users in order to:'
-            - Direct register in the organization and sends invitations
-            - Verify them in any active verification method
-            - Revoke their verification in any active verification method
+            - 'Permet l''introduction massive des utilisateurs afin de :'
+            - Inscription directe au sein de l'organisation et envoie des invitations
+            - Vérifiez-les avec n'importe quelle méthode de vérification active
+            - Révoquer leur vérification dans toute méthode de vérification active
       direct_verifications:
-        explanation: Manual verification by the administrators of the organization
-        name: Direct verification
+        explanation: Vérification manuelle par les administrateurs de l'organisation
+        name: Vérification directe
     direct_verifications:
       verification:
         admin:
@@ -30,8 +30,8 @@ fr:
               new_import: New import
           direct_verifications:
             create:
-              authorized: "%{authorized} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
-              info: "%{count} users detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              authorized: "%{authorized} utilisateurs ont été vérifiés avec succès en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)"
+              info: "%{count} utilisateurs détectés, dont %{registered} sont enregistrés, %{authorized} autorisés à utiliser [%{handler}] (%{unconfirmed} non confirmés)"
               registered: "%{registered} users have been successfully registered (%{count} detected, %{errors} errors) "
               revoked: Verification from %{revoked} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
             gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your users in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
