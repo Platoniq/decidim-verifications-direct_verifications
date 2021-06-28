@@ -6,6 +6,16 @@ module Decidim::DirectVerifications::Verification
   describe MetadataParser do
     subject { described_class.new(txt) }
 
+    describe "#header" do
+      context "when the first line has empty columns" do
+        let(:txt) { "Melina.morrison@bccm.coop,MORRISON Melina,,,11" }
+
+        it "raises an error" do
+          expect { subject.to_h }.to raise_error(MissingHeaderError)
+        end
+      end
+    end
+
     describe "#to_h" do
       context "when the text is empty" do
         let(:txt) { "" }

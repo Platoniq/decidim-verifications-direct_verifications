@@ -14,6 +14,8 @@ module Decidim::DirectVerifications::Verification::Admin
     let(:verification_type) { "direct_verifications" }
     let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
 
+    let(:i18n_scope) { "decidim.direct_verifications.verification.admin.direct_verifications" }
+
     before do
       request.env["decidim.current_organization"] = user.organization
       sign_in user, scope: :user
@@ -138,6 +140,24 @@ module Decidim::DirectVerifications::Verification::Admin
 
               user = Decidim::User.find_by(email: "brandy@example.com")
               expect(user.name).to eq("brandy")
+            end
+          end
+
+          context "when the first row has empty columns" do
+            let(:data) { "brandy@example.com,,consumer" }
+
+            it "shows a user error" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+              expect(flash[:error]).to eq(I18n.t("#{i18n_scope}.create.missing_header"))
+            end
+          end
+
+          context "when no header is provided" do
+            let(:data) { "brandy@example.com,consumer" }
+
+            it "works" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+              expect(response).to redirect_to(direct_verifications_path)
             end
           end
         end

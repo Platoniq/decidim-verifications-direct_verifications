@@ -10,6 +10,8 @@ module Decidim
 
           layout "decidim/admin/users"
 
+          I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
+
           def index
             enforce_permission_to :index, :authorization
           end
@@ -32,6 +34,9 @@ module Decidim
 
             render(action: :index) && return if show_users_info
 
+            redirect_to direct_verifications_path
+          rescue MissingHeaderError => _e
+            flash[:error] = I18n.t("#{I18N_SCOPE}.create.missing_header")
             redirect_to direct_verifications_path
           end
 

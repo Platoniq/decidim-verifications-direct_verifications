@@ -40,8 +40,10 @@ module Decidim
         end
 
         def normalize_header(line)
-          line.map do |text|
-            text.to_sym.downcase
+          line.map do |field|
+            raise MissingHeaderError if field.nil?
+
+            field.to_sym.downcase
           end
         end
       end
