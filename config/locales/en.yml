@@ -53,6 +53,7 @@ en:
                 [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} users detected, of which %{registered} are registered,
                 %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              missing_header: Please, provide a header row
               registered: "%{registered} users have been successfully registered (%{count}
                 detected, %{errors} errors) "
               revoked: Verification from %{revoked} users have been revoked using
