@@ -13,6 +13,12 @@ describe "Admin imports users", type: :system do
     switch_to_host(organization.host)
     login_as user, scope: :user
 
+    organization.available_authorizations = %w(direct_verifications other_verification_method)
+    organization.save!
+    Decidim::DirectVerifications.configure do |config|
+      config.manage_workflows = %w(other_verification_method)
+    end
+
     visit decidim_admin_direct_verifications.new_import_path
   end
 
@@ -87,8 +93,11 @@ describe "Admin imports users", type: :system do
 
     it "revokes users through a CSV file" do
       attach_file("CSV file with users data", filename)
-
       choose(I18n.t("#{i18n_scope}.new.revoke"))
+      select(
+        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        from: "Verification method"
+      )
 
       perform_enqueued_jobs do
         click_button("Upload file")
