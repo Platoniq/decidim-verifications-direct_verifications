@@ -3,10 +3,11 @@
 module Decidim
   module DirectVerifications
     class RevokeUser
-      def initialize(email, organization, instrumenter)
+      def initialize(email, organization, instrumenter, authorization_handler = :direct_verifications)
         @email = email
         @organization = organization
         @instrumenter = instrumenter
+        @authorization_handler = authorization_handler
       end
 
       def call
@@ -26,14 +27,14 @@ module Decidim
 
       private
 
-      attr_reader :email, :organization, :instrumenter
+      attr_reader :email, :organization, :instrumenter, :authorization_handler
 
       def user
         @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
       def authorization
-        @authorization ||= Authorization.find_by(user: user, name: :direct_verifications)
+        @authorization ||= Authorization.find_by(user: user, name: authorization_handler)
       end
 
       def valid_authorization?

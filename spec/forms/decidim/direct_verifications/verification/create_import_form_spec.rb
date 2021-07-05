@@ -8,12 +8,14 @@ module Decidim
       describe CreateImportForm do
         subject(:form) { described_class.from_params(attributes) }
 
+        let(:organization) { build(:organization, available_authorizations: %w(direct_verifications)) }
         let(:attributes) do
           {
             user: build(:user),
-            organization: build(:organization),
+            organization: organization,
             file: double(File),
-            authorize: action
+            authorize: action,
+            authorization_handler: "direct_verifications"
           }
         end
         let(:action) { "in" }
@@ -103,6 +105,33 @@ module Decidim
 
             it { is_expected.not_to be_valid }
           end
+        end
+
+        context "when authorization handler is not provided" do
+          let(:attributes) do
+            {
+              user: build(:user),
+              organization: build(:organization),
+              file: double(File),
+              authorize: action
+            }
+          end
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context "when authorization handler is not known" do
+          let(:attributes) do
+            {
+              user: build(:user),
+              organization: build(:organization),
+              file: double(File),
+              authorize: action,
+              authorization_handler: "unknown"
+            }
+          end
+
+          it { is_expected.not_to be_valid }
         end
       end
     end

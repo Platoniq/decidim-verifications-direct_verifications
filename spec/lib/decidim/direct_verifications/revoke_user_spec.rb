@@ -7,12 +7,14 @@ module Decidim
     describe RevokeUser do
       subject { described_class.new(email, organization, instrumenter) }
 
+      let(:user) { create(:user, organization: organization) }
+      let(:email) { user.email }
+
       describe "#call" do
         let(:organization) { build(:organization) }
         let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 
         context "when revoking existing users" do
-          let(:user) { create(:user, organization: organization) }
           let(:email) { user.email }
 
           before { create(:authorization, :granted, user: user, name: :direct_verifications) }
@@ -43,9 +45,6 @@ module Decidim
         end
 
         context "when the authorization does not exist" do
-          let(:user) { create(:user, organization: organization) }
-          let(:email) { user.email }
-
           it "does not track the operation" do
             subject.call
             expect(instrumenter).not_to have_received(:add_processed)
@@ -59,9 +58,6 @@ module Decidim
         end
 
         context "when the authorization is not granted" do
-          let(:user) { create(:user, organization: organization) }
-          let(:email) { user.email }
-
           before { create(:authorization, :pending, user: user, name: :direct_verifications) }
 
           it "does not track the operation" do
@@ -91,6 +87,25 @@ module Decidim
 
           it "lets lower-level exceptions to pass through" do
             expect { subject.call }.to raise_error(ActiveRecord::ActiveRecordError)
+          end
+        end
+
+        context "when passing a non-default authorization handler" do
+          subject { described_class.new(email, organization, instrumenter, authorization_handler) }
+
+          let(:authorization_handler) { :other_verification_method }
+          let(:user) { create(:user, organization: organization) }
+
+          before { create(:authorization, :granted, user: user, name: authorization_handler) }
+
+          it "tracks the operation" do
+            subject.call
+            expect(instrumenter).to have_received(:add_processed).with(:revoked, email)
+          end
+
+          it "revokes the user authorization" do
+            expect(Verification::DestroyUserAuthorization).to receive(:call)
+            subject.call
           end
         end
       end

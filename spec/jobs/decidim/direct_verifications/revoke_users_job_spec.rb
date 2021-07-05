@@ -20,7 +20,7 @@ module Decidim
       before do
         allow(ImportMailer)
           .to receive(:finished_processing)
-          .with(current_user, kind_of(Instrumenter), :revoked)
+          .with(current_user, kind_of(Instrumenter), :revoked, :direct_verifications)
           .and_return(mailer)
       end
 

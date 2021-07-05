@@ -88,7 +88,7 @@ describe "Admin imports users", type: :system do
     end
 
     before do
-      create(:authorization, :granted, user: user_to_revoke, name: :direct_verifications)
+      create(:authorization, :granted, user: user_to_revoke, name: :other_verification_method)
     end
 
     it "revokes users through a CSV file" do
@@ -112,7 +112,7 @@ describe "Admin imports users", type: :system do
       expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.revoked",
-          handler: :direct_verifications,
+          handler: :other_verification_method,
           count: 1,
           successful: 1,
           errors: 0

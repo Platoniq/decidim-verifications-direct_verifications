@@ -38,7 +38,7 @@ module Decidim
         end
 
         def revoke_users_async
-          RevokeUsersJob.perform_later(file.read, organization, user)
+          RevokeUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
         end
 
         def authorize_users_async

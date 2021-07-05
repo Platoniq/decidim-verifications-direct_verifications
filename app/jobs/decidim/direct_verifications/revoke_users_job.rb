@@ -5,7 +5,7 @@ module Decidim
     class RevokeUsersJob < BaseImportJob
       def process_users
         emails.each do |email, _name|
-          RevokeUser.new(email, organization, instrumenter).call
+          RevokeUser.new(email, organization, instrumenter, authorization_handler).call
         end
       end
 

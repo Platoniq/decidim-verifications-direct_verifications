@@ -9,10 +9,11 @@ module Decidim
 
       I18N_SCOPE = "decidim.direct_verifications.verification.admin.imports.mailer"
 
-      def finished_processing(user, instrumenter, type)
+      def finished_processing(user, instrumenter, type, handler)
         @stats = Stats.from(instrumenter, type)
         @organization = user.organization
         @i18n_key = "#{I18N_SCOPE}.#{type}"
+        @handler = handler
 
         with_user(user) do
           mail(
