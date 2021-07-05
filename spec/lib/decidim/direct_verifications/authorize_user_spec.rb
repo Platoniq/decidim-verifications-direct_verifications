@@ -5,7 +5,11 @@ require "spec_helper"
 module Decidim
   module DirectVerifications
     describe AuthorizeUser do
-      subject { described_class.new(email, data, session, organization, instrumenter) }
+      subject do
+        described_class.new(email, data, session, organization, instrumenter, authorization_handler)
+      end
+
+      let(:authorization_handler) { :direct_verifications }
 
       describe "#call" do
         let(:data) { user.name }

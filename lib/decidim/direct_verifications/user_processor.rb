@@ -29,7 +29,7 @@ module Decidim
 
       def authorize_users
         emails.each do |email, data|
-          AuthorizeUser.new(email, data, session, organization, instrumenter).call
+          AuthorizeUser.new(email, data, session, organization, instrumenter, authorization_handler).call
         end
       end
 

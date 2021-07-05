@@ -42,7 +42,7 @@ module Decidim
         end
 
         def authorize_users_async
-          AuthorizeUsersJob.perform_later(file.read, organization, user)
+          AuthorizeUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
         end
       end
     end

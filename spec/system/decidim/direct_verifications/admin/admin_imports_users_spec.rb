@@ -56,6 +56,10 @@ describe "Admin imports users", type: :system do
 
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
+      select(
+        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        from: "Verification method"
+      )
 
       perform_enqueued_jobs do
         click_button("Upload file")
@@ -73,7 +77,7 @@ describe "Admin imports users", type: :system do
       expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.authorized",
-          handler: :direct_verifications,
+          handler: :other_verification_method,
           count: 1,
           successful: 1,
           errors: 0
