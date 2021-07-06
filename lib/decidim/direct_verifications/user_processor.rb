@@ -35,7 +35,7 @@ module Decidim
 
       def revoke_users
         emails.each do |email, _name|
-          RevokeUser.new(email, organization, instrumenter).call
+          RevokeUser.new(email, organization, instrumenter, authorization_handler).call
         end
       end
 

@@ -163,8 +163,15 @@ module Decidim::DirectVerifications::Verification::Admin
         end
       end
 
-      context "when register users with revoke" do
+      context "when revoking users" do
         params = { userslist: "authorized@example.com", authorize: "out" }
+        it_behaves_like "revoking users", params
+      end
+
+      context "when revoking users with another verification" do
+        params = { userslist: "authorized@example.com", authorize: "out", authorization_handler: "other" }
+        let(:verification_type) { "other" }
+
         it_behaves_like "revoking users", params
       end
     end

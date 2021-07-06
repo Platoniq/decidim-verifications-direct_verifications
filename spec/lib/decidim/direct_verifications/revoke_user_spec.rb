@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module DirectVerifications
     describe RevokeUser do
-      subject { described_class.new(email, organization, instrumenter) }
+      subject { described_class.new(email, organization, instrumenter, "direct_verifications") }
 
       let(:user) { create(:user, organization: organization) }
       let(:email) { user.email }
@@ -81,11 +81,11 @@ module Decidim
             allow(authorization).to receive(:destroy!).and_raise(ActiveRecord::ActiveRecordError)
             allow(Authorization)
               .to receive(:find_by)
-              .with(user: user, name: :direct_verifications)
+              .with(user: user, name: "direct_verifications")
               .and_return(authorization)
           end
 
-          it "lets lower-level exceptions to pass through" do
+          it "lets lower-level exceptions pass through" do
             expect { subject.call }.to raise_error(ActiveRecord::ActiveRecordError)
           end
         end

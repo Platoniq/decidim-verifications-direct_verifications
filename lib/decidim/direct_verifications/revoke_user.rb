@@ -3,7 +3,7 @@
 module Decidim
   module DirectVerifications
     class RevokeUser
-      def initialize(email, organization, instrumenter, authorization_handler = :direct_verifications)
+      def initialize(email, organization, instrumenter, authorization_handler)
         @email = email
         @organization = organization
         @instrumenter = instrumenter
