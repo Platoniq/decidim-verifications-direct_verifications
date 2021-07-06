@@ -10,7 +10,7 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(userslist, organization, current_user, authorization_handler = :direct_verifications)
+      def perform(userslist, organization, current_user, authorization_handler)
         @emails = Verification::MetadataParser.new(userslist).to_h
         @organization = organization
         @current_user = current_user

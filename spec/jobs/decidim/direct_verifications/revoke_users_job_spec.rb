@@ -20,17 +20,17 @@ module Decidim
       before do
         allow(ImportMailer)
           .to receive(:finished_processing)
-          .with(current_user, kind_of(Instrumenter), :revoked, :direct_verifications)
+          .with(current_user, kind_of(Instrumenter), :revoked, "direct_verifications")
           .and_return(mailer)
       end
 
       it "deletes the user authorization" do
-        described_class.perform_later(userslist, organization, current_user)
+        described_class.perform_later(userslist, organization, current_user, "direct_verifications")
         expect(Decidim::Authorization.find_by(id: authorization.id)).to be_nil
       end
 
       it "notifies the result by email" do
-        described_class.perform_later(userslist, organization, current_user)
+        described_class.perform_later(userslist, organization, current_user, "direct_verifications")
         expect(mailer).to have_received(:deliver_now)
       end
     end

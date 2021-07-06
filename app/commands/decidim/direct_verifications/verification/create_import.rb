@@ -34,7 +34,7 @@ module Decidim
         attr_reader :form, :file, :organization, :user, :action
 
         def register_users_async
-          RegisterUsersJob.perform_later(file.read, organization, user)
+          RegisterUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
         end
 
         def revoke_users_async
