@@ -7,10 +7,16 @@
     </h2>
   </div>
   <div class="card-section">
-    <p><%= t("decidim.direct_verifications.verification.admin.new.info_html", link: new_import_path) %></p>
-    <%= form_tag direct_verifications_path, multipart: true, class: "form" do %>
-      <%= label_tag :userslist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
-      <%= text_area_tag :userslist, @userslist, rows: 10 %>
+    <p><%= t("decidim.direct_verifications.verification.admin.imports.new.info") %></p>
+    <pre class="code-block">
+      <strong>email, name, membership_phone, membership_type, membership_weight</strong>
+      ava@example.com, Ava Hawkins, +3476318371, consumer, 1
+      ewan@example.com, Ewan Cooper, +34653565765, worker, 1
+      tilly@example.com, Tilly Jones, +34653565761, collaborator, 0.67
+      ...
+    </pre>
+
+    <%= decidim_form_for(@form, url: imports_path, html: { class: "form" }) do |form| %>
       <label>
         <%= check_box_tag :register %>
         <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
@@ -32,11 +38,10 @@
       </label>
 
       <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
-
       <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
 
-      <%= submit_tag t("admin.new.submit", scope: "decidim.direct_verifications.verification"), class: "button" %>
-
+      <%= form.file_field :file, label: t(".file") %>
+      <%= form.submit t(".submit"), class: "button" %>
     <% end %>
 
   </div>

@@ -5,7 +5,11 @@ require "spec_helper"
 module Decidim
   module DirectVerifications
     describe AuthorizeUser do
-      subject { described_class.new(email, data, session, organization, instrumenter) }
+      subject do
+        described_class.new(email, data, session, organization, instrumenter, authorization_handler)
+      end
+
+      let(:authorization_handler) { :direct_verifications }
 
       describe "#call" do
         let(:data) { user.name }
@@ -15,7 +19,7 @@ module Decidim
           let(:user) { create(:user, organization: organization) }
           let(:email) { user.email }
           let(:session) { {} }
-          let(:instrumenter) { instance_double(UserProcessor, add_processed: true, add_error: true) }
+          let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 
           context "when passing the user name" do
             let(:data) { user.name }
@@ -108,7 +112,7 @@ module Decidim
           let(:email) { "em@mail.com" }
           let(:data) { "Andy" }
           let(:session) { {} }
-          let(:instrumenter) { instance_double(UserProcessor, add_processed: true, add_error: true) }
+          let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 
           it "tracks an error" do
             subject.call

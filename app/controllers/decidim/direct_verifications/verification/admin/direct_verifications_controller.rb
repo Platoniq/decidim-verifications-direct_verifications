@@ -10,6 +10,8 @@ module Decidim
 
           layout "decidim/admin/users"
 
+          I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
+
           def index
             enforce_permission_to :index, :authorization
           end
@@ -18,11 +20,14 @@ module Decidim
             enforce_permission_to :create, :authorization
 
             @userslist = params[:userslist]
-            @processor = UserProcessor.new(current_organization, current_user, session)
+
+            @processor = UserProcessor.new(current_organization, current_user, session, instrumenter)
             @processor.emails = parser_class.new(@userslist).to_h
             @processor.authorization_handler = current_authorization_handler
+
             @stats = UserStats.new(current_organization)
             @stats.authorization_handler = @processor.authorization_handler
+
             register_users
             authorize_users
             revoke_users
@@ -30,17 +35,24 @@ module Decidim
             render(action: :index) && return if show_users_info
 
             redirect_to direct_verifications_path
+          rescue MissingHeaderError => _e
+            flash[:error] = I18n.t("#{I18N_SCOPE}.create.missing_header")
+            redirect_to direct_verifications_path
           end
 
           private
+
+          def instrumenter
+            @instrumenter ||= Instrumenter.new(current_user)
+          end
 
           def register_users
             return unless params[:register]
 
             @processor.register_users
             flash[:warning] = t(".registered", count: @processor.emails.count,
-                                               registered: @processor.processed[:registered].count,
-                                               errors: @processor.errors[:registered].count)
+                                               registered: instrumenter.processed_count(:registered),
+                                               errors: instrumenter.errors_count(:registered))
           end
 
           def authorize_users
@@ -49,8 +61,8 @@ module Decidim
             @processor.authorize_users
             flash[:notice] = t(".authorized", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                               count: @processor.emails.count,
-                                              authorized: @processor.processed[:authorized].count,
-                                              errors: @processor.errors[:authorized].count)
+                                              authorized: instrumenter.processed_count(:authorized),
+                                              errors: instrumenter.errors_count(:authorized))
           end
 
           def revoke_users
@@ -59,8 +71,8 @@ module Decidim
             @processor.revoke_users
             flash[:notice] = t(".revoked", handler: t("#{@processor.authorization_handler}.name", scope: "decidim.authorization_handlers"),
                                            count: @processor.emails.count,
-                                           revoked: @processor.processed[:revoked].count,
-                                           errors: @processor.errors[:revoked].count)
+                                           revoked: instrumenter.processed_count(:revoked),
+                                           errors: instrumenter.errors_count(:revoked))
           end
 
           def show_users_info

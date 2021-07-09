@@ -3,20 +3,20 @@
 module Decidim
   module DirectVerifications
     class RegisterUser
-      def initialize(email, name, organization, current_user, instrumenter)
+      def initialize(email, data, organization, current_user, instrumenter)
         @email = email
-        @name = name
+        @name = data.is_a?(Hash) ? data[:name] : data
         @organization = organization
         @current_user = current_user
         @instrumenter = instrumenter
       end
 
       def call
-        return if find_user
+        return if user
 
         InviteUser.call(form) do
           on(:ok) do
-            instrumenter.track(:registered, email, find_user)
+            instrumenter.track(:registered, email, user)
           end
           on(:invalid) do
             instrumenter.track(:registered, email)
@@ -31,8 +31,8 @@ module Decidim
 
       attr_reader :email, :name, :organization, :current_user, :instrumenter
 
-      def find_user
-        User.find_by(email: email, decidim_organization_id: organization.id)
+      def user
+        @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
       end
 
       def form
