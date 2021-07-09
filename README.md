@@ -47,10 +47,12 @@ This mode provides extra capabilities over the default processing:
 
 This enables querying the authorization metadata however fits you best.
 
-To enable it create a new initializer called `config/initializers/decidim_direct_verifications.rb` with the following contents
+To enable it create a new initializer, for instance `config/initializers/decidim_direct_verifications.rb` with the following contents
 
-```rb
-Rails.application.config.direct_verifications_parser = :metadata
+```ruby
+Decidim::DirectVerifications.configure do |config|
+  config.input_parser = :metadata_parser
+end
 ```
 
 ## Installation
@@ -94,7 +96,10 @@ end
 
 # We need to tell the plugin to handle this method in addition to the default "Direct verification". Any registered workflow is valid.
 Decidim::DirectVerifications.configure do |config|
-  config.manage_workflows = %w(direct_verifications_managers)
+  config.manage_workflows = %w(direct_verifications direct_verifications_managers)
+
+  # change the to the metadata_parser if you want it
+  # config.input_parser = :metadata_parser
 end
 
 ```

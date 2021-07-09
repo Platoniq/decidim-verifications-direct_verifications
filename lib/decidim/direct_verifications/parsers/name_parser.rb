@@ -2,7 +2,7 @@
 
 module Decidim
   module DirectVerifications
-    module Verification
+    module Parsers
       class NameParser < BaseParser
         LINE_DELIMITER = /[\r\n;,]/.freeze
         NON_ALPHA_CHARS = /[^[:print:]]|["$<>|\\]/.freeze

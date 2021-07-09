@@ -10,8 +10,6 @@ module Decidim
 
           layout "decidim/admin/users"
 
-          I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
-
           def index
             enforce_permission_to :index, :authorization
           end
@@ -35,8 +33,8 @@ module Decidim
             render(action: :index) && return if show_users_info
 
             redirect_to direct_verifications_path
-          rescue MissingHeaderError => _e
-            flash[:error] = I18n.t("#{I18N_SCOPE}.create.missing_header")
+          rescue InputParserError => e
+            flash[:error] = e.message
             redirect_to direct_verifications_path
           end
 
@@ -88,11 +86,7 @@ module Decidim
           end
 
           def parser_class
-            if Rails.configuration.direct_verifications_parser == :metadata
-              MetadataParser
-            else
-              NameParser
-            end
+            Decidim::DirectVerifications.find_parser_class(Decidim::DirectVerifications.input_parser)
           end
 
           def authorization_handler(authorization_handler)

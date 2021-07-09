@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-module Decidim::DirectVerifications::Verification
+module Decidim::DirectVerifications::Parsers
   describe MetadataParser do
     subject { described_class.new(txt) }
 
@@ -11,7 +11,7 @@ module Decidim::DirectVerifications::Verification
         let(:txt) { "Melina.morrison@bccm.coop,MORRISON Melina,,,11" }
 
         it "raises an error" do
-          expect { subject.to_h }.to raise_error(MissingHeaderError)
+          expect { subject.to_h }.to raise_error(Decidim::DirectVerifications::InputParserError)
         end
       end
     end
