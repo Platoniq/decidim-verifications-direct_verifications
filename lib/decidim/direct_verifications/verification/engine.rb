@@ -6,8 +6,6 @@ module Decidim
       class Engine < ::Rails::Engine
         isolate_namespace Decidim::DirectVerifications::Verification
 
-        config.direct_verifications_parser = :name
-
         paths["db/migrate"] = nil
         paths["lib/tasks"] = nil
 

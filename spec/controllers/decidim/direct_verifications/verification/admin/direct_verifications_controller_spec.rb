@@ -104,10 +104,10 @@ module Decidim::DirectVerifications::Verification::Admin
           end
 
           around do |example|
-            original_processor = Rails.configuration.direct_verifications_parser
-            Rails.configuration.direct_verifications_parser = :metadata
+            original_processor = ::Decidim::DirectVerifications.input_parser
+            ::Decidim::DirectVerifications.input_parser = :metadata_parser
             example.run
-            Rails.configuration.direct_verifications_parser = original_processor
+            ::Decidim::DirectVerifications.input_parser = original_processor
           end
 
           it "stores any extra columns as authorization metadata" do

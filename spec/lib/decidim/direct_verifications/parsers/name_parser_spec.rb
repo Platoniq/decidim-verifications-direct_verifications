@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-module Decidim::DirectVerifications::Verification
+module Decidim::DirectVerifications::Parsers
   describe NameParser do
     subject { described_class.new(txt) }
 

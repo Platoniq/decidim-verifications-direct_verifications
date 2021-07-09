@@ -11,7 +11,7 @@ module Decidim
       queue_as :default
 
       def perform(userslist, organization, current_user, authorization_handler)
-        @emails = Verification::MetadataParser.new(userslist).to_h
+        @emails = Parsers::MetadataParser.new(userslist).to_h
         @organization = organization
         @current_user = current_user
         @instrumenter = Instrumenter.new(current_user)

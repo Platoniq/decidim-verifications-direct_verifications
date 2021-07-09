@@ -2,7 +2,7 @@
 
 module Decidim
   module DirectVerifications
-    module Verification
+    module Parsers
       # Abstract class all concrete parsers should inherit from. They are expected to implement
       # #header, #lines, and #parse_data methods.
       class BaseParser

@@ -4,8 +4,10 @@ require "csv"
 
 module Decidim
   module DirectVerifications
-    module Verification
+    module Parsers
       class MetadataParser < BaseParser
+        I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
+
         def header
           @header ||= begin
             header_row = lines[0].chomp
@@ -41,7 +43,7 @@ module Decidim
 
         def normalize_header(line)
           line.map do |field|
-            raise MissingHeaderError if field.nil?
+            raise InputParserError, I18n.t("#{I18N_SCOPE}.create.missing_header") if field.nil?
 
             field.to_sym.downcase
           end
