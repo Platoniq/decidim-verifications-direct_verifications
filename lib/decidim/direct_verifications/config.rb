@@ -4,6 +4,7 @@ module Decidim
   module DirectVerifications
     class << self
       attr_accessor :config
+
       def configure
         yield self.config ||= Config.new
       end
@@ -11,6 +12,7 @@ module Decidim
 
     class Config
       attr_reader :manage_workflows
+
       def manage_workflows=(manage_workflows)
         @manage_workflows.concat(manage_workflows).uniq!
       end
