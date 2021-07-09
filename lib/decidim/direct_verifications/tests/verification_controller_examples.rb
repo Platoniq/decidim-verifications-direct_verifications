@@ -2,8 +2,9 @@
 
 shared_examples_for "checking users" do |params|
   context "when check without mails" do
+    before { params[:userslist] = "" }
+
     it "renders the index with info message" do
-      params[:userslist] = ""
       perform_enqueued_jobs do
         post :create, params: params
         expect(flash[:info]).not_to be_empty
@@ -14,8 +15,9 @@ shared_examples_for "checking users" do |params|
   end
 
   context "when check with mails" do
+    before { params[:userslist] = "mail@example.com" }
+
     it "renders the index with info message" do
-      params[:userslist] = "mail@example.com"
       perform_enqueued_jobs do
         post :create, params: params
         expect(flash[:info]).not_to be_empty
@@ -58,13 +60,16 @@ end
 
 shared_examples_for "revoking users" do |params|
   context "when there are valid emails" do
-    it "creates notice message" do
+    before do
       create(
         :authorization,
         :granted,
         name: verification_type,
         user: authorized_user
       )
+    end
+
+    it "creates notice message" do
       perform_enqueued_jobs do
         post :create, params: params
         expect(flash[:notice]).not_to be_empty

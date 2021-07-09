@@ -20,6 +20,14 @@ fr:
     direct_verifications:
       verification:
         admin:
+          authorizations:
+            index:
+              created_at: Créé à
+              metadata: Métadonnées
+              name: Nom
+              title: Autorisations
+              user_name: Nom de l'utilisateur
+              new_import: Nouvel import
           direct_verifications:
             create:
               authorized: "%{authorized} utilisateurs ont été vérifiés avec succès en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)"
@@ -28,6 +36,7 @@ fr:
               revoked: La vérification de %{revoked} utilisateurs ont été révoqués en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)
             gdpr_disclaimer: Faites-le sous votre responsabilité. N'oubliez pas que vous devez avoir le consentement explicite de vos utilisateurs afin de les enregistrer. Dans le cas contraire, vous enfreindrez le règlement du RGPD dans les pays de l'UE.
           index:
+            authorizations: Utilisateurs autorisés
             stats: Statistiques des utilisateurs
             title: Inscription et autorisation des utilisateurs
           new:

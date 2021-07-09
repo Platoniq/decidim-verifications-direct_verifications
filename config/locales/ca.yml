@@ -20,14 +20,24 @@ ca:
     direct_verifications:
       verification:
         admin:
+          authorizations:
+            index:
+              created_at: Data de creació
+              metadata: Metadades
+              name: Nom
+              title: Autoritzacions
+              user_name: Nom d'usuari
+              new_import: Nova importació
           direct_verifications:
             create:
               authorized: "S'han verificat correctament %{authorized} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"
               info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              missing_header: Si us plau, proporcioneu una fila d'encapçalament
               registered: "S'han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)"
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
             gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu de tenir el consentiment explícit dels vostres usuaris per registrar-los. En cas contrari, estareu infringint la regulació GDPR als països de la UE.
           index:
+            authorizations: Usuaris autoritzats
             stats: Estadístiques d'usuaris
             title: Inscriu i autoritza usuaris
           new:

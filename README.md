@@ -1,8 +1,10 @@
 # Decidim::DirectVerifications
 
-![Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/workflows/Test/badge.svg)
+[![Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/actions/workflows/test.yml/badge.svg)](https://github.com/Platoniq/decidim-verifications-direct_verifications/actions/workflows/test.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2195deb4de6c6354a6bc/maintainability)](https://codeclimate.com/github/Platoniq/decidim-verifications-direct_verifications/maintainability)
-[![codecov](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications/branch/master/graph/badge.svg?token=FR1zkV71S2)](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications)
+[![codecov](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications/branch/main/graph/badge.svg?token=FR1zkV71S2)](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications)
+
+
 
 A [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
 
@@ -36,6 +38,21 @@ With the detected list of emails admin have different options available:
 3. Revoke the authorization for the list of users using any verification method available.
 4. Check the status of the users in order to know if they are verified or registered.
 
+### Metadata mode
+
+This mode provides extra capabilities over the default processing:
+
+* Reads CSV format with header (copy and paste it from your spreadsheet)
+* Stores all columns except the email as authorization metadata
+
+This enables querying the authorization metadata however fits you best.
+
+To enable it create a new initializer called `config/initializers/decidim_direct_verifications.rb` with the following contents
+
+```rb
+Rails.application.config.direct_verifications_parser = :metadata
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -49,6 +66,13 @@ And then execute:
 ```bash
 bundle
 ```
+
+Depending on your Decidim version, you might want to specify the version to ensure compatibility:
+
+| Direct Verifications version | Compatible Decidim versions |
+|---|---|
+| 1.0 | >= 0.23.x |
+| 0.22.x | 0.22.x |
 
 ## Using additional verification methods
 

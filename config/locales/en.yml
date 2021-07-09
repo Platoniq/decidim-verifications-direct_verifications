@@ -21,12 +21,39 @@ en:
     direct_verifications:
       verification:
         admin:
+          imports:
+            new:
+              info: Import a CSV file with a user entry per line copying the format from the example below
+              submit: Upload file
+              file: CSV file with users data
+            create:
+              success: File successfully uploaded. We'll email you when all users are imported.
+              error: There was an error importing the file
+            mailer:
+              subject: File import results
+              authorized: "%{successful} users have been successfully verified using
+                [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} users detected, of which %{registered} are registered,
+                %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              registered: "%{successful} users have been successfully registered (%{count}
+                detected, %{errors} errors) "
+              revoked: Verification from %{successful} users have been revoked using
+                [%{handler}] (%{count} detected, %{errors} errors)
+          authorizations:
+            index:
+              created_at: Created at
+              metadata: Metadata
+              name: Name
+              title: Authorizations
+              user_name: User name
+              new_import: New import
           direct_verifications:
             create:
               authorized: "%{authorized} users have been successfully verified using
                 [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} users detected, of which %{registered} are registered,
                 %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              missing_header: Please, provide a header row
               registered: "%{registered} users have been successfully registered (%{count}
                 detected, %{errors} errors) "
               revoked: Verification from %{revoked} users have been revoked using
@@ -35,14 +62,14 @@ en:
               need to have explicit consent from your users in order to register them.
               Otherwise you will be infringing the GDPR regulation in EU countries.
           index:
+            authorizations: Authorized users
             stats: User stats
             title: Register and authorize users
           new:
             authorization_handler: Verification method
             authorize: Authorize users
             check: Check users status
-            info: Enter the emails here, one per line. If the emails are preceded
-              by a text, it will be interpreted as the user's name
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
             register: Register users in the platform (if they exist they will be ignored)
             revoke: Revoke authorization from users
             submit: Send and process the list

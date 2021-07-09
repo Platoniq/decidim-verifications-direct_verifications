@@ -22,7 +22,7 @@ module Decidim
       end
 
       def unconfirmed
-        registered_users.where("decidim_users.confirmed_at IS NULL").count
+        registered_users.where(decidim_users: { confirmed_at: nil }).count
       end
 
       def authorized
@@ -30,7 +30,7 @@ module Decidim
       end
 
       def authorized_unconfirmed
-        authorized_users.where("decidim_users.confirmed_at IS NULL").count
+        authorized_users.where(decidim_users: { confirmed_at: nil }).count
       end
 
       private
@@ -41,10 +41,10 @@ module Decidim
           filter[:email] = emails unless emails.empty?
           return User.where(filter).where.not(email: "")
         end
-        authorized_users(false)
+        authorized_users(strict: false)
       end
 
-      def authorized_users(strict = true)
+      def authorized_users(strict: true)
         q = Decidim::Authorization.joins(:user)
         unless authorization_handler.empty?
           q = q.where(name: authorization_handler)
@@ -56,7 +56,7 @@ module Decidim
         q = q.where("decidim_users.decidim_organization_id=:org and decidim_users.email!=''", org: organization.id)
         return q if emails.empty?
 
-        q.where("decidim_users.email IN (:emails)", emails: emails)
+        q.where(decidim_users: { email: emails })
       end
 
       def expires_in

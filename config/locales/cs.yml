@@ -20,6 +20,14 @@ cs:
     direct_verifications:
       verification:
         admin:
+          authorizations:
+            index:
+              created_at: Vytvořeno v
+              metadata: Metadata
+              name: Název
+              title: Autorizace
+              user_name: Uživatelské jméno
+              new_import: Nový import
           direct_verifications:
             create:
               authorized: "%{authorized} uživatelů bylo úspěšně ověřeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)"
@@ -28,6 +36,7 @@ cs:
               revoked: Ověření od %{revoked} uživatelů bylo zrušeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)
             gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že potřebujete mít výslovný souhlas svých uživatelů, abyste je mohli zaregistrovat. V opačném případě můžete porušovat nařízení o GDPR v zemích EU.
           index:
+            authorizations: Autorizovaní uživatelé
             stats: Statistiky uživatelů
             title: Registrovat a autorizovat uživatele
           new:
