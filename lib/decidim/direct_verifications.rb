@@ -20,7 +20,7 @@ module Decidim
 
     # The processor for the user uploaded data where to extract emails and other info
     # be default it uses Decidim::DirectVerifications::Parsers::NameParser
-    # Currently availalbe are:
+    # Currently available are:
     # - :name_parser
     # - :metadata_parser
     # A custom parser can be specified as long it respects the module hierachy
