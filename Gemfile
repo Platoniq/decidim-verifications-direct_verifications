@@ -14,8 +14,11 @@ gem "decidim", Decidim::DirectVerifications::DECIDIM_VERSION
 gem "decidim-direct_verifications", path: "."
 
 gem "bootsnap", "~> 1.4"
-gem "puma", "~> 4.3"
+
+gem "puma", ">= 5.0.0"
 gem "uglifier", "~> 4.1"
+
+gem "faker", "~> 2.14"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -24,8 +27,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "faker", "~> 1.9"
   gem "letter_opener_web", "~> 1.3"
+  gem "rubocop-faker"
   gem "listen", "~> 3.1"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"

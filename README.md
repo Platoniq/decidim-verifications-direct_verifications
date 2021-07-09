@@ -65,6 +65,13 @@ And then execute:
 bundle
 ```
 
+Depending on your Decidim version, you might want to specify the version to ensure compatibility:
+
+| Direct Verifications version | Compatible Decidim versions |
+|---|---|
+| 1.0 | >= 0.23.x |
+| 0.22.x | 0.22.x |
+
 ## Using additional verification methods
 
 You can manage other verification methods (or workflow) a part from `Direct verification`. You need to configure it in a new file in the `config/initializers` folder.
