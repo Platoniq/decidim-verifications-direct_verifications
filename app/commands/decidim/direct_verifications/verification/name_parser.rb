@@ -5,7 +5,7 @@ module Decidim
     module Verification
       class NameParser < BaseParser
         LINE_DELIMITER = /[\r\n;,]/.freeze
-        NON_ALPHA_CHARS = /[^[:print:]]|[\"\$\<\>\|\\]/.freeze
+        NON_ALPHA_CHARS = /[^[:print:]]|["$<>|\\]/.freeze
 
         def header
           nil

@@ -8,10 +8,10 @@ module Decidim
       class MetadataParser < BaseParser
         def header
           @header ||= begin
-                        header_row = lines[0].chomp
-                        header_row = tokenize(header_row)
-                        normalize_header(header_row)
-                      end
+            header_row = lines[0].chomp
+            header_row = tokenize(header_row)
+            normalize_header(header_row)
+          end
         end
 
         def lines
