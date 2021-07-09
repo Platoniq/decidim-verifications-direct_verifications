@@ -41,7 +41,7 @@ module Decidim
           filter[:email] = emails unless emails.empty?
           return User.where(filter).where.not(email: "")
         end
-        authorized_users(false)
+        authorized_users(strict: false)
       end
 
       def authorized_users(strict: true)
