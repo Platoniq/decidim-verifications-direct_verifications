@@ -37,7 +37,8 @@
         <%= t("admin.new.check", scope: "decidim.direct_verifications.verification") %>
       </label>
 
-      <%# TODO: add authorization_handler field %>
+      <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
+      <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
 
       <%= form.file_field :file, label: t(".file") %>
       <%= form.submit t(".submit"), class: "button" %>

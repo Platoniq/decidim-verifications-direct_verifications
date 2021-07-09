@@ -13,6 +13,12 @@ describe "Admin imports users", type: :system do
     switch_to_host(organization.host)
     login_as user, scope: :user
 
+    organization.available_authorizations = %w(direct_verifications other_verification_method)
+    organization.save!
+    Decidim::DirectVerifications.configure do |config|
+      config.manage_workflows = %w(other_verification_method)
+    end
+
     visit decidim_admin_direct_verifications.new_import_path
   end
 
@@ -50,6 +56,10 @@ describe "Admin imports users", type: :system do
 
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
+      select(
+        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        from: "Verification method"
+      )
 
       perform_enqueued_jobs do
         click_button("Upload file")
@@ -59,15 +69,24 @@ describe "Admin imports users", type: :system do
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       click_link I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
-      expect(page).to have_content("Brandy")
+      expect(page).not_to have_content("Brandy") # In the authorizations page we only show those with :direct_verifications
 
       expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
       expect(ActionMailer::Base.deliveries.first.subject).to eq("Invitation instructions")
 
-      expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
+      expect(ActionMailer::Base.deliveries.second.body.encoded).to include(
+        I18n.t(
+          "#{i18n_scope}.imports.mailer.registered",
+          count: 1,
+          successful: 1,
+          errors: 0
+        )
+      )
+
+      expect(ActionMailer::Base.deliveries.third.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.authorized",
-          handler: :direct_verifications,
+          handler: :other_verification_method,
           count: 1,
           successful: 1,
           errors: 0
@@ -82,13 +101,16 @@ describe "Admin imports users", type: :system do
     end
 
     before do
-      create(:authorization, :granted, user: user_to_revoke, name: :direct_verifications)
+      create(:authorization, :granted, user: user_to_revoke, name: :other_verification_method)
     end
 
     it "revokes users through a CSV file" do
       attach_file("CSV file with users data", filename)
-
       choose(I18n.t("#{i18n_scope}.new.revoke"))
+      select(
+        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        from: "Verification method"
+      )
 
       perform_enqueued_jobs do
         click_button("Upload file")
@@ -103,7 +125,7 @@ describe "Admin imports users", type: :system do
       expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(
           "#{i18n_scope}.imports.mailer.revoked",
-          handler: :direct_verifications,
+          handler: :other_verification_method,
           count: 1,
           successful: 1,
           errors: 0

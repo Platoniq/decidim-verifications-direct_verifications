@@ -3,13 +3,16 @@
 module Decidim
   module DirectVerifications
     class AuthorizeUser
-      def initialize(email, data, session, organization, instrumenter)
+      # rubocop:disable Metrics/ParameterLists
+      def initialize(email, data, session, organization, instrumenter, authorization_handler)
         @email = email
         @data = data
         @session = session
         @organization = organization
         @instrumenter = instrumenter
+        @authorization_handler = authorization_handler
       end
+      # rubocop:enable Metrics/ParameterLists
 
       def call
         unless user
@@ -31,7 +34,7 @@ module Decidim
 
       private
 
-      attr_reader :email, :data, :session, :organization, :instrumenter
+      attr_reader :email, :data, :session, :organization, :instrumenter, :authorization_handler
 
       def valid_authorization?
         !authorization.granted? || authorization.expired?
@@ -46,7 +49,7 @@ module Decidim
           begin
             auth = Authorization.find_or_initialize_by(
               user: user,
-              name: :direct_verifications
+              name: authorization_handler
             )
             auth.metadata = data
             auth

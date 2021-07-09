@@ -9,7 +9,14 @@ module Decidim
         subject(:command) { described_class.new(form) }
 
         let(:form) do
-          instance_double(CreateImportForm, file: file, organization: organization, user: user, action: action)
+          instance_double(
+            CreateImportForm,
+            file: file,
+            organization: organization,
+            user: user,
+            action: action,
+            authorization_handler: "direct_verifications"
+          )
         end
         let(:filename) { file_fixture("users.csv") }
         let(:file) { Rack::Test::UploadedFile.new(filename, "text/csv") }

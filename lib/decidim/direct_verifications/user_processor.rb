@@ -29,13 +29,13 @@ module Decidim
 
       def authorize_users
         emails.each do |email, data|
-          AuthorizeUser.new(email, data, session, organization, instrumenter).call
+          AuthorizeUser.new(email, data, session, organization, instrumenter, authorization_handler).call
         end
       end
 
       def revoke_users
         emails.each do |email, _name|
-          RevokeUser.new(email, organization, instrumenter).call
+          RevokeUser.new(email, organization, instrumenter, authorization_handler).call
         end
       end
 

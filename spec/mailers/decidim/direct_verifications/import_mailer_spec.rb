@@ -8,10 +8,11 @@ module Decidim
       let(:user) { build(:user) }
 
       describe "#finished_processing" do
-        subject(:mail) { described_class.finished_processing(user, instrumenter, type) }
+        subject(:mail) { described_class.finished_processing(user, instrumenter, type, handler) }
 
         let(:instrumenter) { instance_double(Instrumenter, emails_count: 1, processed_count: 1, errors_count: 0) }
         let(:type) { :registered }
+        let(:handler) { :direct_verifications }
 
         it "sends the email to the passed user" do
           expect(mail.to).to eq([user.email])

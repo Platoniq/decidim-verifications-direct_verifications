@@ -10,11 +10,12 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(userslist, organization, current_user)
+      def perform(userslist, organization, current_user, authorization_handler)
         @emails = Verification::MetadataParser.new(userslist).to_h
         @organization = organization
         @current_user = current_user
         @instrumenter = Instrumenter.new(current_user)
+        @authorization_handler = authorization_handler
 
         process_users
         send_email_notification
@@ -22,10 +23,15 @@ module Decidim
 
       private
 
-      attr_reader :emails, :organization, :current_user, :instrumenter
+      attr_reader :emails, :organization, :current_user, :instrumenter, :authorization_handler
 
       def send_email_notification
-        ImportMailer.finished_processing(current_user, instrumenter, type).deliver_now
+        ImportMailer.finished_processing(
+          current_user,
+          instrumenter,
+          type,
+          authorization_handler
+        ).deliver_now
       end
     end
   end

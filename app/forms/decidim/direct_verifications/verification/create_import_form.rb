@@ -15,9 +15,18 @@ module Decidim
         attribute :user, Decidim::User
         attribute :authorize, String
         attribute :register, Boolean
+        attribute :authorization_handler, String
 
-        validates :file, :organization, :user, :authorize, presence: true
+        validates :file, :organization, :user, :authorize, :authorization_handler, presence: true
         validates :authorize, inclusion: { in: ACTIONS.keys }
+
+        validate :available_authorization_handler
+
+        def available_authorization_handler
+          return if authorization_handler.in?(organization.available_authorizations)
+
+          errors.add(:authorization_handler, :inclusion)
+        end
 
         def action
           if register && authorize == "in"
