@@ -1,3 +1,4 @@
+---
 es:
   decidim:
     admin:
@@ -10,10 +11,10 @@ es:
       admin:
         direct_verifications:
           help:
-            - 'Permite la introducción masiva d usuarios con el fin de:'
-            - Registrarlos directamente a la organización con el envío de invitaciones
-            - Verificarlos en cualquier método de verificación activo
-            - Revocar la verificación en cualquier método de verificación activo
+          - 'Permite la introducción masiva d usuarios con el fin de:'
+          - Registrarlos directamente a la organización con el envío de invitaciones
+          - Verificarlos en cualquier método de verificación activo
+          - Revocar la verificación en cualquier método de verificación activo
       direct_verifications:
         explanation: Verificación manual por parte de los administradores de la organización
         name: Verificación directa
@@ -25,17 +26,25 @@ es:
               created_at: Creado el
               metadata: Metadatos
               name: Nombre
+              new_import: Nueva importación
               title: Autorizaciones
               user_name: Nombre de usuario
-              new_import: Nueva importación
           direct_verifications:
             create:
-              authorized: "Se han verificado correctamente %{authorized} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)"
-              info: "Se han detectado %{count} usuarios, de los cuales %{registered} están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed} sin confirmar)"
+              authorized: Se han verificado correctamente %{authorized} usuarios usando
+                [%{handler}] (%{count} detectados, %{errors} errores)
+              info: Se han detectado %{count} usuarios, de los cuales %{registered}
+                están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed}
+                sin confirmar)
               missing_header: Por favor, proporcionad una fila de encabezamiento
-              registered: "Se han registrado correctamente %{registered} usuarios (%{count} detectados, %{errors} errores)"
-              revoked: Se ha revocado correctament la verificación de %{revoked} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)
-            gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe contar con el consentimiento explícito de sus usuarios para poder registrarlos. De lo contrario, estará infringiendo la regulación GDPR en los países de la UE.
+              registered: Se han registrado correctamente %{registered} usuarios (%{count}
+                detectados, %{errors} errores)
+              revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
+                usando [%{handler}] (%{count} detectados, %{errors} errores)
+            gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe
+              contar con el consentimiento explícito de sus usuarios para poder registrarlos.
+              De lo contrario, estará infringiendo la regulación GDPR en los países
+              de la UE.
           index:
             authorizations: Usuarios autorizados
             stats: Estadísticas de usuarios
@@ -44,7 +53,8 @@ es:
             authorization_handler: Método de verificación
             authorize: Autoriza los usuarios
             check: Comprueba el estado de los usuarios
-            info: Introduce aquí los emails, uno por linea. Si los emails están precedidos por un texto, se interpretará como el nombre del usuario
+            info: Introduce aquí los emails, uno por linea. Si los emails están precedidos
+              por un texto, se interpretará como el nombre del usuario
             register: Registra los usuarios a la plataforma (si existen se ignorarán)
             revoke: Revoca la autorización de los usuarios
             submit: Envía y procesa el listado
