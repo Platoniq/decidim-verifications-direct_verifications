@@ -11,12 +11,12 @@ es:
       admin:
         direct_verifications:
           help:
-          - 'Permite la introducción masiva d usuarios con el fin de:'
-          - Registrarlos directamente a la organización con el envío de invitaciones
-          - Verificarlos en cualquier método de verificación activo
-          - Revocar la verificación en cualquier método de verificación activo
+          - 'Permite la introducción masiva de participantes con el fin de:'
+          - Registrarlas directamente en la organización con el envío de invitaciones
+          - Verificarlas con cualquier método de verificación activo
+          - Revocar la verificación con cualquier método de verificación activo
       direct_verifications:
-        explanation: Verificación manual por parte de los administradores de la organización
+        explanation: Verificación manual por parte de las administradoras de la organización
         name: Verificación directa
     direct_verifications:
       verification:
@@ -28,47 +28,47 @@ es:
               name: Nombre
               new_import: Nueva importación
               title: Autorizaciones
-              user_name: Nombre de usuario
+              user_name: Nombre de la participante
           direct_verifications:
             create:
-              authorized: Se han verificado correctamente %{authorized} usuarios usando
-                [%{handler}] (%{count} detectados, %{errors} errores)
-              info: Se han detectado %{count} usuarios, de los cuales %{registered}
-                están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed}
+              authorized: Se han verificado correctamente %{authorized} participantes usando
+                [%{handler}] (%{count} detectadas, %{errors} errores)
+              info: Se han detectado %{count} participantes, de las cuales %{registered}
+                están registradas, %{authorized} autorizadas usando [%{handler}] (%{unconfirmed}
                 sin confirmar)
-              missing_header: Por favor, proporcionad una fila de encabezamiento
-              registered: Se han registrado correctamente %{registered} usuarios (%{count}
-                detectados, %{errors} errores)
-              revoked: Se ha revocado correctament la verificación de %{revoked} usuarios
-                usando [%{handler}] (%{count} detectados, %{errors} errores)
-            gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe
-              contar con el consentimiento explícito de sus usuarios para poder registrarlos.
-              De lo contrario, estará infringiendo la regulación GDPR en los países
+              missing_header: Por favor, proporciona una fila de encabezamiento
+              registered: Se han registrado correctamente %{registered} participantes (%{count}
+                detectadas, %{errors} errores)
+              revoked: Se ha revocado correctamente la verificación de %{revoked} participantes
+                usando [%{handler}] (%{count} detectadas, %{errors} errores)
+            gdpr_disclaimer: Haz esto bajo tu responsabilidad. Recuerda que debes
+              contar con el consentimiento explícito de las participantes para poder registrarlas.
+              De lo contrario, estarás infringiendo la regulación GDPR en los países
               de la UE.
           index:
-            authorizations: Usuarios autorizados
-            stats: Estadísticas de usuarios
-            title: Inscribe y autoriza usuarios
+            authorizations: Participantes autorizadas
+            stats: Estadísticas de participantes
+            title: Inscribe y autoriza participantes
           new:
             authorization_handler: Método de verificación
-            authorize: Autoriza los usuarios
-            check: Comprueba el estado de los usuarios
-            info: Introduce aquí los emails, uno por linea. Si los emails están precedidos
-              por un texto, se interpretará como el nombre del usuario
-            register: Registra los usuarios a la plataforma (si existen se ignorarán)
-            revoke: Revoca la autorización de los usuarios
+            authorize: Autoriza las participantes
+            check: Comprueba el estado de las participantes
+            info_html: Puedes <a href=%{link}>importar un fichero CSV</a> o introducir aquí los emails, uno por linea. Si los emails están precedidos
+              por un texto, éste se interpretará como el nombre de la participante
+            register: Registra las participantes a la plataforma (si existen se ignorarán)
+            revoke: Revoca la autorización de las participantes
             submit: Envía y procesa el listado
             textarea: Lista de emails
           stats:
             index:
-              authorized: Verificados
-              authorized_unconfirmed: Verificados pero sin confirmar
+              authorized: Verificadas
+              authorized_unconfirmed: Verificadas pero sin confirmar
               global: "- Cualquier método de verificación -"
-              registered: Registrados
+              registered: Registradas
               unconfirmed: Sin confirmar
         authorizations:
           new:
-            no_action: Este método requiere que un administrador os verifique
+            no_action: Este método requiere que una administradora os verifique
     verifications:
       authorizations:
         first_login:
