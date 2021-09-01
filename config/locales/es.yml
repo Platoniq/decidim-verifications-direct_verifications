@@ -45,6 +45,24 @@ es:
               contar con el consentimiento explícito de las participantes para poder registrarlas.
               De lo contrario, estarás infringiendo la regulación GDPR en los países
               de la UE.
+          imports:
+            create:
+              error: Ha habido un error al importar el archivo.
+              success: Se ha importado el archivo. Recibirás un email cuando todas las participantes hayan sido importadas.
+            mailer:
+              authorized: "%{successful} participantes han sido verificadas usando
+                [%{handler}] (%{count} detectades, %{errors} errores)"
+              info: "%{count} participantes detectadas, de las cuales %{registered} están registradas,
+                %{authorized} autorizadas usando [%{handler}] (%{unconfirmed} sin confirmar)"
+              registered: "%{successful} participantes han sido registradas (%{count}
+                detectadas, %{errors} errores) "
+              revoked: Se ha revocado correctamente la verificación de %{successful} participantes usando
+                [%{handler}] (%{count} detectadas, %{errors} errores)
+              subject: Resultados de la importación
+            new:
+              file: Archivo CSV con datos de participantes
+              info: Importa un archivo CSV con una participante por línea copiando el formato del siguiente ejemplo
+              submit: Subir archivo
           index:
             authorizations: Participantes autorizadas
             stats: Estadísticas de participantes

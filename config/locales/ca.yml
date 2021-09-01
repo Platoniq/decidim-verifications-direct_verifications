@@ -45,6 +45,24 @@ ca:
               de tenir el consentiment explícit de les vostres participants per a registrar-les.
               En cas contrari, estareu infringint la regulació GDPR als països de
               la UE.
+          imports:
+            create:
+              error: No s'ha pogut importar el fitxer
+              success: S'ha importat el fitxer. Rebràs un email quan totes les participants hagin estat importades.
+            mailer:
+              authorized: "%{successful} participants han estat verificades utilitzant
+                [%{handler}] (%{count} detectades, %{errors} errors)"
+              info: "%{count} participants detectades, de les quals %{registered} estan registrades,
+                %{authorized} autoritzades utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              registered: "%{successful} participants han estat registrades (%{count}
+                detectades, %{errors} errors) "
+              revoked: S'ha revocat correctament la verificació de %{successful} participants utilitzant
+                [%{handler}] (%{count} detectades, %{errors} errors)
+              subject: Resultats de la importació
+            new:
+              file: Fitxer CSV amb dades de participants
+              info: Importa un fitxer CSV file amb una participant per línia copiant el format de l'exemple següent
+              submit: Pujar fitxer
           index:
             authorizations: Participants autoritzades
             stats: Estadístiques de les participants
@@ -59,7 +77,7 @@ ca:
             register: Registra les participants a la plataforma (si existeixen s'ignoraran)
             revoke: Revoca l'autorització de les participants
             submit: Envia i processa el llistat
-            textarea: Llistat d''emails
+            textarea: Llistat d'emails
           stats:
             index:
               authorized: Verificades
