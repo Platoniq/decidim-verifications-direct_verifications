@@ -20,6 +20,20 @@ fr:
     direct_verifications:
       verification:
         admin:
+          imports:
+            new:
+              info: Import a CSV file with a user entry per line copying the format from the example below
+              submit: Upload file
+              file: CSV file with users data
+            create:
+              success: File successfully uploaded. We'll email you when all users are imported.
+              error: There was an error importing the file
+            mailer:
+              subject: File import results
+              authorized: "%{successful} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} utilisateurs détectés, dont %{registered} sont enregistrés, %{authorized} autorisés à utiliser [%{handler}] (%{unconfirmed} non confirmés)"
+              registered: "%{successful} users have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Créé à
@@ -32,6 +46,7 @@ fr:
             create:
               authorized: "%{authorized} utilisateurs ont été vérifiés avec succès en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)"
               info: "%{count} utilisateurs détectés, dont %{registered} sont enregistrés, %{authorized} autorisés à utiliser [%{handler}] (%{unconfirmed} non confirmés)"
+              missing_header: Please, provide a header row
               registered: "%{registered} utilisateurs ont été enregistrés avec succès (%{count} détectés, %{errors} erreurs) "
               revoked: La vérification de %{revoked} utilisateurs ont été révoqués en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)
             gdpr_disclaimer: Faites-le sous votre responsabilité. N'oubliez pas que vous devez avoir le consentement explicite de vos utilisateurs afin de les enregistrer. Dans le cas contraire, vous enfreindrez le règlement du RGPD dans les pays de l'UE.
@@ -43,7 +58,7 @@ fr:
             authorization_handler: Méthode de vérification
             authorize: Utilisateurs autorisés
             check: Vérifier le statut des utilisateurs
-            info: Entrez les e-mails ici, un par ligne. Si les e-mails sont précédés d'un texte, il sera interprété comme le nom de l'utilisateur
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
             register: Inscrire des utilisateurs sur la plateforme (si ils existent, ils seront ignorés)
             revoke: Révoquer l'autorisation des utilisateurs
             submit: Envoyer et traiter la liste
