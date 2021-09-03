@@ -1,4 +1,3 @@
----
 es:
   decidim:
     admin:
@@ -11,30 +10,16 @@ es:
       admin:
         direct_verifications:
           help:
-          - 'Permite la introducción masiva de participantes con el fin de:'
-          - Registrarlas directamente en la organización con el envío de invitaciones
-          - Verificarlas con cualquier método de verificación activo
-          - Revocar la verificación con cualquier método de verificación activo
+            - 'Allows the massive introduction of participants in order to:'
+            - Registrarlos directamente a la organización con el envío de invitaciones
+            - Verificarlos en cualquier método de verificación activo
+            - Revocar la verificación en cualquier método de verificación activo
       direct_verifications:
-        explanation: Verificación manual por parte de las administradoras de la organización
+        explanation: Verificación manual por parte de los administradores de la organización
         name: Verificación directa
     direct_verifications:
       verification:
         admin:
-          imports:
-            new:
-              info: Import a CSV file with a user entry per line copying the format from the example below
-              submit: Upload file
-              file: CSV file with users data
-            create:
-              success: File successfully uploaded. We'll email you when all users are imported.
-              error: There was an error importing the file
-            mailer:
-              subject: File import results
-              authorized: "%{successful} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
-              info: "Se han detectado %{count} usuarios, de los cuales %{registered} están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed} sin confirmar)"
-              registered: "%{successful} users have been successfully registered (%{count} detected, %{errors} errors) "
-              revoked: Verification from %{successful} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Creado el
@@ -42,65 +27,52 @@ es:
               name: Nombre
               new_import: Nueva importación
               title: Autorizaciones
-              user_name: Nombre de la participante
+              user_name: Participant name
           direct_verifications:
             create:
-              authorized: Se han verificado correctamente %{authorized} participantes usando
-                [%{handler}] (%{count} detectadas, %{errors} errores)
-              info: Se han detectado %{count} participantes, de las cuales %{registered}
-                están registradas, %{authorized} autorizadas usando [%{handler}] (%{unconfirmed}
-                sin confirmar)
-              missing_header: Por favor, proporciona una fila de encabezamiento
-              registered: Se han registrado correctamente %{registered} participantes (%{count}
-                detectadas, %{errors} errores)
-              revoked: Se ha revocado correctamente la verificación de %{revoked} participantes
-                usando [%{handler}] (%{count} detectadas, %{errors} errores)
-            gdpr_disclaimer: Haz esto bajo tu responsabilidad. Recuerda que debes
-              contar con el consentimiento explícito de las participantes para poder registrarlas.
-              De lo contrario, estarás infringiendo la regulación GDPR en los países
-              de la UE.
+              authorized: "%{authorized} participants have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} participants detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              missing_header: Por favor, proporcionad una fila de encabezamiento
+              registered: "%{registered} participants have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{revoked} participants have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
+            gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your participants in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
           imports:
             create:
-              error: Ha habido un error al importar el archivo.
-              success: Se ha importado el archivo. Recibirás un email cuando todas las participantes hayan sido importadas.
+              error: There was an error importing the file
+              success: File successfully uploaded. We'll email you when all participants are imported.
             mailer:
-              authorized: "%{successful} participantes han sido verificadas usando
-                [%{handler}] (%{count} detectades, %{errors} errores)"
-              info: "%{count} participantes detectadas, de las cuales %{registered} están registradas,
-                %{authorized} autorizadas usando [%{handler}] (%{unconfirmed} sin confirmar)"
-              registered: "%{successful} participantes han sido registradas (%{count}
-                detectadas, %{errors} errores) "
-              revoked: Se ha revocado correctamente la verificación de %{successful} participantes usando
-                [%{handler}] (%{count} detectadas, %{errors} errores)
-              subject: Resultados de la importación
+              authorized: "%{successful} participants have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} participants detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              registered: "%{successful} participants have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} participants have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
+              subject: File import results
             new:
-              file: Archivo CSV con datos de participantes
-              info: Importa un archivo CSV con una participante por línea copiando el formato del siguiente ejemplo
-              submit: Subir archivo
+              file: CSV file with participants data
+              info: Import a CSV file with a participant entry per line copying the format from the example below
+              submit: Upload file
           index:
-            authorizations: Participantes autorizadas
-            stats: Estadísticas de participantes
-            title: Inscribe y autoriza participantes
+            authorizations: Authorized participants
+            stats: Estadísticas de usuarios
+            title: Register and authorize participants
           new:
             authorization_handler: Método de verificación
-            authorize: Autoriza las participantes
-            check: Comprueba el estado de las participantes
-            info_html: Puedes <a href=%{link}>importar un fichero CSV</a> o introducir aquí los emails, uno por linea. Si los emails están precedidos
-              por un texto, éste se interpretará como el nombre de la participante
-            register: Registra las participantes a la plataforma (si existen se ignorarán)
-            revoke: Revoca la autorización de las participantes
+            authorize: Authorize participants
+            check: Check participants status
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the participant's name.
+            register: Register participants in the platform (if they exist they will be ignored)
+            revoke: Revoke authorization from participants
             submit: Envía y procesa el listado
             textarea: Lista de emails
           stats:
             index:
-              authorized: Verificadas
-              authorized_unconfirmed: Verificadas pero sin confirmar
+              authorized: Verificados
+              authorized_unconfirmed: Verificados pero sin confirmar
               global: "- Cualquier método de verificación -"
-              registered: Registradas
+              registered: Registrados
               unconfirmed: Sin confirmar
         authorizations:
           new:
-            no_action: Este método requiere que una administradora os verifique
+            no_action: Este método requiere que un administrador os verifique
     verifications:
       authorizations:
         first_login:
