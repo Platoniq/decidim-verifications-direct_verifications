@@ -60,7 +60,7 @@ module Decidim::DirectVerifications::Verification::Admin
           expect(flash[:warning]).not_to be_empty
           expect(flash[:warning]).to include("1 detected")
           expect(flash[:warning]).to include("0 errors")
-          expect(flash[:warning]).to include("1 users")
+          expect(flash[:warning]).to include("1 participants")
           expect(flash[:warning]).to include("registered")
         end
 

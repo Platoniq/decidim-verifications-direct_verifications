@@ -1,3 +1,4 @@
+---
 cs:
   decidim:
     admin:
@@ -10,10 +11,10 @@ cs:
       admin:
         direct_verifications:
           help:
-            - 'Umožňuje masivní zavedení uživatelů:'
-            - Přímá registrace v organizaci a odeslání pozvánek
-            - Ověřit je pomocí jakékoliv metody aktivního ověření
-            - Zrušit jejich ověření pomocí jakékoli metody aktivního ověření
+          - 'Umožňuje masivní zavedení uživatelů:'
+          - Přímá registrace v organizaci a odeslání pozvánek
+          - Ověřit je pomocí jakékoliv metody aktivního ověření
+          - Zrušit jejich ověření pomocí jakékoli metody aktivního ověření
       direct_verifications:
         explanation: Ruční ověření správcem organizace
         name: Přímé ověření
@@ -25,16 +26,22 @@ cs:
               created_at: Vytvořeno v
               metadata: Metadata
               name: Název
+              new_import: Nový import
               title: Autorizace
               user_name: Uživatelské jméno
-              new_import: Nový import
           direct_verifications:
             create:
-              authorized: "%{authorized} uživatelů bylo úspěšně ověřeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)"
-              info: "Zjištěno %{count} uživatelů, z nichž %{registered} jsou registrováni, %{authorized} autorizováni pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)"
-              registered: "%{registered} uživatelů bylo úspěšně zaregistrováno (%{count} detekováno, %{errors} chyb) "
-              revoked: Ověření od %{revoked} uživatelů bylo zrušeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyb)
-            gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že potřebujete mít výslovný souhlas svých uživatelů, abyste je mohli zaregistrovat. V opačném případě můžete porušovat nařízení o GDPR v zemích EU.
+              authorized: "%{authorized} uživatelů bylo úspěšně ověřeno pomocí [%{handler}]
+                (%{count} detekováno, %{errors} chyb)"
+              info: Zjištěno %{count} uživatelů, z nichž %{registered} jsou registrováni,
+                %{authorized} autorizováni pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)
+              registered: "%{registered} uživatelů bylo úspěšně zaregistrováno (%{count}
+                detekováno, %{errors} chyb) "
+              revoked: Ověření od %{revoked} uživatelů bylo zrušeno pomocí [%{handler}]
+                (%{count} detekováno, %{errors} chyb)
+            gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že
+              potřebujete mít výslovný souhlas svých uživatelů, abyste je mohli zaregistrovat.
+              V opačném případě můžete porušovat nařízení o GDPR v zemích EU.
           index:
             authorizations: Autorizovaní uživatelé
             stats: Statistiky uživatelů
@@ -43,7 +50,8 @@ cs:
             authorization_handler: Ověřovací metoda
             authorize: Autorizovat uživatele
             check: Zkontrolovat stav uživatelů
-            info: Zadejte e-maily zde, jeden na řádek. Pokud e-mailům předchází text, bude interpretován jako jméno uživatele
+            info: Zadejte e-maily zde, jeden na řádek. Pokud e-mailům předchází text,
+              bude interpretován jako jméno uživatele
             register: Registrovat uživatele na platformě (pokud existují, budou ignorováni)
             revoke: Zrušit autorizaci od uživatelů
             submit: Odeslat a zpracovat seznam

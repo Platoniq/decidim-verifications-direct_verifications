@@ -39,7 +39,7 @@ module Decidim
           context "when the import had no errors" do
             it "shows the number of errors" do
               expect(mail.body.encoded).to include(
-                "1 users have been successfully registered (1 detected, 0 errors)"
+                "1 participants have been successfully registered (1 detected, 0 errors)"
               )
             end
           end
@@ -49,7 +49,7 @@ module Decidim
 
             it "shows the number of errors" do
               expect(mail.body.encoded).to include(
-                "0 users have been successfully registered (1 detected, 1 errors)"
+                "0 participants have been successfully registered (1 detected, 1 errors)"
               )
             end
           end
@@ -61,7 +61,7 @@ module Decidim
           context "when the import had no errors" do
             it "shows the number of errors" do
               expect(mail.body.encoded).to include(
-                "Verification from 1 users have been revoked using [direct_verifications] (1 detected, 0 errors)"
+                "Verification from 1 participants have been revoked using [direct_verifications] (1 detected, 0 errors)"
               )
             end
           end
@@ -71,7 +71,7 @@ module Decidim
 
             it "shows the number of errors" do
               expect(mail.body.encoded).to include(
-                "Verification from 0 users have been revoked using [direct_verifications] (1 detected, 1 errors)"
+                "Verification from 0 participants have been revoked using [direct_verifications] (1 detected, 1 errors)"
               )
             end
           end
