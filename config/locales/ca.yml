@@ -1,3 +1,4 @@
+---
 ca:
   decidim:
     admin:
@@ -10,12 +11,12 @@ ca:
       admin:
         direct_verifications:
           help:
-            - 'Permet la introducció massiva d''usuaris per tal de:'
-            - Registrar-los directament a la organització amb l'enviament d'invitacions
-            - Verificar-los en qualsevol mètode de verificació actiu
-            - Revocar la verificació en qualsevol mètode de verificació actiu
+          - 'Permet la introducció massiva de participants per tal de:'
+          - Registrar-les directament a la organització amb l'enviament d'invitacions
+          - Verificar-les amb qualsevol mètode de verificació actiu
+          - Revocar la verificació amb qualsevol mètode de verificació actiu
       direct_verifications:
-        explanation: Verificació manual per par dels administradors de l'organització
+        explanation: Verificació manual per part de les administradores de l'organització
         name: Verificació directa
     direct_verifications:
       verification:
@@ -56,23 +57,25 @@ ca:
             title: Inscriu i autoritza usuaris
           new:
             authorization_handler: Mètode de verificació
-            authorize: Autoritza els usuaris
-            check: Comprova l'estat dels usuaris
-            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
-            register: Registra els usuaris a la plataforma (si existeixen s'ignoraran)
-            revoke: Revoca l'autorització dels usuaris
+            authorize: Autoritza les participants
+            check: Comprova l'estat de les participants
+            info_html: Pots <a href=%{link}>importar un fitxer CSV</a> o introduir els emails
+              aquí, un per línia. Si els emails estan precedits
+              per un text, aquest s'interpretarà com el nom de la participant
+            register: Registra les participants a la plataforma (si existeixen s'ignoraran)
+            revoke: Revoca l'autorització de les participants
             submit: Envia i processa el llistat
-            textarea: Llista d''emails
+            textarea: Llistat d'emails
           stats:
             index:
-              authorized: Verificats
-              authorized_unconfirmed: Verificats però no confirmats
+              authorized: Verificades
+              authorized_unconfirmed: Verificades però no confirmades
               global: "- Qualsevol mètode de verificació -"
-              registered: Registrats
-              unconfirmed: No confirmats
+              registered: Registrades
+              unconfirmed: No confirmades
         authorizations:
           new:
-            no_action: Aquest mètode requereix que un administrador us verifiqui
+            no_action: Aquest mètode requereix que una administradora us verifiqui
     verifications:
       authorizations:
         first_login:

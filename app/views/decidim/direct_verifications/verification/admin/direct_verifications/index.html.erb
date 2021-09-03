@@ -7,10 +7,10 @@
     </h2>
   </div>
   <div class="card-section">
-    <p><%= t("decidim.direct_verifications.verification.admin.new.info") %></p>
+    <p><%= t("decidim.direct_verifications.verification.admin.new.info_html", link: new_import_path) %></p>
     <%= form_tag direct_verifications_path, multipart: true, class: "form" do %>
-      <%= label_tag :userlist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
-      <%= text_area_tag :userlist, @userslist, rows: 10 %>
+      <%= label_tag :userslist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
+      <%= text_area_tag :userslist, @userslist, rows: 10 %>
       <label>
         <%= check_box_tag :register %>
         <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>

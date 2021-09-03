@@ -9,7 +9,7 @@ module Decidim
 
           def index
             enforce_permission_to :index, :authorization
-            @authorizations = collection
+            @authorizations = collection.includes(:user)
           end
 
           def destroy
@@ -22,7 +22,12 @@ module Decidim
           private
 
           def collection
-            Decidim::Authorization.where(name: "direct_verifications").includes(:user)
+            # Decidim::Verifications::Authorizations Query
+            Decidim::Verifications::Authorizations.new(
+              organization: current_organization,
+              name: "direct_verifications",
+              granted: true
+            ).query
           end
 
           def authorization

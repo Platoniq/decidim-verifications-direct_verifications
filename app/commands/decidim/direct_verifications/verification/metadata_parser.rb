@@ -8,10 +8,10 @@ module Decidim
       class MetadataParser < BaseParser
         def header
           @header ||= begin
-                        header_row = lines[0].chomp
-                        column_names = tokenize(header_row)
-                        column_names.map(&:to_sym).map(&:downcase)
-                      end
+            header_row = lines[0].chomp
+            header_row = tokenize(header_row)
+            normalize_header(header_row)
+          end
         end
 
         def lines
@@ -23,8 +23,8 @@ module Decidim
 
           hash = {}
           header.each_with_index do |column, index|
-            value = tokens[index].strip
-            next if value.include?(email)
+            value = tokens[index]
+            next if value&.include?(email)
 
             hash[column] = value
           end
@@ -34,7 +34,17 @@ module Decidim
         private
 
         def tokenize(line)
-          CSV.parse(line)[0]
+          CSV.parse_line(line).map do |token|
+            token&.strip
+          end
+        end
+
+        def normalize_header(line)
+          line.map do |field|
+            raise MissingHeaderError if field.nil?
+
+            field.to_sym.downcase
+          end
         end
       end
     end

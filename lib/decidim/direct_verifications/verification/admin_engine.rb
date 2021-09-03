@@ -11,6 +11,7 @@ module Decidim
           resources :direct_verifications, only: [:index, :create, :stats]
           resources :stats, only: [:index]
           resources :authorizations, only: [:index, :destroy]
+          resources :imports, only: [:new, :create]
 
           root to: "direct_verifications#index"
         end

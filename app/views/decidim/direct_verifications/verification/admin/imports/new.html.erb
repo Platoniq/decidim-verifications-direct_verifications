@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-divider">
+    <h2 class="card-title">
+      <%= t("admin.index.title", scope: "decidim.direct_verifications.verification") %>
+      <%= link_to t("admin.index.stats", scope: "decidim.direct_verifications.verification"), stats_path, class: "button tiny button--title" %>
+      <%= link_to t("admin.index.authorizations", scope: "decidim.direct_verifications.verification"), authorizations_path, class: "button tiny button--title" %>
+    </h2>
+  </div>
+  <div class="card-section">
+    <p><%= t("decidim.direct_verifications.verification.admin.imports.new.info") %></p>
+    <pre class="code-block">
+      <strong>email, name, membership_phone, membership_type, membership_weight</strong>
+      ava@example.com, Ava Hawkins, +3476318371, consumer, 1
+      ewan@example.com, Ewan Cooper, +34653565765, worker, 1
+      tilly@example.com, Tilly Jones, +34653565761, collaborator, 0.67
+      ...
+    </pre>
+
+    <%= decidim_form_for(@form, url: imports_path, html: { class: "form" }) do |form| %>
+      <label>
+        <%= check_box_tag :register %>
+        <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
+        <div data-alert class="callout alert hide">
+          <%= t("admin.direct_verifications.gdpr_disclaimer", scope: "decidim.direct_verifications.verification") %>
+        </div>
+      </label>
+      <label>
+        <%= radio_button_tag :authorize, "in" %>
+        <%= t("admin.new.authorize", scope: "decidim.direct_verifications.verification") %>
+      </label>
+      <label>
+        <%= radio_button_tag :authorize, "out" %>
+        <%= t("admin.new.revoke", scope: "decidim.direct_verifications.verification") %>
+      </label>
+      <label>
+        <%= radio_button_tag :authorize, "check", true %>
+        <%= t("admin.new.check", scope: "decidim.direct_verifications.verification") %>
+      </label>
+
+      <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
+      <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
+
+      <%= form.file_field :file, label: t(".file") %>
+      <%= form.submit t(".submit"), class: "button" %>
+    <% end %>
+
+  </div>
+</div>
+
+<%= javascript_include_tag "decidim/direct_verifications/verification/admin/direct_verifications_admin" %>

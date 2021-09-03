@@ -6,6 +6,16 @@ module Decidim::DirectVerifications::Verification
   describe MetadataParser do
     subject { described_class.new(txt) }
 
+    describe "#header" do
+      context "when the first line has empty columns" do
+        let(:txt) { "Melina.morrison@bccm.coop,MORRISON Melina,,,11" }
+
+        it "raises an error" do
+          expect { subject.to_h }.to raise_error(MissingHeaderError)
+        end
+      end
+    end
+
     describe "#to_h" do
       context "when the text is empty" do
         let(:txt) { "" }
@@ -26,6 +36,21 @@ module Decidim::DirectVerifications::Verification
 
         it "returns an empty hash" do
           expect(subject.to_h).to eq({})
+        end
+      end
+
+      context "when the text has empty columns" do
+        let(:txt) do
+          <<-EMAILS.strip_heredoc
+            Name,Email,Department,Salary
+            Bob,bob@example.com,,1000
+          EMAILS
+        end
+
+        it "skips those columns" do
+          expect(subject.to_h).to eq(
+            "bob@example.com" => { department: nil, name: "Bob", salary: "1000" }
+          )
         end
       end
 
@@ -64,6 +89,21 @@ module Decidim::DirectVerifications::Verification
               "a@b.co" => { name: "User", type: "third@email.com@as.com" },
               "test1@test.com" => { name: "Test 1", type: "customer" },
               "test4@test.com" => { name: "Test\\| 4", type: "producer" }
+            )
+          end
+        end
+
+        context "and the CSV includes trailing or leading whitespaces" do
+          let(:txt) do
+            <<-CSV.strip_heredoc
+            Name, Email, Type
+            Ava Hawkins, ava@example.com, collaborator
+            CSV
+          end
+
+          it "returns the data in a hash with the email as key" do
+            expect(subject.to_h).to eq(
+              "ava@example.com" => { name: "Ava Hawkins", type: "collaborator" }
             )
           end
         end

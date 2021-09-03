@@ -14,6 +14,8 @@ module Decidim::DirectVerifications::Verification::Admin
     let(:verification_type) { "direct_verifications" }
     let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
 
+    let(:i18n_scope) { "decidim.direct_verifications.verification.admin.direct_verifications" }
+
     before do
       request.env["decidim.current_organization"] = user.organization
       sign_in user, scope: :user
@@ -31,11 +33,14 @@ module Decidim::DirectVerifications::Verification::Admin
 
     describe "POST create" do
       context "when parameters are defaults" do
-        params = { userlist: "" }
+        params = { userslist: "" }
+
         it_behaves_like "checking users", params
+
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
             post :create, params: params
+
             expect(flash[:info]).to include("0 are registered")
             expect(flash[:info]).to include("0 authorized")
             expect(flash[:info]).to include("unconfirmed")
@@ -45,7 +50,7 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with check" do
-        params = { userlist: "mail@example.com", register: true }
+        params = { userslist: "mail@example.com", register: true }
 
         it_behaves_like "checking users", params
 
@@ -55,20 +60,22 @@ module Decidim::DirectVerifications::Verification::Admin
           expect(flash[:warning]).not_to be_empty
           expect(flash[:warning]).to include("1 detected")
           expect(flash[:warning]).to include("0 errors")
-          expect(flash[:warning]).to include("1 users")
+          expect(flash[:warning]).to include("1 participants")
           expect(flash[:warning]).to include("registered")
         end
 
         it "renders the index with warning message" do
           perform_enqueued_jobs do
             post :create, params: params
-            expect(subject).to render_template("decidim/direct_verifications/verification/admin/direct_verifications/index")
+            expect(subject).to render_template(
+              "decidim/direct_verifications/verification/admin/direct_verifications/index"
+            )
           end
         end
       end
 
       context "when register users with authorize" do
-        params = { userlist: "mail@example.com", register: true, authorize: "in" }
+        params = { userslist: "mail@example.com", register: true, authorize: "in" }
 
         it_behaves_like "registering users", params
         it_behaves_like "authorizing users", params
@@ -81,12 +88,10 @@ module Decidim::DirectVerifications::Verification::Admin
         end
 
         context "when the name is not specified" do
+          let(:data) { "Name,Email,Type\r\n\"\",brandy@example.com,consumer" }
+
           it "infers the name from the email" do
-            post :create, params: {
-              userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
-              register: true,
-              authorize: "in"
-            }
+            post :create, params: { userslist: data, register: true, authorize: "in" }
 
             user = Decidim::User.find_by(email: "brandy@example.com")
             expect(user.name).to eq("brandy")
@@ -94,42 +99,79 @@ module Decidim::DirectVerifications::Verification::Admin
         end
 
         context "when in metadata mode" do
+          let(:data) do
+            "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3"
+          end
+
           around do |example|
-            original_processor = Rails.configuration.direct_verifications_parser
-            Rails.configuration.direct_verifications_parser = :metadata
+            original_processor = ::Decidim::DirectVerifications.input_parser
+            ::Decidim::DirectVerifications.input_parser = :metadata_parser
             example.run
-            Rails.configuration.direct_verifications_parser = original_processor
+            ::Decidim::DirectVerifications.input_parser = original_processor
           end
 
           it "stores any extra columns as authorization metadata" do
-            post :create, params: {
-              userlist: "Name,Email,Type\r\nBrandy,brandy@example.com,consumer,2\r\nWhisky,whisky@example.com,producer,3",
-              register: true,
-              authorize: "in"
-            }
+            post :create, params: { userslist: data, register: true, authorize: "in" }
 
             user = Decidim::User.find_by(email: "brandy@example.com")
             authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
             expect(authorization.metadata).to eq("name" => "Brandy", "type" => "consumer")
           end
 
+          context "when a column is empty" do
+            let(:data) { "Name,Email,Type,City\r\nBrandy,brandy@example.com,,Barcelona" }
+
+            it "sets it nil" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+
+              user = Decidim::User.find_by(email: "brandy@example.com")
+              authorization = Decidim::Authorization.find_by(decidim_user_id: user.id)
+
+              expect(authorization.metadata)
+                .to eq("name" => "Brandy", "type" => nil, "city" => "Barcelona")
+            end
+          end
+
           context "when the name is not specified" do
+            let(:data) { "Name,Email,Type\r\n\"\",brandy@example.com,consumer" }
+
             it "infers the name from the email" do
-              post :create, params: {
-                userlist: "Name,Email,Type\r\n\"\",brandy@example.com,consumer",
-                register: true,
-                authorize: "in"
-              }
+              post :create, params: { userslist: data, register: true, authorize: "in" }
 
               user = Decidim::User.find_by(email: "brandy@example.com")
               expect(user.name).to eq("brandy")
             end
           end
+
+          context "when the first row has empty columns" do
+            let(:data) { "brandy@example.com,,consumer" }
+
+            it "shows a user error" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+              expect(flash[:error]).to eq(I18n.t("#{i18n_scope}.create.missing_header"))
+            end
+          end
+
+          context "when no header is provided" do
+            let(:data) { "brandy@example.com,consumer" }
+
+            it "works" do
+              post :create, params: { userslist: data, register: true, authorize: "in" }
+              expect(response).to redirect_to(direct_verifications_path)
+            end
+          end
         end
       end
 
-      context "when register users with revoke" do
-        params = { userlist: "authorized@example.com", authorize: "out" }
+      context "when revoking users" do
+        params = { userslist: "authorized@example.com", authorize: "out" }
+        it_behaves_like "revoking users", params
+      end
+
+      context "when revoking users with another verification" do
+        params = { userslist: "authorized@example.com", authorize: "out", authorization_handler: "other" }
+        let(:verification_type) { "other" }
+
         it_behaves_like "revoking users", params
       end
     end
