@@ -20,6 +20,20 @@ ca:
     direct_verifications:
       verification:
         admin:
+          imports:
+            new:
+              info: Import a CSV file with a user entry per line copying the format from the example below
+              submit: Upload file
+              file: CSV file with users data
+            create:
+              success: File successfully uploaded. We'll email you when all users are imported.
+              error: There was an error importing the file
+            mailer:
+              subject: File import results
+              authorized: "%{successful} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              registered: "%{successful} users have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Data de creació
@@ -32,6 +46,7 @@ ca:
             create:
               authorized: "S'han verificat correctament %{authorized} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"
               info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              missing_header: Si us plau, proporcioneu una fila d'encapçalament
               registered: "S'han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)"
               revoked: S'ha revocat correctament la verificació de %{revoked} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
             gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu de tenir el consentiment explícit dels vostres usuaris per registrar-los. En cas contrari, estareu infringint la regulació GDPR als països de la UE.
@@ -43,7 +58,7 @@ ca:
             authorization_handler: Mètode de verificació
             authorize: Autoritza els usuaris
             check: Comprova l'estat dels usuaris
-            info: Introdueix aquí els emails, un per línia. Si els emails estan precedits per un text, s'interpretarà com el nom de l'usuari
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
             register: Registra els usuaris a la plataforma (si existeixen s'ignoraran)
             revoke: Revoca l'autorització dels usuaris
             submit: Envia i processa el llistat
