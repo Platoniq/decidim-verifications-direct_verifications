@@ -1,4 +1,3 @@
----
 ca:
   decidim:
     admin:
@@ -11,71 +10,69 @@ ca:
       admin:
         direct_verifications:
           help:
-          - 'Permet la introducció massiva de participants per tal de:'
-          - Registrar-les directament a la organització amb l'enviament d'invitacions
-          - Verificar-les amb qualsevol mètode de verificació actiu
-          - Revocar la verificació amb qualsevol mètode de verificació actiu
+            - 'Allows the massive introduction of participants in order to:'
+            - Registrar-los directament a la organització amb l'enviament d'invitacions
+            - Verificar-los en qualsevol mètode de verificació actiu
+            - Revocar la verificació en qualsevol mètode de verificació actiu
       direct_verifications:
-        explanation: Verificació manual per part de les administradores de l'organització
+        explanation: Verificació manual per par dels administradors de l'organització
         name: Verificació directa
     direct_verifications:
       verification:
         admin:
-          imports:
-            new:
-              info: Import a CSV file with a user entry per line copying the format from the example below
-              submit: Upload file
-              file: CSV file with users data
-            create:
-              success: File successfully uploaded. We'll email you when all users are imported.
-              error: There was an error importing the file
-            mailer:
-              subject: File import results
-              authorized: "%{successful} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
-              info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
-              registered: "%{successful} users have been successfully registered (%{count} detected, %{errors} errors) "
-              revoked: Verification from %{successful} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Data de creació
               metadata: Metadades
               name: Nom
-              title: Autoritzacions
-              user_name: Nom d'usuari
               new_import: Nova importació
+              title: Autoritzacions
+              user_name: Participant name
           direct_verifications:
             create:
-              authorized: "S'han verificat correctament %{authorized} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"
-              info: "S'han detectat %{count} usuaris, dels quals %{registered} estan registrats, %{authorized} autoritzats utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              authorized: "%{authorized} participants have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} participants detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
               missing_header: Si us plau, proporcioneu una fila d'encapçalament
-              registered: "S'han registrat correctament %{registered} usuaris (%{count} detectats, %{errors} errors)"
-              revoked: S'ha revocat correctament la verificació de %{revoked} usuaris utilitzant [%{handler}] (%{count} detectats, %{errors} errors)
-            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu de tenir el consentiment explícit dels vostres usuaris per registrar-los. En cas contrari, estareu infringint la regulació GDPR als països de la UE.
+              registered: "%{registered} participants have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{revoked} participants have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
+            gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your participants in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
+          imports:
+            create:
+              error: There was an error importing the file
+              success: File successfully uploaded. We'll email you when all participants are imported.
+            mailer:
+              authorized: "%{successful} participants have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "%{count} participants detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              registered: "%{successful} participants have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} participants have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
+              subject: File import results
+            new:
+              file: CSV file with participants data
+              info: Import a CSV file with a participant entry per line copying the format from the example below
+              submit: Upload file
           index:
-            authorizations: Usuaris autoritzats
+            authorizations: Authorized participants
             stats: Estadístiques d'usuaris
-            title: Inscriu i autoritza usuaris
+            title: Register and authorize participants
           new:
             authorization_handler: Mètode de verificació
-            authorize: Autoritza les participants
-            check: Comprova l'estat de les participants
-            info_html: Pots <a href=%{link}>importar un fitxer CSV</a> o introduir els emails
-              aquí, un per línia. Si els emails estan precedits
-              per un text, aquest s'interpretarà com el nom de la participant
-            register: Registra les participants a la plataforma (si existeixen s'ignoraran)
-            revoke: Revoca l'autorització de les participants
+            authorize: Authorize participants
+            check: Check participants status
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the participant's name.
+            register: Register participants in the platform (if they exist they will be ignored)
+            revoke: Revoke authorization from participants
             submit: Envia i processa el llistat
-            textarea: Llistat d'emails
+            textarea: Llista d''emails
           stats:
             index:
-              authorized: Verificades
-              authorized_unconfirmed: Verificades però no confirmades
+              authorized: Verificats
+              authorized_unconfirmed: Verificats però no confirmats
               global: "- Qualsevol mètode de verificació -"
-              registered: Registrades
-              unconfirmed: No confirmades
+              registered: Registrats
+              unconfirmed: No confirmats
         authorizations:
           new:
-            no_action: Aquest mètode requereix que una administradora us verifiqui
+            no_action: Aquest mètode requereix que un administrador us verifiqui
     verifications:
       authorizations:
         first_login:
