@@ -30,7 +30,7 @@ describe "Admin imports users", type: :system do
 
   context "when registering users" do
     it "registers users through a CSV file" do
-      attach_file("CSV file with users data", filename)
+      attach_file("CSV file with participants data", filename)
 
       check(I18n.t("#{i18n_scope}.new.register"))
 
@@ -52,7 +52,7 @@ describe "Admin imports users", type: :system do
 
   context "when registering and authorizing users" do
     it "registers and authorizes users through a CSV file" do
-      attach_file("CSV file with users data", filename)
+      attach_file("CSV file with participants data", filename)
 
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
@@ -105,7 +105,7 @@ describe "Admin imports users", type: :system do
     end
 
     it "revokes users through a CSV file" do
-      attach_file("CSV file with users data", filename)
+      attach_file("CSV file with participants data", filename)
       choose(I18n.t("#{i18n_scope}.new.revoke"))
       select(
         "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
