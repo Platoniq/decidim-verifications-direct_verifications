@@ -20,6 +20,20 @@ es:
     direct_verifications:
       verification:
         admin:
+          imports:
+            new:
+              info: Import a CSV file with a user entry per line copying the format from the example below
+              submit: Upload file
+              file: CSV file with users data
+            create:
+              success: File successfully uploaded. We'll email you when all users are imported.
+              error: There was an error importing the file
+            mailer:
+              subject: File import results
+              authorized: "%{successful} users have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
+              info: "Se han detectado %{count} usuarios, de los cuales %{registered} están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed} sin confirmar)"
+              registered: "%{successful} users have been successfully registered (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} users have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
           authorizations:
             index:
               created_at: Creado el
@@ -32,6 +46,7 @@ es:
             create:
               authorized: "Se han verificado correctamente %{authorized} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)"
               info: "Se han detectado %{count} usuarios, de los cuales %{registered} están registrados, %{authorized} autorizados usando [%{handler}] (%{unconfirmed} sin confirmar)"
+              missing_header: Por favor, proporcionad una fila de encabezamiento
               registered: "Se han registrado correctamente %{registered} usuarios (%{count} detectados, %{errors} errores)"
               revoked: Se ha revocado correctament la verificación de %{revoked} usuarios usando [%{handler}] (%{count} detectados, %{errors} errores)
             gdpr_disclaimer: Haga esto bajo su responsabilidad. Recuerde que debe contar con el consentimiento explícito de sus usuarios para poder registrarlos. De lo contrario, estará infringiendo la regulación GDPR en los países de la UE.
@@ -43,7 +58,7 @@ es:
             authorization_handler: Método de verificación
             authorize: Autoriza los usuarios
             check: Comprueba el estado de los usuarios
-            info: Introduce aquí los emails, uno por linea. Si los emails están precedidos por un texto, se interpretará como el nombre del usuario
+            info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the user's name.
             register: Registra los usuarios a la plataforma (si existen se ignorarán)
             revoke: Revoca la autorización de los usuarios
             submit: Envía y procesa el listado
