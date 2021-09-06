@@ -11,11 +11,11 @@ ca:
         direct_verifications:
           help:
             - 'Allows the massive introduction of participants in order to:'
-            - Registrar-los directament a la organització amb l'enviament d'invitacions
-            - Verificar-los en qualsevol mètode de verificació actiu
-            - Revocar la verificació en qualsevol mètode de verificació actiu
+            - Registrar-les directament a la organització amb l'enviament d'invitacions
+            - Verificar-les amb qualsevol mètode de verificació actiu
+            - Revocar la verificació amb qualsevol mètode de verificació actiu
       direct_verifications:
-        explanation: Verificació manual per par dels administradors de l'organització
+        explanation: Verificació manual per part de les administradores de l'organització
         name: Verificació directa
     direct_verifications:
       verification:
@@ -52,7 +52,7 @@ ca:
               submit: Upload file
           index:
             authorizations: Authorized participants
-            stats: Estadístiques d'usuaris
+            stats: Estadístiques de les participants
             title: Register and authorize participants
           new:
             authorization_handler: Mètode de verificació
@@ -62,17 +62,17 @@ ca:
             register: Register participants in the platform (if they exist they will be ignored)
             revoke: Revoke authorization from participants
             submit: Envia i processa el llistat
-            textarea: Llista d''emails
+            textarea: Llistat d'emails
           stats:
             index:
-              authorized: Verificats
-              authorized_unconfirmed: Verificats però no confirmats
+              authorized: Verificades
+              authorized_unconfirmed: Verificades però no confirmades
               global: "- Qualsevol mètode de verificació -"
-              registered: Registrats
-              unconfirmed: No confirmats
+              registered: Registrades
+              unconfirmed: No confirmades
         authorizations:
           new:
-            no_action: Aquest mètode requereix que un administrador us verifiqui
+            no_action: Aquest mètode requereix que una administradora us verifiqui
     verifications:
       authorizations:
         first_login:
