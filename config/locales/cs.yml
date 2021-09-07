@@ -1,4 +1,3 @@
----
 cs:
   decidim:
     admin:
@@ -11,10 +10,10 @@ cs:
       admin:
         direct_verifications:
           help:
-          - 'Umožňuje masivní zavedení uživatelů:'
-          - Přímá registrace v organizaci a odeslání pozvánek
-          - Ověřit je pomocí jakékoliv metody aktivního ověření
-          - Zrušit jejich ověření pomocí jakékoli metody aktivního ověření
+            - 'Umožňuje masivní zavedení uživatelů:'
+            - Přímá registrace v organizaci a odeslání pozvánek
+            - Ověřit je pomocí jakékoliv metody aktivního ověření
+            - Zrušit jejich ověření pomocí jakékoli metody aktivního ověření
       direct_verifications:
         explanation: Ruční ověření správcem organizace
         name: Přímé ověření
@@ -28,32 +27,40 @@ cs:
               name: Název
               new_import: Nový import
               title: Autorizace
-              user_name: Uživatelské jméno
+              user_name: Jméno uživatele
           direct_verifications:
             create:
-              authorized: "%{authorized} uživatelů bylo úspěšně ověřeno pomocí [%{handler}]
-                (%{count} detekováno, %{errors} chyb)"
-              info: Zjištěno %{count} uživatelů, z nichž %{registered} jsou registrováni,
-                %{authorized} autorizováni pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)
-              registered: "%{registered} uživatelů bylo úspěšně zaregistrováno (%{count}
-                detekováno, %{errors} chyb) "
-              revoked: Ověření od %{revoked} uživatelů bylo zrušeno pomocí [%{handler}]
-                (%{count} detekováno, %{errors} chyb)
-            gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že
-              potřebujete mít výslovný souhlas svých uživatelů, abyste je mohli zaregistrovat.
-              V opačném případě můžete porušovat nařízení o GDPR v zemích EU.
+              authorized: "%{authorized} účastníků bylo úspěšně ověřeno pomocí [%{handler}] (%{count} bylo detekováno, %{errors} chyb)"
+              info: "%{count} účastníků detekováno, z toho %{registered} jsou registrováni, %{authorized} povoleno pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)"
+              missing_header: Zadejte řádek záhlaví
+              registered: "%{registered} účastníků bylo úspěšně registrováno (%{count} detekováno, %{errors} chyb) "
+              revoked: Ověření od %{revoked} účastníků bylo zrušeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyby)
+            gdpr_disclaimer: Udělejte to v rámci vaší odpovědnosti. Nezapomeňte, že musíte mít výslovný souhlas svých účastníků, abyste je mohli zaregistrovat. V opačném případě porušíte nařízení o GDPR v zemích EU.
+          imports:
+            create:
+              error: Při importu souboru došlo k chybě
+              success: Soubor byl úspěšně nahrán. Až budou importováni všichni účastníci, pošleme vám e-mail.
+            mailer:
+              authorized: "%{successful} účastníků bylo úspěšně ověřeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyby)"
+              info: "%{count} účastníků detekováno, z toho %{registered} jsou registrováni, %{authorized} povoleno pomocí [%{handler}] (%{unconfirmed} nepotvrzeno)"
+              registered: "%{successful} účastníků bylo úspěšně registrováno (%{count} detekováno, %{errors} chyb) "
+              revoked: Ověření od %{successful} účastníků bylo zrušeno pomocí [%{handler}] (%{count} detekováno, %{errors} chyby)
+              subject: Výsledky importu souboru
+            new:
+              file: Soubor CSV s daty účastníků
+              info: Importovat CSV soubor s účastníkem na řádku, který zkopíruje formát z příkladu
+              submit: Nahrát soubor
           index:
-            authorizations: Autorizovaní uživatelé
+            authorizations: Autorizovaní účastníci
             stats: Statistiky uživatelů
-            title: Registrovat a autorizovat uživatele
+            title: Registrovat a autorizovat účastníky
           new:
             authorization_handler: Ověřovací metoda
-            authorize: Autorizovat uživatele
-            check: Zkontrolovat stav uživatelů
-            info: Zadejte e-maily zde, jeden na řádek. Pokud e-mailům předchází text,
-              bude interpretován jako jméno uživatele
-            register: Registrovat uživatele na platformě (pokud existují, budou ignorováni)
-            revoke: Zrušit autorizaci od uživatelů
+            authorize: Autorizovat účastníky
+            check: Zkontrolovat stav účastníků
+            info_html: Můžete <a href=%{link}>importovat CSV</a> nebo zde zadat e-maily, jedno na řádek. Pokud e-mailům předchází text, bude interpretován jako jméno účastníka.
+            register: Registrovat účastníky na platformě (pokud existují budou ignorováni)
+            revoke: Zrušit autorizaci od účastníků
             submit: Odeslat a zpracovat seznam
             textarea: Seznam e-mailů
           stats:
