@@ -12,7 +12,6 @@ module Decidim
             @authorizations = collection.includes(:user)
                                         .page(params[:page])
                                         .per(15)
-
           end
 
           def destroy

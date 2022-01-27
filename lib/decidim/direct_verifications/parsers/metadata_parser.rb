@@ -10,7 +10,7 @@ module Decidim
 
         def header
           @header ||= begin
-            tokenize(lines[0].chomp).map{ |h| h.to_s.downcase }
+            tokenize(lines[0].chomp).map { |h| h.to_s.downcase }
           end
         end
 
@@ -24,6 +24,7 @@ module Decidim
           hash = {}
           header.each_with_index do |column, index|
             next if column.blank?
+
             value = tokens[index]
             next if value&.include?(email)
 
