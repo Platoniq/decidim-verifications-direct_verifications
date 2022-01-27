@@ -9,11 +9,7 @@ module Decidim
         I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
 
         def header
-          @header ||= begin
-            header_row = lines[0].chomp
-            header_row = tokenize(header_row)
-            normalize_header(header_row)
-          end
+          @header ||= tokenize(lines[0].chomp).to_s.downcase
         end
 
         def lines
@@ -25,6 +21,8 @@ module Decidim
 
           hash = {}
           header.each_with_index do |column, index|
+            next if column.blank?
+
             value = tokens[index]
             next if value&.include?(email)
 
@@ -38,12 +36,6 @@ module Decidim
         def tokenize(line)
           CSV.parse_line(line).map do |token|
             token&.strip
-          end
-        end
-
-        def normalize_header(line)
-          line.map do |field|
-            field.nil? ? SecureRandom.uuid : field.to_sym.downcase
           end
         end
       end
