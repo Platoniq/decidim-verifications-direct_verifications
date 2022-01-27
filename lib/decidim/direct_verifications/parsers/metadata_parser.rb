@@ -43,9 +43,7 @@ module Decidim
 
         def normalize_header(line)
           line.map do |field|
-            raise InputParserError, I18n.t("#{I18N_SCOPE}.create.missing_header") if field.nil?
-
-            field.to_sym.downcase
+            field.nil? ? SecureRandom.uuid : field.to_sym.downcase
           end
         end
       end

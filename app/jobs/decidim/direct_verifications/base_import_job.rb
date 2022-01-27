@@ -10,20 +10,36 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(userslist, organization, current_user, authorization_handler)
-        @emails = Parsers::MetadataParser.new(userslist).to_h
+      def perform(filename, organization, current_user, authorization_handler)
+        @filename = filename
         @organization = organization
         @current_user = current_user
-        @instrumenter = Instrumenter.new(current_user)
         @authorization_handler = authorization_handler
 
-        process_users
-        send_email_notification
+        begin
+          @emails = Parsers::MetadataParser.new(userslist).to_h
+          @instrumenter = Instrumenter.new(current_user)
+
+          Rails.logger.info "BaseImportJob: Processing file #{filename}"
+          process_users
+          send_email_notification
+        rescue StandardError => e
+          Rails.logger.error "BaseImportJob Error: #{e.message} #{e.backtrace.filter { |f| f =~ /direct_verifications/ }}"
+        end
+        remove_file!
       end
 
       private
 
-      attr_reader :emails, :organization, :current_user, :instrumenter, :authorization_handler
+      attr_reader :uploader, :filename, :emails, :organization, :current_user, :instrumenter, :authorization_handler
+
+      def userslist
+        return @userslist if @userslist
+
+        @uploader = CsvUploader.new(organization)
+        @uploader.retrieve_from_store!(filename)
+        @userslist = @uploader.file.read.force_encoding("UTF-8")
+      end
 
       def send_email_notification
         ImportMailer.finished_processing(
@@ -32,6 +48,10 @@ module Decidim
           type,
           authorization_handler
         ).deliver_now
+      end
+
+      def remove_file!
+        uploader.remove!
       end
     end
   end

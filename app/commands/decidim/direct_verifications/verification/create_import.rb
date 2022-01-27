@@ -15,12 +15,14 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
+          save_or_upload_file!
           case action
           when :register
             register_users_async
+          when :authorize
+            authorize_users_async
           when :register_and_authorize
             register_users_async
-            file.rewind
             authorize_users_async
           when :revoke
             revoke_users_async
@@ -34,15 +36,24 @@ module Decidim
         attr_reader :form, :file, :organization, :user, :action
 
         def register_users_async
-          RegisterUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
+          RegisterUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
         end
 
         def revoke_users_async
-          RevokeUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
+          RevokeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
         end
 
         def authorize_users_async
-          AuthorizeUsersJob.perform_later(file.read, organization, user, form.authorization_handler)
+          AuthorizeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
+        end
+
+        def save_or_upload_file!
+          file.original_filename = secure_name
+          CsvUploader.new(organization).store!(file)
+        end
+
+        def secure_name
+          @secure_name ||= "#{SecureRandom.uuid}#{File.extname(file.tempfile)}"
         end
       end
     end

@@ -8,7 +8,9 @@ module Decidim
       class NullSession; end
 
       def process_users
+        Rails.logger.info "AuthorizeUsersJob: Authorizing #{emails.count} emails"
         emails.each do |email, data|
+          Rails.logger.debug "AuthorizeUsersJob: Authorizing #{email}"
           AuthorizeUser.new(
             email,
             data,
