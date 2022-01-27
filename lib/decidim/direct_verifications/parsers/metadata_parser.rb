@@ -9,7 +9,9 @@ module Decidim
         I18N_SCOPE = "decidim.direct_verifications.verification.admin.direct_verifications"
 
         def header
-          @header ||= tokenize(lines[0].chomp).to_s.downcase
+          @header ||= begin
+            tokenize(lines[0].chomp).map{ |h| h.to_s.downcase }
+          end
         end
 
         def lines
@@ -22,7 +24,6 @@ module Decidim
           hash = {}
           header.each_with_index do |column, index|
             next if column.blank?
-
             value = tokens[index]
             next if value&.include?(email)
 
