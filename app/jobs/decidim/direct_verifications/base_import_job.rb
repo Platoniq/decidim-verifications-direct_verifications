@@ -10,7 +10,7 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(filename, organization, current_user, authorization_handler)
+      def perform(filename, organization, current_user, authorization_handler, options = {})
         @filename = filename
         @organization = organization
         @current_user = current_user
@@ -26,7 +26,7 @@ module Decidim
         rescue StandardError => e
           Rails.logger.error "BaseImportJob Error: #{e.message} #{e.backtrace.filter { |f| f =~ /direct_verifications/ }}"
         end
-        remove_file!
+        remove_file! if options.fetch(:remove_file, false)
       end
 
       private

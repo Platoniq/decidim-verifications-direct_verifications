@@ -18,14 +18,14 @@ module Decidim
           save_or_upload_file!
           case action
           when :register
-            register_users_async
+            register_users_async(remove_file: true)
           when :authorize
-            authorize_users_async
+            authorize_users_async(remove_file: true)
           when :register_and_authorize
             register_users_async
-            authorize_users_async
+            authorize_users_async(remove_file: true)
           when :revoke
-            revoke_users_async
+            revoke_users_async(remove_file: true)
           end
 
           broadcast(:ok)
@@ -35,16 +35,16 @@ module Decidim
 
         attr_reader :form, :file, :organization, :user, :action
 
-        def register_users_async
-          RegisterUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
+        def register_users_async(options = {})
+          RegisterUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
         end
 
-        def revoke_users_async
-          RevokeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
+        def revoke_users_async(options = {})
+          RevokeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
         end
 
-        def authorize_users_async
-          AuthorizeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler)
+        def authorize_users_async(options = {})
+          AuthorizeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
         end
 
         def save_or_upload_file!
