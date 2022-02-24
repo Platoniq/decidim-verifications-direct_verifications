@@ -48,7 +48,7 @@ module Decidim
         end
 
         def save_or_upload_file!
-          file.original_filename = secure_name
+          file.instance_variable_set(:@original_filename, secure_name)
           CsvUploader.new(organization).store!(file)
         end
 
