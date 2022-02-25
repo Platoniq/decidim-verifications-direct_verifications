@@ -10,6 +10,8 @@ module Decidim
           def index
             enforce_permission_to :index, :authorization
             @authorizations = collection.includes(:user)
+                                        .page(params[:page])
+                                        .per(15)
           end
 
           def destroy

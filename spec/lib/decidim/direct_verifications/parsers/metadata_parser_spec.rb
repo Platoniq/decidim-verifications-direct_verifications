@@ -49,7 +49,7 @@ module Decidim::DirectVerifications::Parsers
 
         it "skips those columns" do
           expect(subject.to_h).to eq(
-            "bob@example.com" => { department: nil, name: "Bob", salary: "1000" }
+            "bob@example.com" => { "department" => nil, "name" => "Bob", "salary" => "1000" }
           )
         end
       end
@@ -66,9 +66,9 @@ module Decidim::DirectVerifications::Parsers
 
         it "returns the data in a hash with the email as key" do
           expect(subject.to_h).to eq(
-            "bob@email.com" => { name: "Bob", department: "Engineering", salary: "1000" },
-            "jane@email.com" => { name: "Jane", department: "Sales", salary: "2000" },
-            "john@email.com" => { name: "John", department: "Management", salary: "5000" }
+            "bob@email.com" => { "name" => "Bob", "department" => "Engineering", "salary" => "1000" },
+            "jane@email.com" => { "name" => "Jane", "department" => "Sales", "salary" => "2000" },
+            "john@email.com" => { "name" => "John", "department" => "Management", "salary" => "5000" }
           )
         end
 
@@ -85,10 +85,10 @@ module Decidim::DirectVerifications::Parsers
 
           it "returns the data in a hash with the email as key" do
             expect(subject.to_h).to eq(
-              "test3@t.com" => { name: "use", type: "type" },
-              "a@b.co" => { name: "User", type: "third@email.com@as.com" },
-              "test1@test.com" => { name: "Test 1", type: "customer" },
-              "test4@test.com" => { name: "Test\\| 4", type: "producer" }
+              "test3@t.com" => { "name" => "use", "type" => "type" },
+              "a@b.co" => { "name" => "User", "type" => "third@email.com@as.com" },
+              "test1@test.com" => { "name" => "Test 1", "type" => "customer" },
+              "test4@test.com" => { "name" => "Test\\| 4", "type" => "producer" }
             )
           end
         end
@@ -103,7 +103,7 @@ module Decidim::DirectVerifications::Parsers
 
           it "returns the data in a hash with the email as key" do
             expect(subject.to_h).to eq(
-              "ava@example.com" => { name: "Ava Hawkins", type: "collaborator" }
+              "ava@example.com" => { "name" => "Ava Hawkins", "type" => "collaborator" }
             )
           end
         end
@@ -131,7 +131,7 @@ module Decidim::DirectVerifications::Parsers
           end
 
           it "keeps only one" do
-            expect(subject.to_h).to eq("brandy@example.com" => { name: "brandy" })
+            expect(subject.to_h).to eq("brandy@example.com" => { "name" => "brandy" })
           end
         end
       end

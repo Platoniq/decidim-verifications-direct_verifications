@@ -8,6 +8,7 @@ module Decidim
       subject { described_class.new(email, name, organization, user, instrumenter) }
 
       let(:user) { build(:user) }
+      let(:remove_files) { true }
       let(:organization) { build(:organization) }
       let(:instrumenter) { instance_double(Instrumenter, track: true) }
 

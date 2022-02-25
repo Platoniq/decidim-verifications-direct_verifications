@@ -10,9 +10,9 @@ module Decidim
 
         def header
           @header ||= begin
-            header_row = lines[0].chomp
-            header_row = tokenize(header_row)
-            normalize_header(header_row)
+            raise InputParserError, I18n.t("#{I18N_SCOPE}.create.missing_header") if lines.count <= 1
+
+            tokenize(lines[0].chomp).map { |h| h.to_s.downcase }
           end
         end
 
@@ -25,6 +25,8 @@ module Decidim
 
           hash = {}
           header.each_with_index do |column, index|
+            next if column.blank?
+
             value = tokens[index]
             next if value&.include?(email)
 
@@ -38,14 +40,6 @@ module Decidim
         def tokenize(line)
           CSV.parse_line(line).map do |token|
             token&.strip
-          end
-        end
-
-        def normalize_header(line)
-          line.map do |field|
-            raise InputParserError, I18n.t("#{I18N_SCOPE}.create.missing_header") if field.nil?
-
-            field.to_sym.downcase
           end
         end
       end
