@@ -11,7 +11,7 @@ module Decidim::DirectVerifications::Parsers
         let(:txt) { "Melina.morrison@bccm.coop,MORRISON Melina,,,11" }
 
         it "raises an error" do
-          expect { subject.to_h }.not_to raise_error(Decidim::DirectVerifications::InputParserError)
+          expect { subject.to_h }.to raise_error(Decidim::DirectVerifications::InputParserError)
         end
       end
     end

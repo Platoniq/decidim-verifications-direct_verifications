@@ -10,6 +10,8 @@ module Decidim
 
         def header
           @header ||= begin
+            raise InputParserError, I18n.t("#{I18N_SCOPE}.create.missing_header") if lines.count <= 1
+
             tokenize(lines[0].chomp).map { |h| h.to_s.downcase }
           end
         end
