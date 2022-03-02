@@ -15,7 +15,6 @@ module Decidim
         def call
           return broadcast(:invalid) unless form.valid?
 
-          save_or_upload_file!
           case action
           when :register
             register_users_async(remove_file: true)
@@ -33,23 +32,21 @@ module Decidim
 
         private
 
-        attr_reader :form, :file, :blob, :organization, :user, :action
+        attr_reader :form, :file, :organization, :user, :action
 
         def register_users_async(options = {})
-          RegisterUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
+          RegisterUsersJob.perform_later(blob.id, organization, user, form.authorization_handler, options)
         end
 
         def revoke_users_async(options = {})
-          RevokeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
+          RevokeUsersJob.perform_later(blob.id, organization, user, form.authorization_handler, options)
         end
 
         def authorize_users_async(options = {})
-          AuthorizeUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
+          AuthorizeUsersJob.perform_later(blob.id, organization, user, form.authorization_handler, options)
         end
 
-        def save_or_upload_file!
-          # file.instance_variable_set(:@original_filename, secure_name)
-          # CsvUploader.new(organization, :file).store!(file)
+        def blob
           @blob ||= ActiveStorage::Blob.create_and_upload!(io: file, filename: secure_name)
         end
 
