@@ -1,4 +1,3 @@
----
 ca:
   decidim:
     admin:
@@ -11,10 +10,10 @@ ca:
       admin:
         direct_verifications:
           help:
-          - 'Permet la introducció massiva de participants per tal de:'
-          - Registrar-les directament a la organització amb l'enviament d'invitacions
-          - Verificar-les amb qualsevol mètode de verificació actiu
-          - Revocar la verificació amb qualsevol mètode de verificació actiu
+            - 'Permet la introducció massiva de participants per tal de:'
+            - Registrar-les directament a la organització amb l'enviament d'invitacions
+            - Verificar-les amb qualsevol mètode de verificació actiu
+            - Revocar la verificació amb qualsevol mètode de verificació actiu
       direct_verifications:
         explanation: Verificació manual per part de les administradores de l'organització
         name: Verificació directa
@@ -31,33 +30,21 @@ ca:
               user_name: Nom de la participant
           direct_verifications:
             create:
-              authorized: S'han verificat correctament %{authorized} participants utilitzant
-                [%{handler}] (%{count} detectats, %{errors} errors)
-              info: S'han detectat %{count} participants, de les quals %{registered} estan
-                registrades, %{authorized} autoritzades utilitzant [%{handler}] (%{unconfirmed}
-                sense confirmar)
+              authorized: "S'han verificat correctament %{authorized} participants utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"
+              info: "S'han detectat %{count} participants, de les quals %{registered} estan registrades, %{authorized} autoritzades utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
               missing_header: Si us plau, proporcioneu una fila d'encapçalament
-              registered: S'han registrat correctament %{registered} participants (%{count}
-                detectades, %{errors} errors)
-              revoked: S'ha revocat correctament la verificació de %{revoked} participants
-                utilitzant [%{handler}] (%{count} detectades, %{errors} errors)
-            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu
-              de tenir el consentiment explícit de les vostres participants per a registrar-les.
-              En cas contrari, estareu infringint la regulació GDPR als països de
-              la UE.
+              registered: "S'han registrat correctament %{registered} participants (%{count} detectades, %{errors} errors)"
+              revoked: S'ha revocat correctament la verificació de %{revoked} participants utilitzant [%{handler}] (%{count} detectades, %{errors} errors)
+            gdpr_disclaimer: Feu-ho sota la vostra responsabilitat. Recordeu que heu de tenir el consentiment explícit de les vostres participants per a registrar-les. En cas contrari, estareu infringint la regulació GDPR als països de la UE.
           imports:
             create:
               error: No s'ha pogut importar el fitxer
               success: S'ha importat el fitxer. Rebràs un email quan totes les participants hagin estat importades.
             mailer:
-              authorized: "%{successful} participants han estat verificades utilitzant
-                [%{handler}] (%{count} detectades, %{errors} errors)"
-              info: "%{count} participants detectades, de les quals %{registered} estan registrades,
-                %{authorized} autoritzades utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
-              registered: "%{successful} participants han estat registrades (%{count}
-                detectades, %{errors} errors) "
-              revoked: S'ha revocat correctament la verificació de %{successful} participants utilitzant
-                [%{handler}] (%{count} detectades, %{errors} errors)
+              authorized: "%{successful} participants han estat verificades utilitzant [%{handler}] (%{count} detectades, %{errors} errors)"
+              info: "%{count} participants detectades, de les quals %{registered} estan registrades, %{authorized} autoritzades utilitzant [%{handler}] (%{unconfirmed} sense confirmar)"
+              registered: "%{successful} participants han estat registrades (%{count} detectades, %{errors} errors) "
+              revoked: S'ha revocat correctament la verificació de %{successful} participants utilitzant [%{handler}] (%{count} detectades, %{errors} errors)
               subject: Resultats de la importació
             new:
               file: Fitxer CSV amb dades de participants
@@ -71,9 +58,7 @@ ca:
             authorization_handler: Mètode de verificació
             authorize: Autoritza les participants
             check: Comprova l'estat de les participants
-            info_html: Pots <a href=%{link}>importar un fitxer CSV</a> o introduir els emails
-              aquí, un per línia. Si els emails estan precedits
-              per un text, aquest s'interpretarà com el nom de la participant
+            info_html: Pots <a href=%{link}>importar un fitxer CSV</a> o introduir els emails aquí, un per línia. Si els emails estan precedits per un text, aquest s'interpretarà com el nom de la participant
             register: Registra les participants a la plataforma (si existeixen s'ignoraran)
             revoke: Revoca l'autorització de les participants
             submit: Envia i processa el llistat
