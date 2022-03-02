@@ -10,7 +10,7 @@ fr:
       admin:
         direct_verifications:
           help:
-            - 'Allows the massive introduction of participants in order to:'
+            - 'Permet l''introduction massive des utilisateurs afin de :'
             - Inscription directe au sein de l'organisation et envoie des invitations
             - Vérifiez-les avec n'importe quelle méthode de vérification active
             - Révoquer leur vérification dans toute méthode de vérification active
@@ -27,15 +27,15 @@ fr:
               name: Nom
               new_import: Nouvel import
               title: Autorisations
-              user_name: Participant name
+              user_name: Nom de l'utilisateur
           direct_verifications:
             create:
-              authorized: "%{authorized} participants have been successfully verified using [%{handler}] (%{count} detected, %{errors} errors)"
-              info: "%{count} participants detected, of which %{registered} are registered, %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
+              authorized: "%{authorized} utilisateurs ont été vérifiés avec succès en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)"
+              info: "%{count} utilisateurs détectés, dont %{registered} sont enregistrés, %{authorized} autorisés à utiliser [%{handler}] (%{unconfirmed} non confirmés)"
               missing_header: Please, provide a header row
-              registered: "%{registered} participants have been successfully registered (%{count} detected, %{errors} errors) "
-              revoked: Verification from %{revoked} participants have been revoked using [%{handler}] (%{count} detected, %{errors} errors)
-            gdpr_disclaimer: Do this under your responsibility. Remember that you need to have explicit consent from your participants in order to register them. Otherwise you will be infringing the GDPR regulation in EU countries.
+              registered: "%{registered} utilisateurs ont été enregistrés avec succès (%{count} détectés, %{errors} erreurs) "
+              revoked: La vérification de %{revoked} utilisateurs ont été révoqués en utilisant [%{handler}] (%{count} détectés, %{errors} erreurs)
+            gdpr_disclaimer: Faites-le sous votre responsabilité. N'oubliez pas que vous devez avoir le consentement explicite de vos utilisateurs afin de les enregistrer. Dans le cas contraire, vous enfreindrez le règlement du RGPD dans les pays de l'UE.
           imports:
             create:
               error: There was an error importing the file
@@ -51,16 +51,16 @@ fr:
               info: Import a CSV file with a participant entry per line copying the format from the example below
               submit: Upload file
           index:
-            authorizations: Authorized participants
+            authorizations: Utilisateurs autorisés
             stats: Statistiques des utilisateurs
-            title: Register and authorize participants
+            title: Inscription et autorisation des utilisateurs
           new:
             authorization_handler: Méthode de vérification
-            authorize: Authorize participants
-            check: Check participants status
+            authorize: Utilisateurs autorisés
+            check: Vérifier le statut des utilisateurs
             info_html: You can <a href=%{link}>import a CSV</a> or enter the emails here, one per line. If the emails are preceded by a text, it will be interpreted as the participant's name.
-            register: Register participants in the platform (if they exist they will be ignored)
-            revoke: Revoke authorization from participants
+            register: Inscrire des utilisateurs sur la plateforme (si ils existent, ils seront ignorés)
+            revoke: Révoquer l'autorisation des utilisateurs
             submit: Envoyer et traiter la liste
             textarea: Liste d'emails
           stats:
