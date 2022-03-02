@@ -16,11 +16,8 @@ module Decidim
           root to: "direct_verifications#index"
         end
 
-        initializer "decidim_direct_verifications.admin_assets" do |app|
-          app.config.assets.precompile += %w(
-            direct_verifications_admin_manifest.js
-            direct_verifications_admin_manifest.css
-          )
+        initializer "decidim_notify.webpacker.assets_path" do
+          Decidim.register_assets_path File.expand_path("app/packs", root)
         end
       end
     end

@@ -10,8 +10,8 @@ module Decidim
     class BaseImportJob < ApplicationJob
       queue_as :default
 
-      def perform(filename, organization, current_user, authorization_handler, options = {})
-        @filename = filename
+      def perform(blob_id, organization, current_user, authorization_handler, options = {})
+        @blob = ActiveStorage::Blob.find(blob_id)
         @organization = organization
         @current_user = current_user
         @authorization_handler = authorization_handler
@@ -20,7 +20,7 @@ module Decidim
           @emails = Parsers::MetadataParser.new(userslist).to_h
           @instrumenter = Instrumenter.new(current_user)
 
-          Rails.logger.info "BaseImportJob: Processing file #{filename}"
+          Rails.logger.info "BaseImportJob: Processing file #{@blob.filename}"
           process_users
           send_email_notification
         rescue StandardError => e
@@ -31,14 +31,10 @@ module Decidim
 
       private
 
-      attr_reader :uploader, :filename, :emails, :organization, :current_user, :instrumenter, :authorization_handler
+      attr_reader :blob, :emails, :organization, :current_user, :instrumenter, :authorization_handler
 
       def userslist
-        return @userslist if @userslist
-
-        @uploader = CsvUploader.new(organization)
-        @uploader.retrieve_from_store!(filename)
-        @userslist = @uploader.file.read.force_encoding("UTF-8")
+        @userslist ||= blob.download.force_encoding("UTF-8")
       end
 
       def send_email_notification
@@ -51,7 +47,7 @@ module Decidim
       end
 
       def remove_file!
-        uploader.remove!
+        blob.purge
       end
     end
   end

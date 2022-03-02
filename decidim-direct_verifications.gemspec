@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.summary = "A decidim batch direct registration and verification module"
   s.description = "Provides a verification method that also registers users directly in the platform. Can be used to mass verificate user with other verification handlers"
 
-  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "package.json", "Rakefile", "README.md"]
   s.require_paths = ["lib"]
 
   s.add_dependency "decidim-admin", Decidim::DirectVerifications::MIN_DECIDIM_VERSION
