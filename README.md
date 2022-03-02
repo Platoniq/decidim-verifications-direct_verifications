@@ -73,6 +73,7 @@ Depending on your Decidim version, you might want to specify the version to ensu
 
 | Direct Verifications version | Compatible Decidim versions |
 |---|---|
+| 1.1 | >= 0.25.x |
 | 1.0 | >= 0.23.x |
 | 0.22.x | 0.22.x |
 
