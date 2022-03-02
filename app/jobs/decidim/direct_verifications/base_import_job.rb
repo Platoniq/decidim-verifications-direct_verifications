@@ -31,14 +31,13 @@ module Decidim
 
       private
 
-      attr_reader :uploader, :filename, :emails, :organization, :current_user, :instrumenter, :authorization_handler
+      attr_reader :blob, :filename, :emails, :organization, :current_user, :instrumenter, :authorization_handler
 
       def userslist
         return @userslist if @userslist
 
-        @uploader = CsvUploader.new(organization)
-        @uploader.retrieve_from_store!(filename)
-        @userslist = @uploader.file.read.force_encoding("UTF-8")
+        @blob = ActiveStorage::Blob.find_by(filename: filename)
+        @userslist = @blob.download.force_encoding("UTF-8")
       end
 
       def send_email_notification
@@ -51,7 +50,7 @@ module Decidim
       end
 
       def remove_file!
-        uploader.remove!
+        blob.purge
       end
     end
   end

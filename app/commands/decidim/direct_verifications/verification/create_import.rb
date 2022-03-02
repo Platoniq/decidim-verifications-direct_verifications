@@ -33,7 +33,7 @@ module Decidim
 
         private
 
-        attr_reader :form, :file, :organization, :user, :action
+        attr_reader :form, :file, :blob, :organization, :user, :action
 
         def register_users_async(options = {})
           RegisterUsersJob.perform_later(secure_name, organization, user, form.authorization_handler, options)
@@ -48,8 +48,9 @@ module Decidim
         end
 
         def save_or_upload_file!
-          file.instance_variable_set(:@original_filename, secure_name)
-          CsvUploader.new(organization).store!(file)
+          # file.instance_variable_set(:@original_filename, secure_name)
+          # CsvUploader.new(organization, :file).store!(file)
+          @blob ||= ActiveStorage::Blob.create_and_upload!(io: file, filename: secure_name)
         end
 
         def secure_name
