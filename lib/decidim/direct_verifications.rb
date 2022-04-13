@@ -28,6 +28,12 @@ module Decidim
       :name_parser
     end
 
+    # add a button to the participants list to be able to handle verifications from there
+    # Manageable Verifications need to be registered in :manage_workflows
+    config_accessor :participants_modal do
+      true
+    end
+
     def self.find_parser_class(manifest)
       "Decidim::DirectVerifications::Parsers::#{manifest.to_s.camelize}".safe_constantize || Decidim::DirectVerifications::Parsers::NameParser
     end
