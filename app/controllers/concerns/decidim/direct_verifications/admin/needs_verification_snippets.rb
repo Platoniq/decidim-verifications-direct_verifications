@@ -26,20 +26,31 @@ module Decidim
 
         def direct_verifications_config
           {
-            buttonTitle: "See verifications", # TODO: i18n
+            buttonTitle: I18n.t("decidim.direct_verifications.participants.modal.button_title", locale: detect_current_locale),
+            modalTitle: I18n.t("decidim.direct_verifications.participants.modal.modal_title", locale: detect_current_locale),
+            closeModalLabel: I18n.t("decidim.direct_verifications.participants.modal.close_modal_label", locale: detect_current_locale),
+            userVerificationsPath: Decidim::DirectVerifications::Verification::AdminEngine.routes.url_helpers.user_authorization_path("-ID-"),
             verifications: direct_verifications_verifications
           }
         end
 
         def direct_verifications_verifications
-          @direct_verifications_verifications ||= Decidim::Authorization.where(decidim_user_id: filtered_collection).map do |auth|
+          @direct_verifications_verifications ||= Decidim::Authorization.where(name: current_organization.available_authorizations)
+                                                                        .where.not(granted_at: nil)
+                                                                        .where(decidim_user_id: filtered_collection).map do |auth|
             {
-              id: auth.decidim_user_id,
+              id: auth.id,
+              userId: auth.decidim_user_id,
               name: auth.name,
+              title: I18n.t("decidim.authorization_handlers.#{auth.name}.name", locale: detect_current_locale, default: auth.name),
               createdAt: auth.created_at,
               updatedAt: auth.updated_at
             }
           end
+        end
+
+        def detect_current_locale
+          params[:locale] || session[:user_locale] || locale
         end
       end
     end

@@ -1,0 +1,19 @@
+<strong><%= user.name %>:</strong>
+<ul>
+<% current_organization.available_authorizations.each do |name| %>
+	<li>
+		<span><%= I18n.t("decidim.authorization_handlers.#{name}.name", default: name) %></span>
+		<% if authorization_granted?(name) %>
+			<span class="label success"><%= t ".granted" %></span>
+			<% if managed?(name) %>
+				<%= t ".revoke" %>
+			<% end %>
+		<% else %>
+			<span class="label alert"><%= t ".not_granted" %></span>
+			<% if managed?(name) %>
+				<%= t ".grant" %>
+			<% end %>
+		<% end %>
+	</li>
+<% end %>
+</ul>
