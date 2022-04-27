@@ -10,9 +10,12 @@ module Decidim
 
           helper_method :user, :authorizations, :authorization_for, :managed?
 
-          def show; end
+          def show
+            enforce_permission_to :index, :authorization
+          end
 
           def update
+            enforce_permission_to :create, :authorization
             handler = OpenStruct.new(handler_name: params[:name], user: user, unique_id: nil, metadata: {})
             if Decidim::Authorization.create_or_update_from(handler)
               flash[:notice] = t(".success", name: auth_name)
@@ -23,6 +26,7 @@ module Decidim
           end
 
           def destroy
+            enforce_permission_to :destroy, :authorization
             begin
               authorization_for(params[:name]).destroy!
               flash[:notice] = t(".success", name: auth_name)

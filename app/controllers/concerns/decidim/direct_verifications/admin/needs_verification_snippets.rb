@@ -16,6 +16,7 @@ module Decidim
           return @snippets if @snippets
 
           @snippets = Decidim::Snippets.new
+          return @snippets if Decidim::DirectVerifications.participants_modal.blank?
 
           @snippets.add(:direct_verifications, "<script>DirectVerificationsConfig = #{direct_verifications_config.to_json}</script>")
           @snippets.add(:direct_verifications, ActionController::Base.helpers.javascript_pack_tag("decidim_direct_verifications_participants"))

@@ -6,7 +6,6 @@ class VerificationUI {
 		this.config = config;
 		this.$table.on('click', '.show-verifications-modal', (e) => this.toggleModal(e));
 		this.addModal();
-		console.log(this);
 	}
 
 	addModal() {
@@ -65,8 +64,6 @@ class VerificationUI {
 
 	toggleModal(e) {
 		const userId = $(e.target).closest("tr").data("user-id");
-		// console.log(this.getUserVerifications(userId))
-		// console.log(this.config.userVerificationsPath.replace("-ID-",userId))
 		this.loadUrl(this.config.userVerificationsPath.replace("-ID-",userId));
 	}
 
