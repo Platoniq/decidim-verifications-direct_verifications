@@ -92,11 +92,17 @@ en:
               registered: Registered
               unconfirmed: Unconfirmed
           user_authorizations:
+            destroy:
+              error: Error while trying to delete the authorization %{name} (%{message})
+              success: Authorization %{name} deleted successfully
             show:
               grant: Authorize user with this method
               granted: Granted
               not_granted: Not granted
               revoke: Revoke the authorization
+            update:
+              error: Error while trying to authorize the user using %{name}
+              success: User authorized successfully using %{name}
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you

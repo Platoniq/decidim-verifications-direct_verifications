@@ -1,19 +1,27 @@
 <strong><%= user.name %>:</strong>
-<ul>
+<table class="table-list">
+	<tbody>
 <% current_organization.available_authorizations.each do |name| %>
-	<li>
-		<span><%= I18n.t("decidim.authorization_handlers.#{name}.name", default: name) %></span>
-		<% if authorization_granted?(name) %>
-			<span class="label success"><%= t ".granted" %></span>
-			<% if managed?(name) %>
-				<%= t ".revoke" %>
+	<% authorization = authorization_for(name) %>
+	<tr>
+		<td><%= I18n.t("decidim.authorization_handlers.#{name}.name", default: name) %></td>
+		<td>
+			<% if authorization&.granted? %>
+				<span class="label success"><%= t ".granted" %></span>
+			<% else %>
+				<span class="label alert"><%= t ".not_granted" %></span>
 			<% end %>
-		<% else %>
-			<span class="label alert"><%= t ".not_granted" %></span>
+		</td>
+		<td class="table-list__actions">
 			<% if managed?(name) %>
-				<%= t ".grant" %>
+				<% if authorization&.granted? %>
+					<%= icon_link_to "circle-x", user_authorization_path(user, name: name), t(".revoke"), method: :delete, role: "img", aria_label: t(".revoke") %>
+				<% else %>
+					<%= icon_link_to "circle-check", user_authorization_path(user, name: name), t(".grant"), method: :patch, role: "img", aria_label: t(".grant") %>
+				<% end %>
 			<% end %>
-		<% end %>
-	</li>
+		</td>
+	</tr>
 <% end %>
-</ul>
+	</tbody>
+</table>

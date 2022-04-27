@@ -29,7 +29,9 @@ module Decidim
             buttonTitle: I18n.t("decidim.direct_verifications.participants.modal.button_title", locale: detect_current_locale),
             modalTitle: I18n.t("decidim.direct_verifications.participants.modal.modal_title", locale: detect_current_locale),
             closeModalLabel: I18n.t("decidim.direct_verifications.participants.modal.close_modal_label", locale: detect_current_locale),
+            statsLabel: I18n.t("decidim.direct_verifications.verification.admin.index.stats", locale: detect_current_locale),
             userVerificationsPath: Decidim::DirectVerifications::Verification::AdminEngine.routes.url_helpers.user_authorization_path("-ID-"),
+            statsPath: Decidim::DirectVerifications::Verification::AdminEngine.routes.url_helpers.stats_path,
             verifications: direct_verifications_verifications
           }
         end

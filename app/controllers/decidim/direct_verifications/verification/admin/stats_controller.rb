@@ -7,7 +7,7 @@ module Decidim
         class StatsController < Decidim::Admin::ApplicationController
           include NeedsPermission
 
-          layout "decidim/admin/users"
+          layout -> { request.xhr? ? false : "decidim/admin/users" }
 
           def index
             enforce_permission_to :index, :authorization

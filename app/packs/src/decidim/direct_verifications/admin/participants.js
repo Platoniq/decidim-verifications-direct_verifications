@@ -10,7 +10,7 @@ class VerificationUI {
 	}
 
 	addModal() {
-		this.$table.after(`<div class="reveal" id="show-verifications-modal" data-reveal>
+		this.$modal = $(`<div class="reveal" id="show-verifications-modal" data-reveal>
   <div class="reveal__header">
     <h3 class="reveal__title">${this.config.modalTitle}</h3>
     <button class="close-button" data-close aria-label="${this.config.closeModalLabel}"
@@ -24,7 +24,8 @@ class VerificationUI {
     </div>
   </div>
 </div>`);
-		this.$modal = $("#show-verifications-modal");
+		this.$table.after(this.$modal);
+		this.$title = $("#user-groups .card-title:first");
 		this.$modalBody = this.$modal.find(".modal-body");
 		this.reveal = new Foundation.Reveal(this.$modal);
 	}
@@ -38,6 +39,16 @@ class VerificationUI {
 	  		<use href="${this.svgPath}#${this.icon}"></use>
 	  		</svg></span></a>`);
 	  });
+	}
+
+	addStatsTitle() {
+	  // Add upper link to verification stats
+	  const $a = $(`<a class="button tiny button--title" href="${this.config.statsPath}">${this.config.statsLabel}</a>`);
+	  $a.on("click", (e) => {
+	  	e.preventDefault();
+	  	this.loadUrl($a.attr("href"), true);
+	  });
+	  this.$title.append($a);
 	}
 
 	getTrStatus(tr) {
@@ -56,8 +67,16 @@ class VerificationUI {
 		const userId = $(e.target).closest("tr").data("user-id");
 		// console.log(this.getUserVerifications(userId))
 		// console.log(this.config.userVerificationsPath.replace("-ID-",userId))
+		this.loadUrl(this.config.userVerificationsPath.replace("-ID-",userId));
+	}
+
+	loadUrl(url, large=false) {
+		this.$modal.removeClass("large");
+		if(large) {
+			this.$modal.addClass("large");
+		}
 		this.$modalBody.html('<span class="loading-spinner"></span>');
-		this.$modalBody.load(this.config.userVerificationsPath.replace("-ID-",userId));
+		this.$modalBody.load(url);
 		this.$modal.foundation("toggle");
 	}
 }
@@ -66,5 +85,5 @@ $(() => {
   const ui = new VerificationUI($("#user-groups table.table-list"), DirectVerificationsConfig);
   // Draw the icon buttons for checking verification statuses
   ui.drawButtons();
-  //TODO: set verifications statuses
+  ui.addStatsTitle();
 });
