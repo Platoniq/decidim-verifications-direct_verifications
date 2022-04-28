@@ -4,7 +4,7 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class UserAuthorizationsController < Decidim::Admin::ApplicationController
+        class UserAuthorizationsController < ApplicationController
           include NeedsPermission
           layout false
 
@@ -15,7 +15,7 @@ module Decidim
           end
 
           def update
-            enforce_permission_to :create, :authorization
+            enforce_permission_to :create, :direct_authorization, name: params[:name]
             handler = OpenStruct.new(handler_name: params[:name], user: user, unique_id: nil, metadata: {})
             if Decidim::Authorization.create_or_update_from(handler)
               flash[:notice] = t(".success", name: auth_name)
@@ -26,7 +26,7 @@ module Decidim
           end
 
           def destroy
-            enforce_permission_to :destroy, :authorization
+            enforce_permission_to :destroy, :direct_authorization, name: params[:name]
             begin
               authorization_for(params[:name]).destroy!
               flash[:notice] = t(".success", name: auth_name)

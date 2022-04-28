@@ -4,7 +4,7 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class StatsController < Decidim::Admin::ApplicationController
+        class StatsController < ApplicationController
           include NeedsPermission
 
           layout -> { request.xhr? ? false : "decidim/admin/users" }

@@ -8,7 +8,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
     let(:user) { create(:user, :confirmed, :admin, organization: organization) }
     let(:organization) do
-      create(:organization, available_authorizations: [verification_type])
+      create(:organization, available_authorizations: %w(direct_verifications another_verification))
     end
     let(:verification_type) { "direct_verifications" }
     let!(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
@@ -34,7 +34,17 @@ module Decidim::DirectVerifications::Verification::Admin
         expect(flash[:notice]).to be_present
         expect(response).to have_http_status(:redirect)
       end
-      # TODO: when auth is not handled by direct verification, permission deny
+
+      # when auth is not handled by direct verification, permission deny
+      context "when authorization is not handled by direct_verifications" do
+        let(:verification_type) { "another_verification" }
+
+        it "cannot create an authorization" do
+          get :update, params: { id: unauthorized_user.id, name: verification_type }
+          expect(flash[:alert]).to be_present
+          expect(response).to have_http_status(:redirect)
+        end
+      end
     end
 
     describe "GET destroy" do
@@ -43,7 +53,16 @@ module Decidim::DirectVerifications::Verification::Admin
         expect(flash[:notice]).to be_present
         expect(response).to have_http_status(:redirect)
       end
-      # TODO: when auth is not handled by direct verification, permission deny
+
+      context "when authorization is not handled by direct_verifications" do
+        let(:verification_type) { "another_verification" }
+
+        it "cannot create an authorization" do
+          get :destroy, params: { id: unauthorized_user.id, name: verification_type }
+          expect(flash[:alert]).to be_present
+          expect(response).to have_http_status(:redirect)
+        end
+      end
     end
   end
 end
