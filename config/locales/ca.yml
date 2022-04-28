@@ -18,6 +18,11 @@ ca:
         explanation: Verificació manual per part de les administradores de l'organització
         name: Verificació directa
     direct_verifications:
+      participants:
+        modal:
+          button_title: Veure autoritzacions
+          modal_close_button: Tanca
+          modal_title: Autoritzacions disponibles
       verification:
         admin:
           authorizations:
@@ -70,6 +75,18 @@ ca:
               global: "- Qualsevol mètode de verificació -"
               registered: Registrades
               unconfirmed: No confirmades
+          user_authorizations:
+            destroy:
+              error: Error al esborrar l'autorització %{name} (%{message})
+              success: La verificació %{name} ha estat eliminada correctament
+            show:
+              grant: Autoritza la usuària fent servir aquest mètode
+              granted: Concedida
+              not_granted: No concedida
+              revoke: Revoca l'autorització
+            update:
+              error: No s'ha pogut autoritzar la usuària usant el mètode %{name}
+              success: Usuària autoritzada correctament amb %{name}
         authorizations:
           new:
             no_action: Aquest mètode requereix que una administradora us verifiqui

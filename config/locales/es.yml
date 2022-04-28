@@ -18,6 +18,11 @@ es:
         explanation: Verificación manual por parte de las administradoras de la organización
         name: Verificación directa
     direct_verifications:
+      participants:
+        modal:
+          button_title: Ver autorizaciones
+          modal_close_button: Cerrar
+          modal_title: Autorizaciones disponibles
       verification:
         admin:
           authorizations:
@@ -70,6 +75,18 @@ es:
               global: "- Cualquier método de verificación -"
               registered: Registradas
               unconfirmed: Sin confirmar
+          user_authorizations:
+            destroy:
+              error: Error al intentar eliminar la autorización %{name} (%{message})
+              success: Autorización %{name} eliminada correctamente
+            show:
+              grant: Autorizar usuaria con este método
+              granted: Concedida
+              not_granted: No concedida
+              revoke: Revocar autorización
+            update:
+              error: Error al intentar autorizar la usuaria usando %{name}
+              success: Usuaria autorizada con éxito usando %{name}
         authorizations:
           new:
             no_action: Este método requiere que una administradora os verifique
