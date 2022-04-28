@@ -20,9 +20,9 @@ es:
     direct_verifications:
       participants:
         modal:
-          button_title: See authorizations
-          modal_close_button: Close
-          modal_title: Available authorizations
+          button_title: Ver autorizaciones
+          modal_close_button: Cerrar
+          modal_title: Autorizaciones disponibles
       verification:
         admin:
           authorizations:
@@ -77,16 +77,16 @@ es:
               unconfirmed: Sin confirmar
           user_authorizations:
             destroy:
-              error: Error while trying to delete the authorization %{name} (%{message})
-              success: Authorization %{name} deleted successfully
+              error: Error al intentar eliminar la autorización %{name} (%{message})
+              success: Autorización %{name} eliminada correctamente
             show:
-              grant: Authorize user with this method
-              granted: Granted
-              not_granted: Not granted
-              revoke: Revoke the authorization
+              grant: Autorizar usuaria con este método
+              granted: Concedida
+              not_granted: No concedida
+              revoke: Revocar autorización
             update:
-              error: Error while trying to authorize the user using %{name}
-              success: User authorized successfully using %{name}
+              error: Error al intentar autorizar la usuaria usando %{name}
+              success: Usuaria autorizada con éxito usando %{name}
         authorizations:
           new:
             no_action: Este método requiere que una administradora os verifique
