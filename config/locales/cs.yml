@@ -20,9 +20,9 @@ cs:
     direct_verifications:
       participants:
         modal:
-          button_title: See authorizations
-          modal_close_button: Close
-          modal_title: Available authorizations
+          button_title: Zobrazit autorizace
+          modal_close_button: Zavřít
+          modal_title: Dostupné autorizace
       verification:
         admin:
           authorizations:
@@ -77,16 +77,16 @@ cs:
               unconfirmed: Nepotvrzeno
           user_authorizations:
             destroy:
-              error: Error while trying to delete the authorization %{name} (%{message})
-              success: Authorization %{name} deleted successfully
+              error: Chyba při pokusu o odstranění autorizace %{name} (%{message})
+              success: Autorizace %{name} úspěšně smazána
             show:
-              grant: Authorize user with this method
-              granted: Granted
-              not_granted: Not granted
-              revoke: Revoke the authorization
+              grant: Autorizovat uživatele touto metodou
+              granted: Uděleno
+              not_granted: Neuděleno
+              revoke: Zrušit autorizaci
             update:
-              error: Error while trying to authorize the user using %{name}
-              success: User authorized successfully using %{name}
+              error: Chyba při pokusu o autorizaci uživatele pomocí %{name}
+              success: Uživatel úspěšně autorizován pomocí %{name}
         authorizations:
           new:
             no_action: Tato metoda vyžaduje administrátora, který vás ověřuje
