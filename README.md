@@ -55,6 +55,28 @@ Decidim::DirectVerifications.configure do |config|
 end
 ```
 
+### Direct managements of user's authorizations
+
+This plugin also provides a place for admins to see and manage (if configured) existing verifications for any user.
+Admins can go to the "Participants" admin page and see a new management button, when clicked it shows a modal window with all the authorizations that this user has granted as well as the missing ones. If Direct Verfication is configured to manage that verification (through the `manage_workflows` config var) it can be granted or revoke just by clicking a button.
+
+![Participants mods](examples/participants.png)
+
+![Participants modal management](examples/authorization-modal.png)
+
+This behavior can be disabled by disabling in a initializer the config var `participants_modal`.
+
+**`config/initializers/decidim_verifications.rb`:**
+
+```ruby
+# frozen_string_literal: true
+
+Decidim::DirectVerifications.configure do |config|
+  # Disable participants direct verifications management
+  config.participants_modal = false
+end
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -73,6 +95,7 @@ Depending on your Decidim version, you might want to specify the version to ensu
 
 | Direct Verifications version | Compatible Decidim versions |
 |---|---|
+| 1.2 | >= 0.25.x |
 | 1.1 | >= 0.25.x |
 | 1.0 | >= 0.23.x |
 | 0.22.x | 0.22.x |

@@ -19,6 +19,11 @@ en:
         explanation: Manual verification by the administrators of the organization
         name: Direct verification
     direct_verifications:
+      participants:
+        modal:
+          button_title: See authorizations
+          modal_close_button: Close
+          modal_title: Available authorizations
       verification:
         admin:
           authorizations:
@@ -31,37 +36,37 @@ en:
               user_name: Participant name
           direct_verifications:
             create:
-              authorized: "%{authorized} participants have been successfully verified using
-                [%{handler}] (%{count} detected, %{errors} errors)"
+              authorized: "%{authorized} participants have been successfully verified
+                using [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} participants detected, of which %{registered} are registered,
                 %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
               missing_header: Please, provide a header row
-              registered: "%{registered} participants have been successfully registered (%{count}
-                detected, %{errors} errors) "
-              revoked: Verification from %{revoked} participants have been revoked using
-                [%{handler}] (%{count} detected, %{errors} errors)
+              registered: "%{registered} participants have been successfully registered
+                (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{revoked} participants have been revoked
+                using [%{handler}] (%{count} detected, %{errors} errors)
             gdpr_disclaimer: Do this under your responsibility. Remember that you
-              need to have explicit consent from your participants in order to register them.
-              Otherwise you will be infringing the GDPR regulation in EU countries.
+              need to have explicit consent from your participants in order to register
+              them. Otherwise you will be infringing the GDPR regulation in EU countries.
           imports:
             create:
               error: There was an error importing the file
               success: File successfully uploaded. We'll email you when all participants
                 are imported.
             mailer:
-              authorized: "%{successful} participants have been successfully verified using
-                [%{handler}] (%{count} detected, %{errors} errors)"
+              authorized: "%{successful} participants have been successfully verified
+                using [%{handler}] (%{count} detected, %{errors} errors)"
               info: "%{count} participants detected, of which %{registered} are registered,
                 %{authorized} authorized using [%{handler}] (%{unconfirmed} unconfirmed)"
-              registered: "%{successful} participants have been successfully registered (%{count}
-                detected, %{errors} errors) "
-              revoked: Verification from %{successful} participants have been revoked using
-                [%{handler}] (%{count} detected, %{errors} errors)
+              registered: "%{successful} participants have been successfully registered
+                (%{count} detected, %{errors} errors) "
+              revoked: Verification from %{successful} participants have been revoked
+                using [%{handler}] (%{count} detected, %{errors} errors)
               subject: File import results
             new:
               file: CSV file with participants data
-              info: Import a CSV file with a participant entry per line copying the format
-                from the example below
+              info: Import a CSV file with a participant entry per line copying the
+                format from the example below
               submit: Upload file
           index:
             authorizations: Authorized participants
@@ -74,7 +79,8 @@ en:
             info_html: You can <a href=%{link}>import a CSV</a> or enter the emails
               here, one per line. If the emails are preceded by a text, it will be
               interpreted as the participant's name.
-            register: Register participants in the platform (if they exist they will be ignored)
+            register: Register participants in the platform (if they exist they will
+              be ignored)
             revoke: Revoke authorization from participants
             submit: Send and process the list
             textarea: Emails list
@@ -85,6 +91,18 @@ en:
               global: "- Any verification method -"
               registered: Registered
               unconfirmed: Unconfirmed
+          user_authorizations:
+            destroy:
+              error: Error while trying to delete the authorization %{name} (%{message})
+              success: Authorization %{name} deleted successfully
+            show:
+              grant: Authorize user with this method
+              granted: Granted
+              not_granted: Not granted
+              revoke: Revoke the authorization
+            update:
+              error: Error while trying to authorize the user using %{name}
+              success: User authorized successfully using %{name}
         authorizations:
           new:
             no_action: This method requires an administrator that verifies you

@@ -12,8 +12,15 @@ module Decidim
           resources :stats, only: [:index]
           resources :authorizations, only: [:index, :destroy]
           resources :imports, only: [:new, :create]
+          resources :user_authorizations, only: [:show, :update, :destroy]
 
           root to: "direct_verifications#index"
+        end
+
+        config.after_initialize do
+          if Decidim::DirectVerifications.participants_modal.present?
+            Decidim::Admin::OfficializationsController.include(Decidim::DirectVerifications::Admin::NeedsVerificationSnippets)
+          end
         end
 
         initializer "decidim_notify.webpacker.assets_path" do

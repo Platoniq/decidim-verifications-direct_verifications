@@ -4,7 +4,7 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class DirectVerificationsController < Decidim::Admin::ApplicationController
+        class DirectVerificationsController < ApplicationController
           include NeedsPermission
           helper_method :workflows, :current_authorization_handler
 

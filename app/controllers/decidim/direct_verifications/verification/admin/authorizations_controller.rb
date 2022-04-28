@@ -4,7 +4,7 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class AuthorizationsController < Decidim::Admin::ApplicationController
+        class AuthorizationsController < ApplicationController
           layout "decidim/admin/users"
 
           def index

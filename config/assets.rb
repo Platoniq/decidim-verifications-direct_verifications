@@ -20,5 +20,6 @@ Decidim::Webpacker.register_path("#{base_path}/app/packs")
 # `stylesheet_pack_tag`.
 Decidim::Webpacker.register_entrypoints(
   decidim_direct_verifications: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications.js",
+  decidim_direct_verifications_participants: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications_participants.js",
   decidim_direct_verifications_css: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications.scss"
 )

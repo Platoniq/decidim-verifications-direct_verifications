@@ -4,7 +4,7 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class ImportsController < Decidim::Admin::ApplicationController
+        class ImportsController < ApplicationController
           layout "decidim/admin/users"
           helper_method :workflows, :current_authorization_handler
 

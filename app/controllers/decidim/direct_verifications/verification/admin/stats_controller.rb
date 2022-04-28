@@ -4,10 +4,10 @@ module Decidim
   module DirectVerifications
     module Verification
       module Admin
-        class StatsController < Decidim::Admin::ApplicationController
+        class StatsController < ApplicationController
           include NeedsPermission
 
-          layout "decidim/admin/users"
+          layout -> { request.xhr? ? false : "decidim/admin/users" }
 
           def index
             enforce_permission_to :index, :authorization
