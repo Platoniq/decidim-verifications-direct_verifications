@@ -17,7 +17,7 @@ module Decidim
           root to: "direct_verifications#index"
         end
 
-        config.to_prepare do
+        config.after_initialize do
           if Decidim::DirectVerifications.participants_modal.present?
             Decidim::Admin::OfficializationsController.include(Decidim::DirectVerifications::Admin::NeedsVerificationSnippets)
           end
