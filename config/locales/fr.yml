@@ -18,6 +18,11 @@ fr:
         explanation: Vérification manuelle par les administrateurs de l'organisation
         name: Vérification directe
     direct_verifications:
+      participants:
+        modal:
+          button_title: See authorizations
+          modal_close_button: Close
+          modal_title: Available authorizations
       verification:
         admin:
           authorizations:
@@ -70,6 +75,18 @@ fr:
               global: "- N'importe quelle méthode de vérification -"
               registered: Inscrits
               unconfirmed: Non confirmé
+          user_authorizations:
+            destroy:
+              error: Error while trying to delete the authorization %{name} (%{message})
+              success: Authorization %{name} deleted successfully
+            show:
+              grant: Authorize user with this method
+              granted: Granted
+              not_granted: Not granted
+              revoke: Revoke the authorization
+            update:
+              error: Error while trying to authorize the user using %{name}
+              success: User authorized successfully using %{name}
         authorizations:
           new:
             no_action: Cette méthode nécessite un administrateur qui vous vérifie

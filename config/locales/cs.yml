@@ -18,6 +18,11 @@ cs:
         explanation: Ruční ověření správcem organizace
         name: Přímé ověření
     direct_verifications:
+      participants:
+        modal:
+          button_title: See authorizations
+          modal_close_button: Close
+          modal_title: Available authorizations
       verification:
         admin:
           authorizations:
@@ -70,6 +75,18 @@ cs:
               global: "- Jakákoli metoda ověřování -"
               registered: Registrován
               unconfirmed: Nepotvrzeno
+          user_authorizations:
+            destroy:
+              error: Error while trying to delete the authorization %{name} (%{message})
+              success: Authorization %{name} deleted successfully
+            show:
+              grant: Authorize user with this method
+              granted: Granted
+              not_granted: Not granted
+              revoke: Revoke the authorization
+            update:
+              error: Error while trying to authorize the user using %{name}
+              success: User authorized successfully using %{name}
         authorizations:
           new:
             no_action: Tato metoda vyžaduje administrátora, který vás ověřuje
