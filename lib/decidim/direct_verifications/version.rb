@@ -3,7 +3,7 @@
 module Decidim
   # This holds the decidim-direct_verifications version.
   module DirectVerifications
-    VERSION = "1.1"
+    VERSION = "1.2"
     DECIDIM_VERSION = "0.26.0"
     MIN_DECIDIM_VERSION = ">= 0.25.0"
   end
