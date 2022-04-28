@@ -23,7 +23,7 @@ module Decidim
           end
         end
 
-        initializer "decidim_notify.webpacker.assets_path" do
+        initializer "direct_verifications.webpacker.assets_path" do
           Decidim.register_assets_path File.expand_path("app/packs", root)
         end
       end
