@@ -33,6 +33,8 @@ ca:
               new_import: Nova importació
               title: Autoritzacions
               user_name: Nom de la participant
+            destroy:
+              success: L'autorizació s'ha eliminat correctament.
           direct_verifications:
             create:
               authorized: "S'han verificat correctament %{authorized} participants utilitzant [%{handler}] (%{count} detectats, %{errors} errors)"

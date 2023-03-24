@@ -6,7 +6,7 @@ module Decidim
       # Abstract class all concrete parsers should inherit from. They are expected to implement
       # #header, #lines, and #parse_data methods.
       class BaseParser
-        EMAIL_REGEXP = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i.freeze
+        EMAIL_REGEXP = /([A-Z0-9+._-]+@[A-Z0-9._-]+\.[A-Z0-9_-]+)\b/i
 
         def initialize(txt)
           @txt = txt

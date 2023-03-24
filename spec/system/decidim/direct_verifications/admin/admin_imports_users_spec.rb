@@ -22,6 +22,12 @@ describe "Admin imports users", type: :system do
     visit decidim_admin_direct_verifications.new_import_path
   end
 
+  after do
+    Decidim::DirectVerifications.configure do |config|
+      config.manage_workflows = %w(direct_verifications)
+    end
+  end
+
   it "can be accessed from direct_verifications_path" do
     visit decidim_admin_direct_verifications.direct_verifications_path
     click_link "import a CSV"

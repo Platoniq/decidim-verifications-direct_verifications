@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "package.json", "Rakefile", "README.md"]
   s.require_paths = ["lib"]
 
-  s.add_dependency "decidim-admin", Decidim::DirectVerifications::MIN_DECIDIM_VERSION
-  s.add_dependency "decidim-core", Decidim::DirectVerifications::MIN_DECIDIM_VERSION
+  s.add_dependency "decidim-admin", Decidim::DirectVerifications::COMPAT_DECIDIM_VERSION
+  s.add_dependency "decidim-core", Decidim::DirectVerifications::COMPAT_DECIDIM_VERSION
 end

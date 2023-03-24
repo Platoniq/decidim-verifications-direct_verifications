@@ -50,7 +50,7 @@ module Decidim
         end
 
         context "when registering users without name" do
-          let(:email) { "em@il.com" }
+          let(:email) { "em+1@il.com" }
           let(:name) { nil }
 
           it "tracks the operation" do
@@ -60,7 +60,7 @@ module Decidim
 
           it "infers the name from the email" do
             subject.call
-            expect(Decidim::User.last.name).to eq("em")
+            expect(Decidim::User.last.name).to eq("em1")
           end
 
           it "invites the user" do

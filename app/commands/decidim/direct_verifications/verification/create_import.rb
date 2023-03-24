@@ -3,7 +3,7 @@
 module Decidim
   module DirectVerifications
     module Verification
-      class CreateImport < Rectify::Command
+      class CreateImport < Decidim::Command
         def initialize(form)
           @form = form
           @file = form.file
