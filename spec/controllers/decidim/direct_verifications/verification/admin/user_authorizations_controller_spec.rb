@@ -30,7 +30,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
     describe "GET update" do
       it "creates an authorization" do
-        get :update, params: { id: authorized_user.id, name: verification_type }
+        get :update, params: { id: unauthorized_user.id, name: verification_type }
         expect(flash[:notice]).to be_present
         expect(response).to have_http_status(:redirect)
       end
@@ -57,8 +57,8 @@ module Decidim::DirectVerifications::Verification::Admin
       context "when authorization is not handled by direct_verifications" do
         let(:verification_type) { "another_verification" }
 
-        it "cannot create an authorization" do
-          get :destroy, params: { id: unauthorized_user.id, name: verification_type }
+        it "cannot destroy an authorization" do
+          get :destroy, params: { id: authorized_user.id, name: verification_type }
           expect(flash[:alert]).to be_present
           expect(response).to have_http_status(:redirect)
         end
