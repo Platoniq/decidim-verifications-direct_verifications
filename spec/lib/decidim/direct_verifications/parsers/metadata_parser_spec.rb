@@ -27,7 +27,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the text is invalid" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             nonsense emails...
             not_an@email
             no em@il
@@ -41,7 +41,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the text has empty columns" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             Name,Email,Department,Salary
             Bob,bob@example.com,,1000
           EMAILS
@@ -56,7 +56,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the text is a CSV with headers" do
         let(:txt) do
-          <<-ROWS.strip_heredoc
+          <<~ROWS
             Name,Email,Department,Salary
             Bob,bob@email.com,Engineering,1000
             Jane,jane@email.com,Sales,2000
@@ -74,12 +74,12 @@ module Decidim::DirectVerifications::Parsers
 
         context "and the CSV includes quotes" do
           let(:txt) do
-            <<-CSV.strip_heredoc
-            Name,Email,Type
-            use,test3@t.com,type
-            User,<a@b.co> another@email.com,third@email.com@as.com
-            Test 1, test1@test.com, customer
-            \"Test\\| 4\", <test4@test.com, producer
+            <<~CSV
+              Name,Email,Type
+              use,test3@t.com,type
+              User,<a@b.co> another@email.com,third@email.com@as.com
+              Test 1, test1@test.com, customer
+              \"Test\\| 4\", <test4@test.com, producer
             CSV
           end
 
@@ -95,9 +95,9 @@ module Decidim::DirectVerifications::Parsers
 
         context "and the CSV includes trailing or leading whitespaces" do
           let(:txt) do
-            <<-CSV.strip_heredoc
-            Name, Email, Type
-            Ava Hawkins, ava@example.com, collaborator
+            <<~CSV
+              Name, Email, Type
+              Ava Hawkins, ava@example.com, collaborator
             CSV
           end
 
@@ -110,7 +110,7 @@ module Decidim::DirectVerifications::Parsers
 
         context "when the name is not specified" do
           let(:txt) do
-            <<-EMAILS.strip_heredoc
+            <<~EMAILS
               email
               em@il.com
             EMAILS
@@ -123,7 +123,7 @@ module Decidim::DirectVerifications::Parsers
 
         context "when entries are duplicate" do
           let(:txt) do
-            <<-EMAILS.strip_heredoc
+            <<~EMAILS
               name,email
               brandy,brandy@example.com
               brandy,brandy@example.com

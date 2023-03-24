@@ -33,6 +33,8 @@ es:
               new_import: Nueva importación
               title: Autorizaciones
               user_name: Nombre de la participante
+            destroy:
+              success: La autorización se ha eliminado correctamente.
           direct_verifications:
             create:
               authorized: "Se han verificado correctamente %{authorized} participantes usando [%{handler}] (%{count} detectadas, %{errors} errores)"

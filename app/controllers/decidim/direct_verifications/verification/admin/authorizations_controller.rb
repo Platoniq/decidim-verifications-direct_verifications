@@ -16,7 +16,7 @@ module Decidim
 
           def destroy
             if authorization.destroy
-              flash[:notice] = "successfully"
+              flash[:notice] = t("authorizations.destroy.success", scope: "decidim.direct_verifications.verification.admin")
               redirect_to authorizations_path
             end
           end

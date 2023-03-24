@@ -26,3 +26,4 @@ npm_debug.log
 .ruby-version
 tags
 *.gem
+.rubocop-*

@@ -46,7 +46,7 @@ module Decidim
           other_verification
         end
 
-        it "has registered only " do
+        it "has registered only" do
           expect(subject.registered).to eq(5)
           expect(subject.unconfirmed).to eq(2)
           expect(subject.authorized).to eq(3)
@@ -67,7 +67,7 @@ module Decidim
           subject.authorization_handler = "direct_verifications"
         end
 
-        it "has registered only " do
+        it "has registered only" do
           expect(subject.registered).to eq(2)
           expect(subject.unconfirmed).to eq(1)
           expect(subject.authorized).to eq(2)

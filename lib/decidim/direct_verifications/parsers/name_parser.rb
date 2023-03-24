@@ -4,8 +4,8 @@ module Decidim
   module DirectVerifications
     module Parsers
       class NameParser < BaseParser
-        LINE_DELIMITER = /[\r\n;,]/.freeze
-        NON_ALPHA_CHARS = /[^[:print:]]|["$<>|\\]/.freeze
+        LINE_DELIMITER = /[\r\n;,]/
+        NON_ALPHA_CHARS = /[^[:print:]]|["$<>|\\]/
 
         def header
           nil

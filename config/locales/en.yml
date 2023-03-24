@@ -34,6 +34,8 @@ en:
               new_import: New import
               title: Authorizations
               user_name: Participant name
+            destroy:
+              success: The authorization was successfully deleted.
           direct_verifications:
             create:
               authorized: "%{authorized} participants have been successfully verified

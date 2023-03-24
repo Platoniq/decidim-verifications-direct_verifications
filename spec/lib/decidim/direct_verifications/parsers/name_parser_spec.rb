@@ -17,7 +17,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the text is invalid" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             nonsense emails...
             not_an@email
             no em@il
@@ -31,7 +31,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the text is valid" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             test1@test.com
             test2@test.com
             use test3@t.com
@@ -61,7 +61,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when the name is not specified" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             em@il.com
           EMAILS
         end
@@ -73,7 +73,7 @@ module Decidim::DirectVerifications::Parsers
 
       context "when entries are duplicate" do
         let(:txt) do
-          <<-EMAILS.strip_heredoc
+          <<~EMAILS
             brandy,brandy@example.com
             brandy,brandy@example.com
           EMAILS
