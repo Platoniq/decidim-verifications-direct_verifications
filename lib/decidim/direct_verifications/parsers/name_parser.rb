@@ -32,7 +32,7 @@ module Decidim
         end
 
         def fallback_name(email)
-          email.split("@").first
+          email.split("@").first&.gsub(/\W/,'')
         end
       end
     end

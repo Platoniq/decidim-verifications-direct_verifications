@@ -46,7 +46,7 @@ module Decidim::DirectVerifications::Parsers
           expect(subject.to_h).to eq(
             "a@b.co" => "User",
             "another@email.com" => "another",
-            "dot.email@test.com" => "dot.email",
+            "dot.email@test.com" => "dotemail",
             "my-other@email.org" => "My other name",
             "my@email.net" => "My name",
             "test1@test.com" => "Test 1",
@@ -62,12 +62,12 @@ module Decidim::DirectVerifications::Parsers
       context "when the name is not specified" do
         let(:txt) do
           <<~EMAILS
-            em@il.com
+            em+2@il.com
           EMAILS
         end
 
         it "infers the name from the email" do
-          expect(subject.to_h).to eq("em@il.com" => "em")
+          expect(subject.to_h).to eq("em+2@il.com" => "em2")
         end
       end
 
