@@ -14,7 +14,3 @@ AllCops:
     - "node_modules/**/*"
     - "db/schema.rb"
     - "vendor/**/*"
-
-RSpec/FilePath:
-  Exclude:
-    - "spec/serializers/user_export_serializer_spec.rb"
