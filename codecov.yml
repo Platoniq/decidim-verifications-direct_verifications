@@ -1,0 +1,2 @@
+ignore:
+  - "lib/decidim/direct_verifications/version.rb"
