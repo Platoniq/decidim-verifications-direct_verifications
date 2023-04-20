@@ -94,11 +94,13 @@ bundle
 Depending on your Decidim version, you might want to specify the version to ensure compatibility:
 
 | Direct Verifications version | Compatible Decidim versions |
-|---|---|
-| 1.2 | >= 0.25.x |
-| 1.1 | >= 0.25.x |
-| 1.0 | >= 0.23.x |
-| 0.22.x | 0.22.x |
+|------------------------------|-----------------------------|
+| 1.3                          | >= 0.27.x                   |
+| 1.2.1                        | >= 0.25.x                   |
+| 1.2                          | >= 0.25.x                   |
+| 1.1                          | >= 0.25.x                   |
+| 1.0                          | >= 0.23.x                   |
+| 0.22.x                       | 0.22.x                      |
 
 ## Using additional verification methods
 
