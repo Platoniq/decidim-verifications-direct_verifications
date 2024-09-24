@@ -8,11 +8,11 @@ on:
 
 env:
   RUBY_VERSION: 3.1.1
-  NODE_VERSION: 16.9.1
+  NODE_VERSION: 18.17.1
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:11
