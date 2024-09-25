@@ -18,7 +18,7 @@ gem "bootsnap", "~> 1.4"
 gem "puma", ">= 5.0.0"
 gem "uglifier", "~> 4.1"
 
-gem "faker", "~> 2.14"
+gem "faker"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -29,6 +29,7 @@ end
 group :development do
   gem "letter_opener_web", "~> 1.3"
   gem "listen", "~> 3.1"
+  gem "mdl"
   gem "rubocop-faker"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
