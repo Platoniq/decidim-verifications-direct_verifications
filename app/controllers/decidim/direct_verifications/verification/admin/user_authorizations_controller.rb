@@ -16,7 +16,7 @@ module Decidim
 
           def update
             enforce_permission_to :create, :direct_authorization, name: params[:name]
-            handler = OpenStruct.new(handler_name: params[:name], user: user, unique_id: nil, metadata: {})
+            handler = OpenStruct.new(handler_name: params[:name], user:, unique_id: nil, metadata: {})
             if Decidim::Authorization.create_or_update_from(handler)
               flash[:notice] = t(".success", name: auth_name)
             else
@@ -47,7 +47,7 @@ module Decidim
           end
 
           def authorization_for(name)
-            authorizations.find_by(name: name)
+            authorizations.find_by(name:)
           end
 
           def managed?(name)

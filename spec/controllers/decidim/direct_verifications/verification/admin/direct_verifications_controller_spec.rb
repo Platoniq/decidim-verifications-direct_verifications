@@ -4,15 +4,15 @@ require "spec_helper"
 require "decidim/direct_verifications/tests/verification_controller_examples"
 
 module Decidim::DirectVerifications::Verification::Admin
-  describe DirectVerificationsController, type: :controller do
+  describe DirectVerificationsController do
     routes { Decidim::DirectVerifications::Verification::AdminEngine.routes }
 
-    let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+    let(:user) { create(:user, :confirmed, :admin, organization:) }
     let(:organization) do
       create(:organization, available_authorizations: [verification_type])
     end
     let(:verification_type) { "direct_verifications" }
-    let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
+    let(:authorized_user) { create(:user, email: "authorized@example.com", organization:) }
 
     let(:i18n_scope) { "decidim.direct_verifications.verification.admin.direct_verifications" }
 
@@ -39,7 +39,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
-            post :create, params: params
+            post(:create, params:)
 
             expect(flash[:info]).to include("0 are registered")
             expect(flash[:info]).to include("0 authorized")
@@ -55,7 +55,7 @@ module Decidim::DirectVerifications::Verification::Admin
         it_behaves_like "checking users", params
 
         it "creates warning message" do
-          post :create, params: params
+          post(:create, params:)
 
           expect(flash[:warning]).not_to be_empty
           expect(flash[:warning]).to include("1 detected")
@@ -66,7 +66,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
         it "renders the index with warning message" do
           perform_enqueued_jobs do
-            post :create, params: params
+            post(:create, params:)
             expect(subject).to render_template(
               "decidim/direct_verifications/verification/admin/direct_verifications/index"
             )
@@ -82,7 +82,7 @@ module Decidim::DirectVerifications::Verification::Admin
 
         it "redirects with notice and warning messages" do
           perform_enqueued_jobs do
-            post :create, params: params
+            post(:create, params:)
             expect(subject).to redirect_to(action: :index)
           end
         end
@@ -155,7 +155,7 @@ module Decidim::DirectVerifications::Verification::Admin
           context "when no header is provided" do
             let(:data) { "brandy@example.com,consumer" }
 
-            it "works" do
+            it "works successfully" do
               post :create, params: { userslist: data, register: true, authorize: "in" }
               expect(response).to redirect_to(direct_verifications_path)
             end

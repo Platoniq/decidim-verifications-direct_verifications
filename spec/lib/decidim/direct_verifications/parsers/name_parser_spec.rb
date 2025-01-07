@@ -37,8 +37,8 @@ module Decidim::DirectVerifications::Parsers
             use test3@t.com
             User <a@b.co>\ranother@email.com,third@email.com@as.com
             Test 1 test1@test.com
-            \"Test\\| 4\" <test4@test.com
-            dot.email@test.com\rMy.Dot:Name with.dot@email.dot.com;\"My name\" <my@email.net>, My other name <my-other@email.org>
+            "Test\\| 4" <test4@test.com
+            dot.email@test.com\rMy.Dot:Name with.dot@email.dot.com;"My name" <my@email.net>, My other name <my-other@email.org>
           EMAILS
         end
 

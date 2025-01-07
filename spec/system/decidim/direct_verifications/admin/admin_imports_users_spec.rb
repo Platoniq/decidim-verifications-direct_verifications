@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Admin imports users", type: :system do
+describe "Admin imports users" do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
 
   let(:i18n_scope) { "decidim.direct_verifications.verification.admin" }
   let(:filename) { file_fixture("users.csv") }
@@ -103,7 +103,7 @@ describe "Admin imports users", type: :system do
 
   context "when revoking users" do
     let(:user_to_revoke) do
-      create(:user, name: "Brandy", email: "brandy@example.com", organization: organization)
+      create(:user, name: "Brandy", email: "brandy@example.com", organization:)
     end
 
     before do

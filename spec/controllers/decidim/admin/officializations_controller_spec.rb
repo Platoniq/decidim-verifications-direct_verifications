@@ -3,15 +3,15 @@
 require "spec_helper"
 
 module Decidim::Admin
-  describe OfficializationsController, type: :controller do
+  describe OfficializationsController do
     routes { Decidim::Admin::Engine.routes }
 
-    let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+    let(:user) { create(:user, :confirmed, :admin, organization:) }
     let(:organization) do
       create(:organization, available_authorizations: [verification_type])
     end
     let(:verification_type) { "direct_verifications" }
-    let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
+    let(:authorized_user) { create(:user, email: "authorized@example.com", organization:) }
     let(:snippets) { controller.helpers.snippets.display(:direct_verifications) }
     let(:modal_on) { true }
 

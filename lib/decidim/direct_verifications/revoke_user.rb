@@ -30,11 +30,11 @@ module Decidim
       attr_reader :email, :organization, :instrumenter, :authorization_handler
 
       def user
-        @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
+        @user ||= User.find_by(email:, decidim_organization_id: organization.id)
       end
 
       def authorization
-        @authorization ||= Authorization.find_by(user: user, name: authorization_handler)
+        @authorization ||= Authorization.find_by(user:, name: authorization_handler)
       end
 
       def valid_authorization?

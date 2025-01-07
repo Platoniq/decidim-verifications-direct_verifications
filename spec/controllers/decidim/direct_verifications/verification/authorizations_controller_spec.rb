@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim::DirectVerifications::Verification
-  describe AuthorizationsController, type: :controller do
+  describe AuthorizationsController do
     routes { Decidim::DirectVerifications::Verification::Engine.routes }
 
     let(:organization) do

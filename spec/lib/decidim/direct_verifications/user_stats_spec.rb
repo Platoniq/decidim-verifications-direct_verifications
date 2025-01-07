@@ -7,22 +7,22 @@ module Decidim
     describe UserStats do
       subject { described_class.new(organization) }
 
-      let(:confirmed) { create(:user, :confirmed, organization: organization) }
-      let(:confirmed2) { create(:user, :confirmed, organization: organization) }
-      let(:confirmed3) { create(:user, :confirmed, organization: organization) }
-      let(:unconfirmed) { create(:user, organization: organization) }
-      let(:unconfirmed2) { create(:user, organization: organization) }
+      let(:confirmed) { create(:user, :confirmed, organization:) }
+      let(:other_confirmed) { create(:user, :confirmed, organization:) }
+      let(:another_confirmed) { create(:user, :confirmed, organization:) }
+      let(:unconfirmed) { create(:user, organization:) }
+      let(:other_unconfirmed) { create(:user, organization:) }
       let(:organization) do
         create(:organization, available_authorizations: %w(direct_verifications other_verification))
       end
       let(:direct_verification) do
-        create(:authorization, :granted, user: confirmed, name: "direct_verifications", organization: organization)
+        create(:authorization, :granted, user: confirmed, name: "direct_verifications", organization:)
       end
-      let(:direct_verification2) do
-        create(:authorization, :granted, user: unconfirmed, name: "direct_verifications", organization: organization)
+      let(:other_direct_verification) do
+        create(:authorization, :granted, user: unconfirmed, name: "direct_verifications", organization:)
       end
       let(:other_verification) do
-        create(:authorization, :granted, user: confirmed, name: "other_verification", organization: organization)
+        create(:authorization, :granted, user: confirmed, name: "other_verification", organization:)
       end
 
       context "when no one registered" do
@@ -37,12 +37,12 @@ module Decidim
       context "when counting users for all methods" do
         before do
           confirmed
-          confirmed2
-          confirmed3
+          other_confirmed
+          another_confirmed
           unconfirmed
-          unconfirmed2
+          other_unconfirmed
           direct_verification
-          direct_verification2
+          other_direct_verification
           other_verification
         end
 
@@ -57,12 +57,12 @@ module Decidim
       context "when counting users for one method" do
         before do
           confirmed
-          confirmed2
-          confirmed3
+          other_confirmed
+          another_confirmed
           unconfirmed
-          unconfirmed2
+          other_unconfirmed
           direct_verification
-          direct_verification2
+          other_direct_verification
           other_verification
           subject.authorization_handler = "direct_verifications"
         end

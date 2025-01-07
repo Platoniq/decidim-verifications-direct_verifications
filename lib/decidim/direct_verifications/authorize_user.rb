@@ -41,14 +41,14 @@ module Decidim
       end
 
       def user
-        @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
+        @user ||= User.find_by(email:, decidim_organization_id: organization.id)
       end
 
       def authorization
         @authorization ||=
           begin
             auth = Authorization.find_or_initialize_by(
-              user: user,
+              user:,
               name: authorization_handler
             )
             auth.metadata = data

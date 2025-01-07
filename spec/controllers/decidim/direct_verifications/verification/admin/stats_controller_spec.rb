@@ -3,15 +3,15 @@
 require "spec_helper"
 
 module Decidim::DirectVerifications::Verification::Admin
-  describe StatsController, type: :controller do
+  describe StatsController do
     routes { Decidim::DirectVerifications::Verification::AdminEngine.routes }
 
-    let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+    let(:user) { create(:user, :confirmed, :admin, organization:) }
     let(:organization) do
       create(:organization, available_authorizations: [verification_type])
     end
     let(:verification_type) { "direct_verifications" }
-    let(:authorized_user) { create(:user, email: "authorized@example.com", organization: organization) }
+    let(:authorized_user) { create(:user, email: "authorized@example.com", organization:) }
 
     before do
       request.env["decidim.current_organization"] = user.organization
