@@ -2,7 +2,7 @@
 
 module Decidim
   module DirectVerifications
-    class ImportMailer < Decidim::Admin::ApplicationMailer
+    class ImportMailer < Decidim::ApplicationMailer
       include LocalisedMailer
 
       layout "decidim/mailer"
