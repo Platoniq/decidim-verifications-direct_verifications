@@ -31,8 +31,6 @@ module Decidim::DirectVerifications::Verification::Admin
     describe "GET update" do
       it "creates an authorization" do
         temp = { id: unauthorized_user.id, name: verification_type }
-        puts temp
-        puts temp.nil?
         get :update, params: { id: unauthorized_user.id, name: verification_type }
         expect(flash[:notice]).to be_present
         expect(response).to have_http_status(:redirect)
