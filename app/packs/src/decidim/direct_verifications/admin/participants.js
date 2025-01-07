@@ -4,7 +4,7 @@ class VerificationUI {
     this.svgPath = $table.find("use[href]:first").attr("href").split("#")[0];
     this.icon = "icon-key";
     this.config = config;
-    this.$table.on("click", ".show-verifications-modal", (e) => this.toggleModal(e));
+    this.$table.on("click", ".show-verifications-modal", (event) => this.toggleModal(event));
     this.addModal();
   }
 
@@ -26,6 +26,7 @@ class VerificationUI {
     this.$table.after(this.$modal);
     this.$title = $("#user-groups .card-title:first");
     this.$modalBody = this.$modal.find(".modal-body");
+    // eslint-disable-next-line no-undef
     this.reveal = new Foundation.Reveal(this.$modal);
   }
 
@@ -43,8 +44,8 @@ class VerificationUI {
   addStatsTitle() {
     // Add upper link to verification stats
     const $a = $(`<a class="button tiny button--title" href="${this.config.statsPath}">${this.config.statsLabel}</a>`);
-    $a.on("click", (e) => {
-      e.preventDefault();
+    $a.on("click", (event) => {
+      event.preventDefault();
       this.loadUrl($a.attr("href"), true);
     });
     this.$title.append($a);
@@ -57,15 +58,15 @@ class VerificationUI {
   }
 
   getVerification(id) {
-    return this.config.verifications.find((auth) => auth.id == id);
+    return this.config.verifications.find((auth) => auth.id === id);
   }
 
   getUserVerifications(userId) {
-    return this.config.verifications.filter((auth) => auth.userId == userId);
+    return this.config.verifications.filter((auth) => auth.userId === userId);
   }
 
-  toggleModal(e) {
-    const userId = $(e.target).closest("tr").data("user-id");
+  toggleModal(event) {
+    const userId = $(event.target).closest("tr").data("user-id");
     this.loadUrl(this.config.userVerificationsPath.replace("-ID-", userId));
   }
 
@@ -81,6 +82,7 @@ class VerificationUI {
 }
 
 $(() => {
+  // eslint-disable-next-line no-undef
   const ui = new VerificationUI($("#user-groups table.table-list"), DirectVerificationsConfig);
   // Draw the icon buttons for checking verification statuses
   ui.drawButtons();
