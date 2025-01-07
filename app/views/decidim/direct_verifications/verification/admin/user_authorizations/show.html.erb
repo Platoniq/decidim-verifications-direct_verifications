@@ -1,27 +1,27 @@
 <strong><%= user.name %>:</strong>
 <table class="table-list">
   <tbody>
-<% current_organization.available_authorizations.each do |name| %>
-  <% authorization = authorization_for(name) %>
-  <tr>
-    <td><%= I18n.t("decidim.authorization_handlers.#{name}.name", default: name) %></td>
-    <td>
-      <% if authorization&.granted? %>
-        <span class="label success"><%= t ".granted" %></span>
-      <% else %>
-        <span class="label alert"><%= t ".not_granted" %></span>
-      <% end %>
-    </td>
-    <td class="table-list__actions">
-      <% if managed?(name) %>
-        <% if authorization&.granted? %>
-          <%= icon_link_to "circle-x", user_authorization_path(user, name: name), t(".revoke"), method: :delete, role: "img", aria_label: t(".revoke") %>
-        <% else %>
-          <%= icon_link_to "circle-check", user_authorization_path(user, name: name), t(".grant"), method: :patch, role: "img", aria_label: t(".grant") %>
-        <% end %>
-      <% end %>
-    </td>
-  </tr>
-<% end %>
+    <% current_organization.available_authorizations.each do |name| %>
+      <% authorization = authorization_for(name) %>
+      <tr>
+        <td><%= I18n.t("decidim.authorization_handlers.#{name}.name", default: name) %></td>
+        <td>
+          <% if authorization&.granted? %>
+            <span class="label success"><%= t ".granted" %></span>
+          <% else %>
+            <span class="label alert"><%= t ".not_granted" %></span>
+          <% end %>
+        </td>
+        <td class="table-list__actions">
+          <% if managed?(name) %>
+            <% if authorization&.granted? %>
+              <%= icon_link_to "delete-bin-line", user_authorization_path(user, name: name), t(".revoke"), method: :delete, role: "img", aria_label: t(".revoke") %>
+            <% else %>
+              <%= icon_link_to "checkbox-circle-line", user_authorization_path(user, name: name), t(".grant"), method: :patch, role: "img", aria_label: t(".grant") %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

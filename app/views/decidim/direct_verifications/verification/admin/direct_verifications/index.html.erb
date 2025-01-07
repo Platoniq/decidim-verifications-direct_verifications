@@ -1,44 +1,71 @@
+<%= append_stylesheet_pack_tag "decidim_direct_verifications" %>
+
+<% add_decidim_page_title(t("admin.index.title", scope: "decidim.direct_verifications.verification")) %>
+
 <div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
       <%= t("admin.index.title", scope: "decidim.direct_verifications.verification") %>
-      <%= link_to t("admin.index.stats", scope: "decidim.direct_verifications.verification"), stats_path, class: "button tiny button--title" %>
-      <%= link_to t("admin.index.authorizations", scope: "decidim.direct_verifications.verification"), authorizations_path, class: "button tiny button--title" %>
-    </h2>
+      <%= link_to t("admin.index.stats", scope: "decidim.direct_verifications.verification"), stats_path, class: "button button__sm button__secondary" %>
+      <%= link_to t("admin.index.authorizations", scope: "decidim.direct_verifications.verification"), authorizations_path, class: "button button__sm button__secondary" %>
+    </h1>
   </div>
   <div class="card-section">
-    <p><%= t("decidim.direct_verifications.verification.admin.new.info_html", link: new_import_path) %></p>
-    <%= form_tag direct_verifications_path, multipart: true, class: "form" do %>
-      <%= label_tag :userslist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
-      <%= text_area_tag :userslist, @userslist, rows: 10 %>
-      <label>
-        <%= check_box_tag :register %>
-        <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
-        <div data-alert class="callout alert hide">
-          <%= t("admin.direct_verifications.gdpr_disclaimer", scope: "decidim.direct_verifications.verification") %>
+    <div class="card pt-4">
+      <div class="row column">
+        <p class="form-info"><%= t("decidim.direct_verifications.verification.admin.new.info_html", link: new_import_path) %></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-section">
+    <%= form_tag direct_verifications_path, multipart: true, class: "form form-defaults" do %>
+      <div class="form__wrapper">
+        <div class="card pt-4">
+          <div class="card-section">
+            <div class="row column">
+              <%= label_tag :userslist, t("admin.new.textarea", scope: "decidim.direct_verifications.verification") %>
+              <%= text_area_tag :userslist, @userslist, rows: 10 %>
+            </div>
+            <div class="row column">
+              <label>
+                <%= check_box_tag :register %>
+                <%= t("admin.new.register", scope: "decidim.direct_verifications.verification") %>
+                <div data-alert class="callout alert hide">
+                  <%= t("admin.direct_verifications.gdpr_disclaimer", scope: "decidim.direct_verifications.verification") %>
+                </div>
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                <%= radio_button_tag :authorize, "in" %>
+                <%= t("admin.new.authorize", scope: "decidim.direct_verifications.verification") %>
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                <%= radio_button_tag :authorize, "out" %>
+                <%= t("admin.new.revoke", scope: "decidim.direct_verifications.verification") %>
+              </label>
+            </div>
+            <div class="row column">
+              <label>
+                <%= radio_button_tag :authorize, "check", true %>
+                <%= t("admin.new.check", scope: "decidim.direct_verifications.verification") %>
+              </label>
+            </div>
+            <div class="row column">
+              <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
+              <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
+            </div>
+          </div>
         </div>
-      </label>
-      <label>
-        <%= radio_button_tag :authorize, "in" %>
-        <%= t("admin.new.authorize", scope: "decidim.direct_verifications.verification") %>
-      </label>
-      <label>
-        <%= radio_button_tag :authorize, "out" %>
-        <%= t("admin.new.revoke", scope: "decidim.direct_verifications.verification") %>
-      </label>
-      <label>
-        <%= radio_button_tag :authorize, "check", true %>
-        <%= t("admin.new.check", scope: "decidim.direct_verifications.verification") %>
-      </label>
-
-      <%= label_tag :authorization_handler, t("admin.new.authorization_handler", scope: "decidim.direct_verifications.verification") %>
-
-      <%= select_tag :authorization_handler, options_for_select(workflows, current_authorization_handler) %>
-
-      <%= submit_tag t("admin.new.submit", scope: "decidim.direct_verifications.verification"), class: "button" %>
-
+      </div>
+      <div class="item__edit-sticky">
+        <div class="item__edit-sticky-container">
+          <%= submit_tag t("admin.new.submit", scope: "decidim.direct_verifications.verification"), class: "button button__sm button__secondary" %>
+        </div>
+      </div>
     <% end %>
-
   </div>
 </div>
 

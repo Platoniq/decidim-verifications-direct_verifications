@@ -6,3 +6,10 @@
   border: 1px solid #e8e8e8;
   padding: rem-calc(2 5 1);
 }
+
+.form-info {
+  a {
+    color: var(--secondary);
+    text-decoration: underline;
+  }
+}
