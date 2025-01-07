@@ -52,6 +52,9 @@ jobs:
       - run: bundle exec erblint app/views/**/*.erb
         name: Lint ERB files
 
+      - run: bundle exec mdl *.md
+        name: Lint Markdown files
+
       - run: npm run lint
         name: Lint JS files
 
