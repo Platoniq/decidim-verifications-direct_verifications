@@ -5,10 +5,8 @@
   "scripts": {
     "lint": "eslint -c .eslintrc.json --no-error-on-unmatched-pattern --ext .js,.jsx app/packs",
     "lint-fix": "eslint -c .eslintrc.json --no-error-on-unmatched-pattern --ext .js,.jsx app/packs --fix",
-    "stylelint": "stylelint **/*.scss",
-    "stylelint-fix": "stylelint **/*.scss --fix",
-    "prettier": "prettier --check '**/*.scss'",
-    "prettify": "prettier --write '**/*.scss'"
+    "stylelint": "stylelint app/packs/stylesheets/**/*.scss",
+    "stylelint-fix": "stylelint app/packs/stylesheets/**/*.scss --fix"
   },
   "repository": {
     "type": "git",
