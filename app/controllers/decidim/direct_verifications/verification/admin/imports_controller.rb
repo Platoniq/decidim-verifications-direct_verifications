@@ -21,7 +21,7 @@ module Decidim
 
             CreateImport.call(form) do
               on(:ok) do
-                flash.now[:notice] = t(".success")
+                flash[:notice] = t(".success")
               end
 
               on(:invalid) do

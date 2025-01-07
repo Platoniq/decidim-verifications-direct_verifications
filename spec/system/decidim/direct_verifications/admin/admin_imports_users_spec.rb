@@ -63,7 +63,7 @@ describe "Admin imports users" do
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
       select(
-        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
         from: "Verification method"
       )
 
@@ -114,7 +114,7 @@ describe "Admin imports users" do
       attach_file("CSV file with participants data", filename)
       choose(I18n.t("#{i18n_scope}.new.revoke"))
       select(
-        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
         from: "Verification method"
       )
 
