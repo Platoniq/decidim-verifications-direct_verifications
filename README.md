@@ -2,7 +2,7 @@
 
 [![Test](https://github.com/Platoniq/decidim-verifications-direct_verifications/actions/workflows/test.yml/badge.svg)](https://github.com/Platoniq/decidim-verifications-direct_verifications/actions/workflows/test.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2195deb4de6c6354a6bc/maintainability)](https://codeclimate.com/github/Platoniq/decidim-verifications-direct_verifications/maintainability)
-[![codecov](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications/branch/main/graph/badge.svg?token=FR1zkV71S2)](https://codecov.io/gh/Platoniq/decidim-verifications-direct_verifications)
+[![Coverage Status](https://coveralls.io/repos/github/Platoniq/decidim-verifications-direct_verifications/badge.svg?branch=main)](https://coveralls.io/github/Platoniq/decidim-verifications-direct_verifications?branch=main)
 
 A [Decidim](https://github.com/decidim/decidim) that provides a verification method called `Direct verification`. Works only on the admin side, final users do not intervene in the verification process.
 
