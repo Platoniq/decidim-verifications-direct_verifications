@@ -21,7 +21,9 @@ module Decidim
 
             CreateImport.call(form) do
               on(:ok) do
-                flash.now[:notice] = t(".success")
+                # rubocop:disable Rails/ActionControllerFlashBeforeRender
+                flash[:notice] = t(".success")
+                # rubocop:enable Rails/ActionControllerFlashBeforeRender
               end
 
               on(:invalid) do
