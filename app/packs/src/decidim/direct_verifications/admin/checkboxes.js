@@ -1,6 +1,15 @@
-$(() => {
-  $('[type="checkbox"]#register').change(function () {
-    // eslint-disable-next-line no-invalid-this
-    $(this).closest("label").find(".callout").toggleClass("hide", !$(this).prop("checked"))
-  })
-})
+document.addEventListener("DOMContentLoaded", () => {
+  const checkbox = document.querySelector('[type="checkbox"]#register');
+
+  if (checkbox) {
+    checkbox.addEventListener("change", (event) => {
+      const label = event.target.closest("label");
+      if (label) {
+        const callout = label.querySelector(".callout");
+        if (callout) {
+          callout.classList.toggle("hide", !event.target.checked);
+        }
+      }
+    });
+  }
+});
