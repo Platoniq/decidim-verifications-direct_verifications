@@ -1,5 +1,9 @@
-<strong><%= user.name %>:</strong>
-<table class="table-list">
+<table class="table-list mx-auto">
+  <thead>
+    <tr>
+      <th colspan="3" style="text-align: center; font-size: 16px"><%= user.name %></th>
+    </tr>
+  </thead>
   <tbody>
     <% current_organization.available_authorizations.each do |name| %>
       <% authorization = authorization_for(name) %>
