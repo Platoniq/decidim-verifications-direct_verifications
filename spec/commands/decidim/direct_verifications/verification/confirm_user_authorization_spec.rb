@@ -23,7 +23,7 @@ module Decidim
           end
 
           let(:form) do
-            DirectVerificationsForm.new(name: name, email: email)
+            DirectVerificationsForm.new(name:, email:)
           end
 
           let(:user) { authorization.user }

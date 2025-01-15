@@ -36,7 +36,7 @@ module Decidim
           let(:email) { "em@il.com" }
           let(:name) { "Joni" }
 
-          let!(:user) { create(:user, email: email, organization: organization) }
+          let!(:user) { create(:user, email:, organization:) }
 
           it "doesn't track the operation" do
             subject.call

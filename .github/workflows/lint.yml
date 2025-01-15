@@ -1,4 +1,4 @@
-name: Test
+name: Lint
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   NODE_VERSION: 18.17.1
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -28,7 +28,6 @@ jobs:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -47,15 +46,18 @@ jobs:
       - run: npm ci
         name: Install JS deps
 
-      - name: Setup Database
-        run: bundle exec rake test_app
-    
-      - name: Run RSpec
-        run: CI=1 bundle exec rspec
+      - run: bundle exec rubocop -P
+        name: Lint Ruby files
 
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: screenshots
-          path: ./spec/decidim_dummy_app/tmp/screenshots
-          if-no-files-found: ignore
+      - run: bundle exec erblint app/views/**/*.erb
+        name: Lint ERB files
+
+      - run: bundle exec mdl *.md
+        name: Lint Markdown files
+
+      - run: npm run lint
+        name: Lint JS files
+
+      - run: npm run stylelint
+        name: Lint SCSS files
+

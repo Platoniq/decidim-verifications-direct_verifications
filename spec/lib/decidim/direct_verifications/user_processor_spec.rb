@@ -7,7 +7,7 @@ module Decidim
     describe UserProcessor do
       subject { described_class.new(organization, user, session, instrumenter) }
 
-      let(:user) { create(:user, :confirmed, :admin, organization: organization) }
+      let(:user) { create(:user, :confirmed, :admin, organization:) }
       let(:session) { double(:session) }
       let(:organization) do
         create(:organization, available_authorizations: ["direct_verifications"])

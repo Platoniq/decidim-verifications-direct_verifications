@@ -11,10 +11,10 @@ module Decidim
         let(:form) do
           instance_double(
             CreateImportForm,
-            file: file,
-            organization: organization,
-            user: user,
-            action: action,
+            file:,
+            organization:,
+            user:,
+            action:,
             authorization_handler: "direct_verifications"
           )
         end

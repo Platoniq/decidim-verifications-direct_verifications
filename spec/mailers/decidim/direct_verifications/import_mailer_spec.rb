@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim
   module DirectVerifications
-    describe ImportMailer, type: :mailer do
+    describe ImportMailer do
       let(:user) { build(:user) }
 
       describe "#finished_processing" do

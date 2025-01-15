@@ -79,7 +79,7 @@ module Decidim::DirectVerifications::Parsers
               use,test3@t.com,type
               User,<a@b.co> another@email.com,third@email.com@as.com
               Test 1, test1@test.com, customer
-              \"Test\\| 4\", <test4@test.com, producer
+              "Test\\| 4", <test4@test.com, producer
             CSV
           end
 

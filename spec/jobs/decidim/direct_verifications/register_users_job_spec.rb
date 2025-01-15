@@ -4,11 +4,11 @@ require "spec_helper"
 
 module Decidim
   module DirectVerifications
-    describe RegisterUsersJob, type: :job do
+    describe RegisterUsersJob do
       let(:filename) { file_fixture("users.csv").realpath.to_s }
       let(:file) { Rack::Test::UploadedFile.new(filename, "text/csv") }
       let(:organization) { create(:organization) }
-      let!(:current_user) { create(:user, organization: organization) }
+      let!(:current_user) { create(:user, organization:) }
       let(:mailer) { double(:mailer, deliver_now: true) }
       let(:blob) { ActiveStorage::Blob.create_and_upload!(io: file, filename: file.original_filename) }
 

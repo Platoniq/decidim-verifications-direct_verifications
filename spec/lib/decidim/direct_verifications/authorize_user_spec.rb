@@ -16,7 +16,7 @@ module Decidim
 
         context "when authorizing confirmed users" do
           let(:organization) { build(:organization) }
-          let(:user) { create(:user, organization: organization) }
+          let(:user) { create(:user, organization:) }
           let(:email) { user.email }
           let(:session) { {} }
           let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
@@ -53,7 +53,7 @@ module Decidim
 
           context "when the authorization already exists" do
             context "when the authorization is not granted" do
-              let!(:authorization) { create(:authorization, :pending, user: user, name: :direct_verifications) }
+              let!(:authorization) { create(:authorization, :pending, user:, name: :direct_verifications) }
 
               it "authorizes the user" do
                 expect(Verification::ConfirmUserAuthorization).to receive(:call)
@@ -62,7 +62,7 @@ module Decidim
             end
 
             context "when the authorization is already granted and expired" do
-              let!(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+              let!(:authorization) { create(:authorization, :granted, user:, name: :direct_verifications) }
 
               before do
                 allow(authorization).to receive(:expired?).and_return(true)
@@ -76,7 +76,7 @@ module Decidim
             end
 
             context "when the authorization is already granted and not expired" do
-              let!(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+              let!(:authorization) { create(:authorization, :granted, user:, name: :direct_verifications) }
 
               before do
                 allow(authorization).to receive(:expired?).and_return(false)

@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Admin creates direct verifications", type: :system do
+describe "Admin creates direct verifications" do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
 
   let(:i18n_scope) { "decidim.direct_verifications.verification.admin.direct_verifications" }
 
@@ -16,10 +16,10 @@ describe "Admin creates direct verifications", type: :system do
   end
 
   around do |example|
-    original_processor = ::Decidim::DirectVerifications.input_parser
-    ::Decidim::DirectVerifications.input_parser = :metadata_parser
+    original_processor = Decidim::DirectVerifications.input_parser
+    Decidim::DirectVerifications.input_parser = :metadata_parser
     example.run
-    ::Decidim::DirectVerifications.input_parser = original_processor
+    Decidim::DirectVerifications.input_parser = original_processor
   end
 
   context "when registering users" do

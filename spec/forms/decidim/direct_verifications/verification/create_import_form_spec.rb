@@ -12,7 +12,7 @@ module Decidim
         let(:attributes) do
           {
             user: build(:user),
-            organization: organization,
+            organization:,
             file: double(File),
             authorize: action,
             authorization_handler: "direct_verifications"

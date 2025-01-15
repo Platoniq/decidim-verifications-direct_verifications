@@ -32,14 +32,14 @@ module Decidim
       attr_reader :email, :name, :organization, :current_user, :instrumenter
 
       def user
-        @user ||= User.find_by(email: email, decidim_organization_id: organization.id)
+        @user ||= User.find_by(email:, decidim_organization_id: organization.id)
       end
 
       def form
         RegistrationForm.new(
           name: name.presence || fallback_name,
           email: email.downcase,
-          organization: organization,
+          organization:,
           admin: false,
           invited_by: current_user,
           invitation_instructions: "direct_invite"

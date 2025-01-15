@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "deface"
+
 module Decidim
   module DirectVerifications
     module Verification

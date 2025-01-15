@@ -7,7 +7,7 @@ module Decidim
     describe RevokeUser do
       subject { described_class.new(email, organization, instrumenter, "direct_verifications") }
 
-      let(:user) { create(:user, organization: organization) }
+      let(:user) { create(:user, organization:) }
       let(:email) { user.email }
 
       describe "#call" do
@@ -17,7 +17,7 @@ module Decidim
         context "when revoking existing users" do
           let(:email) { user.email }
 
-          before { create(:authorization, :granted, user: user, name: :direct_verifications) }
+          before { create(:authorization, :granted, user:, name: :direct_verifications) }
 
           it "tracks the operation" do
             subject.call
@@ -58,7 +58,7 @@ module Decidim
         end
 
         context "when the authorization is not granted" do
-          before { create(:authorization, :pending, user: user, name: :direct_verifications) }
+          before { create(:authorization, :pending, user:, name: :direct_verifications) }
 
           it "does not track the operation" do
             subject.call
@@ -73,15 +73,15 @@ module Decidim
         end
 
         context "when the authorization fails to be destroyed" do
-          let(:user) { create(:user, organization: organization) }
+          let(:user) { create(:user, organization:) }
           let(:email) { user.email }
-          let(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+          let(:authorization) { create(:authorization, :granted, user:, name: :direct_verifications) }
 
           before do
             allow(authorization).to receive(:destroy!).and_raise(ActiveRecord::ActiveRecordError)
             allow(Authorization)
               .to receive(:find_by)
-              .with(user: user, name: "direct_verifications")
+              .with(user:, name: "direct_verifications")
               .and_return(authorization)
           end
 
@@ -94,9 +94,9 @@ module Decidim
           subject { described_class.new(email, organization, instrumenter, authorization_handler) }
 
           let(:authorization_handler) { :other_verification_method }
-          let(:user) { create(:user, organization: organization) }
+          let(:user) { create(:user, organization:) }
 
-          before { create(:authorization, :granted, user: user, name: authorization_handler) }
+          before { create(:authorization, :granted, user:, name: authorization_handler) }
 
           it "tracks the operation" do
             subject.call

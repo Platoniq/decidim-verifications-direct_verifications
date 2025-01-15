@@ -1,11 +1,13 @@
-<%= stylesheet_pack_tag "decidim_direct_verifications" %>
+<%= append_stylesheet_pack_tag "decidim_direct_verifications" %>
+
+<% add_decidim_page_title(t(".title")) %>
 
 <div class="card">
-  <div class="card-divider">
-    <h2 class="card-title">
+  <div class="item_show__header">
+    <h2 class="item_show__header-title">
       <%= t(".title") %>
-      <%= link_to t("admin.index.stats", scope: "decidim.direct_verifications.verification"), stats_path, class: "button tiny button--title" %>
-      <%= link_to t(".new_import"), direct_verifications_path, class: "button tiny button--title" %>
+      <%= link_to t("admin.index.stats", scope: "decidim.direct_verifications.verification"), stats_path, class: "button button__sm button__secondary" %>
+      <%= link_to t(".new_import"), direct_verifications_path, class: "button button__sm button__secondary" %>
     </h2>
   </div>
   <div class="card-section">
@@ -31,7 +33,7 @@
               <td><%= authorization.created_at %></td>
 
               <td class="table-list__actions">
-                <%= icon_link_to "circle-x", authorization_path(authorization), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
+                <%= icon_link_to "delete-bin-line", authorization_path(authorization), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
               </td>
             </tr>
           <% end %>

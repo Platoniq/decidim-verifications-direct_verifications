@@ -3,11 +3,13 @@
 require "decidim/dev"
 
 require "simplecov"
-SimpleCov.start "rails"
-if ENV["CODECOV"]
-  require "codecov"
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+
+if ENV["CI"]
+  require "coveralls"
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 end
+
+SimpleCov.start "rails"
 
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 

@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim::DirectVerifications::Verification::Admin
-  describe AuthorizationsController, type: :controller do
+  describe AuthorizationsController do
     routes { Decidim::DirectVerifications::Verification::AdminEngine.routes }
 
     let(:organization) { create(:organization) }
-    let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+    let(:user) { create(:user, :admin, :confirmed, organization:) }
 
     before do
       request.env["decidim.current_organization"] = organization

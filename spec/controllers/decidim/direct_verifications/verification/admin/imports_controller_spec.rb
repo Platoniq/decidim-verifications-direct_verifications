@@ -3,11 +3,11 @@
 require "spec_helper"
 
 module Decidim::DirectVerifications::Verification::Admin
-  describe ImportsController, type: :controller do
+  describe ImportsController do
     routes { Decidim::DirectVerifications::Verification::AdminEngine.routes }
 
     let(:organization) { create(:organization) }
-    let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+    let(:user) { create(:user, :admin, :confirmed, organization:) }
 
     before do
       request.env["decidim.current_organization"] = organization
@@ -33,11 +33,11 @@ module Decidim::DirectVerifications::Verification::Admin
       context "when the import is valid" do
         it "authorizes the action" do
           expect(controller).to receive(:allowed_to?).with(:create, :authorization, {})
-          post :create, params: { file: file }
+          post :create, params: { file: }
         end
 
         it "redirects to :new" do
-          post :create, params: { file: file }
+          post :create, params: { file: }
           expect(response).to redirect_to(new_import_path)
         end
       end

@@ -4,15 +4,15 @@ require "spec_helper"
 
 module Decidim
   module DirectVerifications
-    describe RevokeUsersJob, type: :job do
+    describe RevokeUsersJob do
       let(:filename) { file_fixture("users.csv").realpath.to_s }
       let(:file) { Rack::Test::UploadedFile.new(filename, "text/csv") }
       let(:organization) { create(:organization) }
-      let(:current_user) { create(:user, organization: organization) }
+      let(:current_user) { create(:user, organization:) }
       let(:mailer) { double(:mailer, deliver_now: true) }
 
-      let(:user) { create(:user, organization: organization, email: "brandy@example.com") }
-      let!(:authorization) { create(:authorization, :granted, user: user, name: :direct_verifications) }
+      let(:user) { create(:user, organization:, email: "brandy@example.com") }
+      let!(:authorization) { create(:authorization, :granted, user:, name: :direct_verifications) }
       let(:blob) { ActiveStorage::Blob.create_and_upload!(io: file, filename: file.original_filename) }
 
       around do |example|

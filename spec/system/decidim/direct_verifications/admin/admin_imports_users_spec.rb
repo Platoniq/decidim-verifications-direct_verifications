@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-describe "Admin imports users", type: :system do
+describe "Admin imports users" do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:user) { create(:user, :admin, :confirmed, organization:) }
 
   let(:i18n_scope) { "decidim.direct_verifications.verification.admin" }
   let(:filename) { file_fixture("users.csv") }
@@ -63,7 +63,7 @@ describe "Admin imports users", type: :system do
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
       select(
-        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
         from: "Verification method"
       )
 
@@ -103,7 +103,7 @@ describe "Admin imports users", type: :system do
 
   context "when revoking users" do
     let(:user_to_revoke) do
-      create(:user, name: "Brandy", email: "brandy@example.com", organization: organization)
+      create(:user, name: "Brandy", email: "brandy@example.com", organization:)
     end
 
     before do
@@ -114,7 +114,7 @@ describe "Admin imports users", type: :system do
       attach_file("CSV file with participants data", filename)
       choose(I18n.t("#{i18n_scope}.new.revoke"))
       select(
-        "translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
         from: "Verification method"
       )
 
