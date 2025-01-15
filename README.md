@@ -82,7 +82,7 @@ end
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-direct_verifications"
+gem "decidim-direct_verifications", git: "https://github.com/Platoniq/decidim-verifications-direct_verifications"
 ```
 
 And then execute:
