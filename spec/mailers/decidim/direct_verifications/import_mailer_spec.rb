@@ -30,7 +30,7 @@ module Decidim
         end
 
         it "sets the organization" do
-          expect(mail.body.encoded).to include(user.organization.name)
+          expect(mail.body.encoded).to include(user.organization.name[user.locale])
         end
 
         context "when the type is :registered" do

@@ -20,6 +20,8 @@ en:
         name: Direct verification
       other_verification_method:
         name: Direct verifications
+      other:
+        name: Other
     direct_verifications:
       participants:
         modal:
