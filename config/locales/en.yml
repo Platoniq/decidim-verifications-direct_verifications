@@ -18,6 +18,10 @@ en:
       direct_verifications:
         explanation: Manual verification by the administrators of the organization
         name: Direct verification
+      other_verification_method:
+        name: Direct verificationsbab
+      other:
+        name: Other
     direct_verifications:
       participants:
         modal:

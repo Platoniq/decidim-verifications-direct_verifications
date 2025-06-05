@@ -30,7 +30,7 @@ describe "Admin imports users" do
 
   it "can be accessed from direct_verifications_path" do
     visit decidim_admin_direct_verifications.direct_verifications_path
-    click_link "import a CSV"
+    click_on "import a CSV"
     expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
   end
 
@@ -41,7 +41,7 @@ describe "Admin imports users" do
       check(I18n.t("#{i18n_scope}.new.register"))
 
       perform_enqueued_jobs do
-        click_button("Upload file")
+        click_on("Upload file")
       end
 
       expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
@@ -63,19 +63,19 @@ describe "Admin imports users" do
       check(I18n.t("#{i18n_scope}.new.register"))
       choose(I18n.t("#{i18n_scope}.new.authorize"))
       select(
-        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Direct verifications",
         from: "Verification method"
       )
 
       perform_enqueued_jobs do
-        click_button("Upload file")
+        click_on("Upload file")
       end
 
       expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
-      click_link I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
-      expect(page).not_to have_content("Brandy") # In the authorizations page we only show those with :direct_verifications
+      click_on I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
+      expect(page).to have_no_content("Brandy") # In the authorizations page we only show those with :direct_verifications
 
       expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
       expect(ActionMailer::Base.deliveries.first.subject).to eq("Invitation instructions")
@@ -114,19 +114,19 @@ describe "Admin imports users" do
       attach_file("CSV file with participants data", filename)
       choose(I18n.t("#{i18n_scope}.new.revoke"))
       select(
-        "Translation missing: en.decidim.authorization_handlers.other_verification_method.name",
+        "Direct verifications",
         from: "Verification method"
       )
 
       perform_enqueued_jobs do
-        click_button("Upload file")
+        click_on("Upload file")
       end
 
       expect(page).to have_admin_callout("successfully")
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
-      click_link I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
-      expect(page).not_to have_content("Brandy")
+      click_on I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
+      expect(page).to have_no_content("Brandy")
 
       expect(ActionMailer::Base.deliveries.last.body.encoded).to include(
         I18n.t(

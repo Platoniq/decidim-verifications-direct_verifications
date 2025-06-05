@@ -29,7 +29,7 @@ describe "Admin creates direct verifications" do
         check "register"
         choose "authorize_in"
 
-        click_button "Send and process the list"
+        click_on "Send and process the list"
 
         expect(page).to have_content(I18n.t("#{i18n_scope}.create.missing_header"))
       end

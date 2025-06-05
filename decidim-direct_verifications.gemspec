@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["ivan@platoniq.net"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/Platoniq/decidim-verifications-direct_verifications"
-  s.required_ruby_version = ">= 3.1"
+  s.required_ruby_version = ">= 3.2"
 
   s.name = "decidim-direct_verifications"
   s.summary = "A decidim batch direct registration and verification module"

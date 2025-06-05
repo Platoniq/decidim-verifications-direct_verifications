@@ -18,7 +18,7 @@ describe "Admin manages imported authorizations" do
     login_as user, scope: :user
 
     visit decidim_admin_direct_verifications.direct_verifications_path
-    click_link I18n.t("index.authorizations", scope:)
+    click_on I18n.t("index.authorizations", scope:)
   end
 
   context "when listing authorizations" do
@@ -37,8 +37,8 @@ describe "Admin manages imported authorizations" do
         expect(page).to have_content(authorization.created_at)
       end
 
-      expect(page).not_to have_content(non_direct_authorization.name)
-      expect(page).not_to have_content(out_of_scope_authorization.user.name)
+      expect(page).to have_no_content(non_direct_authorization.name)
+      expect(page).to have_no_content(out_of_scope_authorization.user.name)
     end
 
     it "lets users navigate to stats and new import" do
@@ -50,10 +50,10 @@ describe "Admin manages imported authorizations" do
   context "when destroying an authorization" do
     it "destroys the authorizations" do
       within "tr[data-authorization-id=\"#{authorization.id}\"]" do
-        accept_confirm { click_link "Delete" }
+        accept_confirm { click_on "Delete" }
       end
 
-      expect(page).not_to have_content("tr[data-authorization-id=\"#{authorization.id}\"]")
+      expect(page).to have_no_content("tr[data-authorization-id=\"#{authorization.id}\"]")
       expect(page).to have_admin_callout("successfully")
     end
   end
