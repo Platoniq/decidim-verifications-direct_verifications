@@ -50,7 +50,7 @@ module Decidim
           q = q.where(name: authorization_handler)
           if strict
             q = q.where.not(granted_at: nil)
-            q = q.where("decidim_authorizations.granted_at >= :date", date: Time.current - expires_in) if expires_in
+            q = q.where(decidim_authorizations: { granted_at: (Time.current - expires_in).. }) if expires_in
           end
         end
         q = q.where("decidim_users.decidim_organization_id=:org and decidim_users.email!=''", org: organization.id)

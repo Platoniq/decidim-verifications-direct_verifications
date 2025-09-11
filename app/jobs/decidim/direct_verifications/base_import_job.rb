@@ -24,7 +24,7 @@ module Decidim
           process_users
           send_email_notification
         rescue StandardError => e
-          Rails.logger.error "BaseImportJob Error: #{e.message} #{e.backtrace.filter { |f| f =~ /direct_verifications/ }}"
+          Rails.logger.error "BaseImportJob Error: #{e.message} #{e.backtrace.grep(/direct_verifications/)}"
         end
         remove_file! if options.fetch(:remove_file, false)
       end
