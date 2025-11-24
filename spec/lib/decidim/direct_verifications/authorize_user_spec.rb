@@ -12,7 +12,7 @@ module Decidim
       let(:authorization_handler) { :direct_verifications }
 
       describe "#call" do
-        let(:data) { user.name }
+        let(:data) { { "name" => user.name } }
 
         context "when authorizing confirmed users" do
           let(:organization) { build(:organization) }
@@ -22,7 +22,7 @@ module Decidim
           let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 
           context "when passing the user name" do
-            let(:data) { user.name }
+            let(:data) { { "name" => user.name } }
 
             it "tracks the operation" do
               subject.call
@@ -92,7 +92,7 @@ module Decidim
 
           context "when the user fails to be authorized" do
             let(:form) { instance_double(Verification::DirectVerificationsForm, valid?: false) }
-            let(:data) { user.name }
+            let(:data) { { "name" => user.name } }
 
             before do
               allow(Verification::DirectVerificationsForm)
@@ -110,7 +110,7 @@ module Decidim
           let(:organization) { build(:organization) }
           let(:user) { nil }
           let(:email) { "em@mail.com" }
-          let(:data) { "Andy" }
+          let(:data) { { "name" => "Andy" } }
           let(:session) { {} }
           let(:instrumenter) { instance_double(Instrumenter, add_processed: true, add_error: true) }
 

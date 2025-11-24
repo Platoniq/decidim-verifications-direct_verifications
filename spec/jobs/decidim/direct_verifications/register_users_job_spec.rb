@@ -28,7 +28,7 @@ module Decidim
           .to change(Decidim::User, :count).from(1).to(2)
 
         user = Decidim::User.find_by(email: "brandy@example.com")
-        expect(user.name).to eq("brandy")
+        expect(user.name).to eq("Brandy")
       end
 
       it "does not authorize the user" do

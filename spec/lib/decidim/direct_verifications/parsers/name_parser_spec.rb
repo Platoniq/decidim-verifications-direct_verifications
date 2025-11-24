@@ -44,17 +44,17 @@ module Decidim::DirectVerifications::Parsers
 
         it "returns the emails in a hash" do
           expect(subject.to_h).to eq(
-            "a@b.co" => "User",
-            "another@email.com" => "another",
-            "dot.email@test.com" => "dotemail",
-            "my-other@email.org" => "My other name",
-            "my@email.net" => "My name",
-            "test1@test.com" => "Test 1",
-            "test2@test.com" => "test2",
-            "test3@t.com" => "use",
-            "test4@test.com" => "Test 4",
-            "third@email.com" => "third",
-            "with.dot@email.dot.com" => "My.Dot:Name"
+            "a@b.co" => { "name" => "User" },
+            "another@email.com" => { "name" => "another" },
+            "dot.email@test.com" => { "name" => "dotemail" },
+            "my-other@email.org" => { "name" => "My other name" },
+            "my@email.net" => { "name" => "My name" },
+            "test1@test.com" => { "name" => "Test 1" },
+            "test2@test.com" => { "name" => "test2" },
+            "test3@t.com" => { "name" => "use" },
+            "test4@test.com" => { "name" => "Test 4" },
+            "third@email.com" => { "name" => "third" },
+            "with.dot@email.dot.com" => { "name" => "My.Dot:Name" }
           )
         end
       end
@@ -67,7 +67,7 @@ module Decidim::DirectVerifications::Parsers
         end
 
         it "infers the name from the email" do
-          expect(subject.to_h).to eq("em+2@il.com" => "em2")
+          expect(subject.to_h).to eq("em+2@il.com" => { "name" => "em2" })
         end
       end
 
@@ -80,7 +80,7 @@ module Decidim::DirectVerifications::Parsers
         end
 
         it "keeps only one" do
-          expect(subject.to_h).to eq("brandy@example.com" => "brandy")
+          expect(subject.to_h).to eq("brandy@example.com" => { "name" => "brandy" })
         end
       end
     end

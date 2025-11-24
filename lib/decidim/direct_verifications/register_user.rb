@@ -5,7 +5,7 @@ module Decidim
     class RegisterUser
       def initialize(email, data, organization, current_user, instrumenter)
         @email = email
-        @name = data.is_a?(Hash) ? data[:name] : data
+        @name = data.is_a?(Hash) ? (data["name"] || data[:name]) : data
         @organization = organization
         @current_user = current_user
         @instrumenter = instrumenter
