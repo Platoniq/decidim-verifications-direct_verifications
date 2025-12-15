@@ -40,5 +40,8 @@
     "@decidim/prettier-config": "^0.28.0",
     "@decidim/stylelint-config": "^0.28.0",
     "postcss-scss": "^4.0.9"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0"
   }
 }

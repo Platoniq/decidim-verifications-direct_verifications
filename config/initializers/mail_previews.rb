@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-  config.action_mailer.preview_path = Decidim::DirectVerifications::Verification::Engine.root.join("spec/mailers")
+  config.action_mailer.preview_paths = [Decidim::DirectVerifications::Verification::Engine.root.join("spec/mailers")]
 end
