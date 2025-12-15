@@ -8,14 +8,14 @@ on:
 
 env:
   RUBY_VERSION: 3.3.4
-  NODE_VERSION: 18.17.1
+  NODE_VERSION: 22.14.0
 
 jobs:
   test:
     runs-on: ubuntu-22.04
     services:
       postgres:
-        image: postgres:14
+        image: postgres:16
         ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
