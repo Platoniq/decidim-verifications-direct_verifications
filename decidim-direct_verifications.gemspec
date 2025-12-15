@@ -21,5 +21,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "decidim-admin", Decidim::DirectVerifications::COMPAT_DECIDIM_VERSION
   s.add_dependency "decidim-core", Decidim::DirectVerifications::COMPAT_DECIDIM_VERSION
+  s.add_dependency "decidim-initiatives", Decidim::DirectVerifications::COMPAT_DECIDIM_VERSION
   s.add_dependency "deface", "~> 1.5"
 end

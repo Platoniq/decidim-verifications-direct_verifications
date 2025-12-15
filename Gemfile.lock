@@ -4,6 +4,7 @@ PATH
     decidim-direct_verifications (1.7.0)
       decidim-admin (>= 0.31.0, < 0.32)
       decidim-core (>= 0.31.0, < 0.32)
+      decidim-initiatives (>= 0.31.0, < 0.32)
       deface (~> 1.5)
 
 GEM
@@ -313,6 +314,11 @@ GEM
       decidim-core (= 0.31.0)
     decidim-generators (0.31.0)
       decidim-core (= 0.31.0)
+    decidim-initiatives (0.31.0)
+      decidim-admin (= 0.31.0)
+      decidim-comments (= 0.31.0)
+      decidim-core (= 0.31.0)
+      decidim-verifications (= 0.31.0)
     decidim-meetings (0.31.0)
       decidim-core (= 0.31.0)
       decidim-forms (= 0.31.0)
