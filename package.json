@@ -25,7 +25,7 @@
     "extends": "@decidim/stylelint-config"
   },
   "engines": {
-    "node": "18.17.1",
+    "node": "22.14.0",
     "npm": ">=9.6.7"
   },
   "devDependencies": {
@@ -35,10 +35,14 @@
     "@babel/plugin-transform-runtime": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
-    "@decidim/dev": "^0.28.0",
-    "@decidim/eslint-config": "^0.28.0",
-    "@decidim/prettier-config": "^0.28.0",
-    "@decidim/stylelint-config": "^0.28.0",
+    "@decidim/dev": "^0.31.0",
+    "@decidim/eslint-config": "^0.31.0",
+    "@decidim/prettier-config": "^0.31.0",
+    "@decidim/stylelint-config": "^0.31.0",
     "postcss-scss": "^4.0.9"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "shakapacker": "~8.3.0"
   }
 }
