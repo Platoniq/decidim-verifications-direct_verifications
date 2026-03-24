@@ -12,13 +12,13 @@ base_path = File.expand_path("..", __dir__)
 # in your JavaScript entrypoints (or other JavaScript files within Decidim)
 # using `import "src/decidim/foo"` after you have registered the additional path
 # as follows.
-Decidim::Webpacker.register_path("#{base_path}/app/packs")
+Decidim::Shakapacker.register_path("#{base_path}/app/packs")
 
 # Register the entrypoints for your module. These entrypoints can be included
 # within your application using `javascript_pack_tag` and if you include any
 # SCSS files within the entrypoints, they become available for inclusion using
 # `stylesheet_pack_tag`.
-Decidim::Webpacker.register_entrypoints(
+Decidim::Shakapacker.register_entrypoints(
   decidim_direct_verifications: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications.js",
   decidim_direct_verifications_participants: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications_participants.js",
   decidim_direct_verifications_css: "#{base_path}/app/packs/entrypoints/decidim_direct_verifications.scss"

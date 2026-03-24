@@ -26,6 +26,7 @@ en:
       participants:
         modal:
           button_title: See authorizations
+          close_modal_label: Close
           modal_close_button: Close
           modal_title: Available authorizations
       verification:

@@ -24,7 +24,7 @@ module Decidim
         end
       rescue StandardError => e
         instrumenter.track(:registered, email)
-        raise e if Rails.env.test? || Rails.env.development?
+        raise e if Rails.env.local?
       end
 
       private
