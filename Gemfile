@@ -12,6 +12,7 @@ require_relative "#{base_path}lib/decidim/direct_verifications/version"
 
 gem "decidim", Decidim::DirectVerifications::DECIDIM_VERSION
 gem "decidim-direct_verifications", path: "."
+gem "decidim-initiatives", Decidim::DirectVerifications::DECIDIM_VERSION
 
 gem "bootsnap", "~> 1.4"
 
