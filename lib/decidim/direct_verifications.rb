@@ -8,15 +8,19 @@ require_relative "direct_verifications/parsers"
 
 module Decidim
   module DirectVerifications
-    include ActiveSupport::Configurable
-
     class InputParserError < StandardError; end
+
+    class << self
+      def config = self
+
+      def configure
+        yield self
+      end
+    end
 
     # Specify in this variable which authorization methods can be managed by the plugin
     # Be careful to specify only what you really need
-    config_accessor :manage_workflows do
-      ["direct_verifications"]
-    end
+    mattr_accessor :manage_workflows, default: ["direct_verifications"]
 
     # The processor for the user uploaded data where to extract emails and other info
     # be default it uses Decidim::DirectVerifications::Parsers::NameParser
@@ -24,15 +28,11 @@ module Decidim
     # - :name_parser
     # - :metadata_parser
     # A custom parser can be specified as long it respects the module hierachy
-    config_accessor :input_parser do
-      :name_parser
-    end
+    mattr_accessor :input_parser, default: :name_parser
 
     # add a button to the participants list to be able to handle verifications from there
     # Manageable Verifications need to be registered in :manage_workflows
-    config_accessor :participants_modal do
-      true
-    end
+    mattr_accessor :participants_modal, default: true
 
     def self.find_parser_class(manifest)
       "Decidim::DirectVerifications::Parsers::#{manifest.to_s.camelize}".safe_constantize || Decidim::DirectVerifications::Parsers::NameParser
