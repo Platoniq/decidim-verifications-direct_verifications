@@ -54,7 +54,7 @@ describe "Admin manages imported authorizations" do
       end
 
       expect(page).to have_no_content("tr[data-authorization-id=\"#{authorization.id}\"]")
-      expect(page).to have_admin_callout("successfully")
+      expect(page).to have_admin_callout(I18n.t("authorizations.destroy.success", scope:))
     end
   end
 end
