@@ -122,7 +122,7 @@ describe "Admin imports users" do
         click_on("Upload file")
       end
 
-      expect(page).to have_admin_callout("successfully")
+      expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       click_on I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
