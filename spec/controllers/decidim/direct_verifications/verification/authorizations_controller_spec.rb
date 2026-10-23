@@ -21,14 +21,14 @@ module Decidim::DirectVerifications::Verification
       context "when the handler is not valid" do
         it "redirects the user" do
           get :new, params: { handler: "foo" }
-          expect(response).to redirect_to("/authorizations")
+          expect(response).to redirect_to(Decidim::Verifications::Engine.routes.url_helpers.authorizations_path)
         end
       end
 
       context "when the handler is valid" do
         it "redirects the user" do
           get :new, params: { handler: "direct_verifications" }
-          expect(response).to redirect_to("/authorizations")
+          expect(response).to redirect_to(Decidim::Verifications::Engine.routes.url_helpers.authorizations_path)
         end
       end
     end
