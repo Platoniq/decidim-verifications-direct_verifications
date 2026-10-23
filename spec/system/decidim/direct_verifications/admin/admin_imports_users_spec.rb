@@ -42,9 +42,11 @@ describe "Admin imports users" do
 
       perform_enqueued_jobs do
         click_on("Upload file")
+        # click_on returns before the server has handled the upload. Wait for it
+        # inside the block, so the import job (and its emails) is performed.
+        expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       end
 
-      expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       expect(ActionMailer::Base.deliveries.first.to).to contain_exactly("brandy@example.com")
@@ -69,9 +71,11 @@ describe "Admin imports users" do
 
       perform_enqueued_jobs do
         click_on("Upload file")
+        # click_on returns before the server has handled the upload. Wait for it
+        # inside the block, so the import job (and its emails) is performed.
+        expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       end
 
-      expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       click_on I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
@@ -120,9 +124,11 @@ describe "Admin imports users" do
 
       perform_enqueued_jobs do
         click_on("Upload file")
+        # click_on returns before the server has handled the upload. Wait for it
+        # inside the block, so the import job (and its emails) is performed.
+        expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       end
 
-      expect(page).to have_admin_callout(I18n.t("#{i18n_scope}.imports.create.success"))
       expect(page).to have_current_path(decidim_admin_direct_verifications.new_import_path)
 
       click_on I18n.t("index.authorizations", scope: "decidim.direct_verifications.verification.admin")
