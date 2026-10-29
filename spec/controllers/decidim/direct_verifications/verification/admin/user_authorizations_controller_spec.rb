@@ -63,6 +63,29 @@ module Decidim::DirectVerifications::Verification::Admin
           expect(response).to have_http_status(:redirect)
         end
       end
+
+      context "when the user belongs to another organization" do
+        let!(:other_user) { create(:user, :confirmed) }
+        let!(:other_authorization) { create(:authorization, :granted, name: verification_type, user: other_user) }
+
+        it "does not find the user and keeps the authorization" do
+          expect do
+            get :destroy, params: { id: other_user.id, name: verification_type }
+          end.to raise_error(ActiveRecord::RecordNotFound)
+          expect(other_authorization.reload).to be_persisted
+        end
+      end
+    end
+
+    describe "GET update for a user of another organization" do
+      let!(:other_user) { create(:user, :confirmed) }
+
+      it "does not find the user and creates no authorization" do
+        expect do
+          get :update, params: { id: other_user.id, name: verification_type }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+        expect(Decidim::Authorization.where(user: other_user)).to be_empty
+      end
     end
   end
 end
