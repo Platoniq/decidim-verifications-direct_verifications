@@ -5,6 +5,8 @@ module Decidim
     module Verification
       module Admin
         class ApplicationController < Decidim::Admin::ApplicationController
+          private
+
           def permission_class_chain
             [::Decidim::DirectVerifications::Admin::Permissions] + super
           end
