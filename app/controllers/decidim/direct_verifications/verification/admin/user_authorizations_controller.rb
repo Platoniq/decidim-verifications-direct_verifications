@@ -27,11 +27,12 @@ module Decidim
 
           def destroy
             enforce_permission_to :destroy, :direct_authorization, name: params[:name]
+            user # not found for users of other organizations, before the rescue below
             begin
               authorization_for(params[:name]).destroy!
               flash[:notice] = t(".success", name: auth_name)
             rescue StandardError => e
-              flash[:alert] = t(".error", name: auth_name, error: e.message)
+              flash[:alert] = t(".error", name: auth_name, message: e.message)
             end
             redirect_to decidim_admin.officializations_path
           end
@@ -39,11 +40,13 @@ module Decidim
           private
 
           def user
-            @user ||= Decidim::User.find_by(id: params[:id])
+            # Only users of the current organization (raises not found otherwise).
+            @user ||= current_organization.users.find(params[:id])
           end
 
           def authorizations
-            @authorizations ||= Decidim::Authorization.where(decidim_user_id: user.id)
+            # `user` is already scoped to the current organization.
+            @authorizations ||= Decidim::Authorization.where(decidim_user_id: user.id) # rubocop:disable Decidim/OrganizationScopedFinder
           end
 
           def authorization_for(name)
