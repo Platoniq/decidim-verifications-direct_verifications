@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     decidim-direct_verifications (1.8.0)
-      decidim-admin (>= 0.32.0, < 0.33)
-      decidim-core (>= 0.32.0, < 0.33)
+      decidim-admin (>= 0.32.2, < 0.33)
+      decidim-core (>= 0.32.2, < 0.33)
       deface (~> 1.5)
 
 GEM
