@@ -37,7 +37,8 @@ module Decidim
         end
 
         def direct_verifications_verifications
-          @direct_verifications_verifications ||= Decidim::Authorization.where(name: current_organization.available_authorizations)
+          # filtered_collection is current_organization.users, so this stays within the organization.
+          @direct_verifications_verifications ||= Decidim::Authorization.where(name: current_organization.available_authorizations) # rubocop:disable Decidim/OrganizationScopedFinder
                                                                         .where.not(granted_at: nil)
                                                                         .where(decidim_user_id: filtered_collection).map do |auth|
             {
