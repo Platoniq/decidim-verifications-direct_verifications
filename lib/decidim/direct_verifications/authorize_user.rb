@@ -22,7 +22,7 @@ module Decidim
 
         return unless valid_authorization?
 
-        Verification::ConfirmUserAuthorization.call(authorization, form, session) do
+        Verification::ConfirmUserAuthorization.call(authorization, form) do
           on(:ok) do
             instrumenter.add_processed :authorized, email
           end

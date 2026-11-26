@@ -33,9 +33,9 @@ module Decidim::DirectVerifications::Verification::Admin
 
     describe "POST create" do
       context "when parameters are defaults" do
-        params = { userslist: "" }
+        let(:params) { { userslist: "" } }
 
-        it_behaves_like "checking users", params
+        it_behaves_like "checking users", { userslist: "" }
 
         it "have no registered or authorized users" do
           perform_enqueued_jobs do
@@ -50,9 +50,9 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with check" do
-        params = { userslist: "mail@example.com", register: true }
+        let(:params) { { userslist: "mail@example.com", register: true } }
 
-        it_behaves_like "checking users", params
+        it_behaves_like "checking users", { userslist: "mail@example.com", register: true }
 
         it "creates warning message" do
           post(:create, params:)
@@ -75,10 +75,10 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when register users with authorize" do
-        params = { userslist: "mail@example.com", register: true, authorize: "in" }
+        let(:params) { { userslist: "mail@example.com", register: true, authorize: "in" } }
 
-        it_behaves_like "registering users", params
-        it_behaves_like "authorizing users", params
+        it_behaves_like "registering users", { userslist: "mail@example.com", register: true, authorize: "in" }
+        it_behaves_like "authorizing users", { userslist: "mail@example.com", register: true, authorize: "in" }
 
         it "redirects with notice and warning messages" do
           perform_enqueued_jobs do
@@ -164,15 +164,13 @@ module Decidim::DirectVerifications::Verification::Admin
       end
 
       context "when revoking users" do
-        params = { userslist: "authorized@example.com", authorize: "out" }
-        it_behaves_like "revoking users", params
+        it_behaves_like "revoking users", { userslist: "authorized@example.com", authorize: "out" }
       end
 
       context "when revoking users with another verification" do
-        params = { userslist: "authorized@example.com", authorize: "out", authorization_handler: "other" }
         let(:verification_type) { "other" }
 
-        it_behaves_like "revoking users", params
+        it_behaves_like "revoking users", { userslist: "authorized@example.com", authorize: "out", authorization_handler: "other" }
       end
     end
   end

@@ -7,9 +7,8 @@ module Decidim
     module Verification
       module Admin
         describe ConfirmUserAuthorization do
-          subject { described_class.new(authorization, form, session) }
+          subject { described_class.new(authorization, form) }
 
-          let(:session) { double(:session) }
           let(:organization) do
             create(:organization, available_authorizations: ["direct_verifications"])
           end
